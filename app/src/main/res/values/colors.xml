@@ -2,9 +2,19 @@
 <resources>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <color name="purple_700">#4D4D99</color>
+    <color name="blue_500">#1A7DE5</color>
+    <color name="blue_300">#1466B8</color>
+    <color name="gray_800">#121A21</color>
+    <color name="gray_700">#1A2633</color>
+    <color name="gray_500">#243647</color>
+    <color name="gray_400">#637587</color>
+    <color name="gray_300">#94ADC7</color>
+    <color name="gray_200">#E8E8F2</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="mainStatusBarColor">@color/white</color>
+    <color name="navBarColor">@color/white</color>
 </resources>
