@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.autoservicemobile.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,10 +30,15 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        _viewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        binding.textTitle.text = _viewModel.titleText
+
+        binding.newsRecycler.layoutManager = LinearLayoutManager(context)
+        _viewModel.articles.observe(viewLifecycleOwner){
+            binding.newsRecycler.adapter = NewsRecyclerAdapter(it){ item ->
+                {}
+            }
         }
+
         return root
     }
 

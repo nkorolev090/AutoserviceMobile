@@ -3,4 +3,9 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="cart_title">Корзина</string>
+    <string name="home_title">Главная</string>
+    <string name="loyalty_title">Подарки</string>
+    <string name="profile_title">Профиль</string>
+    <string name="services_title">Услуги</string>
 </resources>
