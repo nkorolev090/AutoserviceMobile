@@ -1,4 +1,4 @@
-package com.project.autoservicemobile.ui.notifications
+package com.project.autoservicemobile.ui.cart
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,30 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.project.autoservicemobile.databinding.FragmentNotificationsBinding
+import com.project.autoservicemobile.databinding.FragmentCartBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class NotificationsFragment : Fragment() {
+@AndroidEntryPoint
+class CartFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentCartBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val _viewModel: CartViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
-
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentCartBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
+        _viewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

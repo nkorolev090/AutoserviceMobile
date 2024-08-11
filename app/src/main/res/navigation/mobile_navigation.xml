@@ -8,18 +8,31 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.project.autoservicemobile.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.project.autoservicemobile.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_services"
+        android:name="com.project.autoservicemobile.ui.services.ServicesFragment"
+        android:label="services"
+        tools:layout="@layout/fragment_services" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.project.autoservicemobile.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_cart"
+        android:name="com.project.autoservicemobile.ui.cart.CartFragment"
+        android:label="cart"
+        tools:layout="@layout/fragment_cart" />
+
+    <fragment
+        android:id="@+id/navigation_loyalty"
+        android:name="com.project.autoservicemobile.ui.loyalty.LoyaltyFragment"
+        android:label="fragment_loyalty"
+        tools:layout="@layout/fragment_loyalty" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.project.autoservicemobile.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
 </navigation>

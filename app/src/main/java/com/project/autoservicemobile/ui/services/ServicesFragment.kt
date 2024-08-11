@@ -1,4 +1,4 @@
-package com.project.autoservicemobile.ui.dashboard
+package com.project.autoservicemobile.ui.services
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,30 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.project.autoservicemobile.databinding.FragmentDashboardBinding
+import com.project.autoservicemobile.databinding.FragmentServicesBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class DashboardFragment : Fragment() {
+@AndroidEntryPoint
+class ServicesFragment : Fragment() {
 
-    private var _binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentServicesBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private val _viewModel: ServicesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentServicesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
+        _viewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
