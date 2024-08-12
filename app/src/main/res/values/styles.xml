@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="buttonPrimary">
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="android:paddingVertical">5dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/be_vietnam_pro_medium</item>
+    </style>
+    <style name="buttonSecondary">
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
+        <item name="android:backgroundTint">?attr/colorOnSecondary</item>
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="android:paddingVertical">5dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/be_vietnam_pro_medium</item>
+    </style>
+</resources>

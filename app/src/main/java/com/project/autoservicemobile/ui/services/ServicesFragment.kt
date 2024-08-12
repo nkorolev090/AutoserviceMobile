@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.autoservicemobile.databinding.FragmentServicesBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,13 +30,24 @@ class ServicesFragment : Fragment() {
         _binding = FragmentServicesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        _viewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        setup()
+
         return root
     }
+private fun setup(){
+    binding.textTitle.text = _viewModel.titleText
 
+    binding.servicesRecycler.layoutManager = LinearLayoutManager(context)
+    _viewModel.services.observe(viewLifecycleOwner){
+        binding.servicesRecycler.adapter = ServicesRecyclerAdapter(it,
+            { item ->
+                _viewModel.onCartBtnClick(item)
+            },
+            { item ->
+                _viewModel.onFavoritesBtnClick(item)
+            })
+    }
+}
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

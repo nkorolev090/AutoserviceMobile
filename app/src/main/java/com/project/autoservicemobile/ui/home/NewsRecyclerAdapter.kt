@@ -16,9 +16,9 @@ class NewsRecyclerAdapter (private val articles: List<NewsArticleUI>, private va
 .Adapter<NewsRecyclerAdapter.NewsViewHolder>() {
 
     class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val mainTextView: TextView = itemView.findViewById(R.id.mainText)
-        private val descriptionTextView: TextView = itemView.findViewById(R.id.descriptionText)
-        private val imageView: ImageView = itemView.findViewById(R.id.newsImage)
+        private val mainTextView: TextView = itemView.requireViewById(R.id.mainText)
+        private val descriptionTextView: TextView = itemView.requireViewById(R.id.descriptionText)
+        private val imageView: ImageView = itemView.requireViewById(R.id.newsImage)
         private val loadMoreButton: MaterialButton = itemView.requireViewById(R.id.readMoreBtn)
 
 

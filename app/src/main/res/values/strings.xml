@@ -8,4 +8,6 @@
     <string name="loyalty_title">Подарки</string>
     <string name="profile_title">Профиль</string>
     <string name="services_title">Услуги</string>
+    <string name="to_cart">В корзину</string>
+    <string name="from_cart">Удалить</string>
 </resources>

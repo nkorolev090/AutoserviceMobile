@@ -30,6 +30,12 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        setup()
+
+        return root
+    }
+
+    private fun setup(){
         binding.textTitle.text = _viewModel.titleText
 
         binding.newsRecycler.layoutManager = LinearLayoutManager(context)
@@ -38,10 +44,7 @@ class HomeFragment : Fragment() {
                 {}
             }
         }
-
-        return root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
