@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.databinding.FragmentCartBinding
 import com.project.autoservicemobile.databinding.FragmentLoyaltyBinding
 import com.project.autoservicemobile.databinding.FragmentServicesBinding
+import com.project.autoservicemobile.ui.services.ServicesRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,6 +32,18 @@ class LoyaltyFragment : Fragment() {
         _binding = FragmentLoyaltyBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        setup()
+
         return root
+    }
+
+    private fun setup(){
+
+        binding.pointsRecycler.layoutManager = LinearLayoutManager(context)
+        _viewModel.points.observe(viewLifecycleOwner){
+            binding.pointsRecycler.adapter = PointsRecyclerAdapter(it)}
+
+        _viewModel.rewards.observe(viewLifecycleOwner){
+            binding.rewardsRecycler.adapter = RewardsRecyclerAdapter(it)}
     }
 }

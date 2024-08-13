@@ -19,7 +19,7 @@
     <item
         android:id="@+id/navigation_loyalty"
         android:icon="@drawable/ic_loyalty"
-        android:title="@string/loyalty_title" />
+        android:title="@string/loyalty_nav_title" />
 
     <item
         android:id="@+id/navigation_profile"

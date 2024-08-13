@@ -5,7 +5,8 @@
     <string name="title_notifications">Notifications</string>
     <string name="cart_title">Корзина</string>
     <string name="home_title">Главная</string>
-    <string name="loyalty_title">Подарки</string>
+    <string name="loyalty_title">Программа лояльности</string>
+    <string name="loyalty_nav_title">Бонусы</string>
     <string name="profile_title">Профиль</string>
     <string name="services_title">Услуги</string>
     <string name="to_cart">В корзину</string>

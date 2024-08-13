@@ -155,7 +155,7 @@
         android:fontFamily="@font/inter_medium"
         android:textFontWeight="1000"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="5dp"
+        android:paddingVertical="10dp"
         android:text="Записаться"
         android:textAllCaps="false"
         android:textColor="?attr/colorPrimaryVariant"

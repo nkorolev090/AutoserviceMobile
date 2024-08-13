@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,9 +16,227 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleText="@string/loyalty_title" />
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/joinBtnContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBar">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/loyaltyImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/loyalty_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/be_vietnam_pro_bold"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textSize="28sp"
+                android:textAlignment="center"
+                android:text="The future of mobility is here. Are you in?"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loyaltyImage" />
+
+            <TextView
+                android:id="@+id/descriptionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro_regular"
+                android:text="Get access to exclusive benefits and rewards."
+                android:textColor="?attr/colorOnSecondary"
+                android:textAlignment="center"
+                android:layout_marginTop="12dp"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/titleText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/howItText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/be_vietnam_pro_bold"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textSize="18sp"
+                android:textAlignment="textStart"
+                android:text="How it works?"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/descriptionText" />
+
+            <LinearLayout
+                android:id="@+id/lp_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/howItText" >
+
+                <LinearLayout
+                    android:id="@+id/startCell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/loyalty_vec_start"/>
+
+                    <TextView
+                        android:id="@+id/lpStartText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro_regular"
+                        android:text="Get access "
+                        android:textColor="?attr/colorSecondaryVariant"
+                        android:layout_marginTop="12dp"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/midCell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/loyalty_vec_mid"/>
+
+                    <TextView
+                        android:id="@+id/lpMidText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro_regular"
+                        android:text="Get access "
+                        android:textColor="?attr/colorSecondaryVariant"
+                        android:layout_marginTop="12dp"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/finalCell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/loyalty_vec_fin"/>
+
+                    <TextView
+                        android:id="@+id/lpFinalText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro_regular"
+                        android:text="Get access "
+                        android:textColor="?attr/colorSecondaryVariant"
+                        android:layout_marginTop="12dp"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/pointsTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/be_vietnam_pro_bold"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textSize="18sp"
+                android:textAlignment="textStart"
+                android:text="Earning Points"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lp_table" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pointsRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                tools:itemCount="3"
+                tools:listitem="@layout/li_points_item"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pointsTitleText" />
+
+            <TextView
+                android:id="@+id/rewardsTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/be_vietnam_pro_bold"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textSize="18sp"
+                android:textAlignment="textStart"
+                android:text="Availeble rewards"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pointsRecycler" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rewardsRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="20dp"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rewardsTitleText"
+                tools:listitem="@layout/li_rewards_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/joinBtnContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/joinBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="20dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:fontFamily="@font/inter_medium"
+            android:textFontWeight="1000"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:text="Присоединиться"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="16sp"
+            app:cornerRadius="15dp" />
+
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
