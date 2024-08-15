@@ -26,7 +26,7 @@
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="18sp"
         android:textAlignment="textStart"
-        android:text="Информация о пользователе"
+        tools:text="Информация о пользователе"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBar"/>
 
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginVertical="20dp"
-        app:layout_constraintBottom_toTopOf="@id/continue_btn"
+        app:layout_constraintBottom_toTopOf="@id/logOut_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/personal_infoText">
@@ -52,7 +52,7 @@
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="18sp"
                 android:textAlignment="textStart"
-                android:text="Имя"
+                tools:text="Имя"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -92,7 +92,7 @@
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="18sp"
                 android:textAlignment="textStart"
-                android:text="Фамилия"
+                tools:text="Фамилия"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nameLayout"/>
 
@@ -132,7 +132,7 @@
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="18sp"
                 android:textAlignment="textStart"
-                android:text="Дата рождения"
+                tools:text="Дата рождения"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/surnameLayout"/>
 
@@ -157,7 +157,7 @@
                     android:id="@+id/dateInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="date"
                     android:backgroundTint="?attr/colorOnContainer"
                     android:fontFamily="@font/be_vietnam_pro_medium"/>
 
@@ -172,7 +172,7 @@
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="18sp"
                 android:textAlignment="textStart"
-                android:text="Email"
+                tools:text="Email"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dateLayout"/>
 
@@ -212,7 +212,7 @@
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="18sp"
                 android:textAlignment="textStart"
-                android:text="Пароль"
+                tools:text="Пароль"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/emailLayout"/>
 
@@ -237,7 +237,7 @@
                     android:id="@+id/passwordInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPassword"
                     android:backgroundTint="?attr/colorOnContainer"
                     android:fontFamily="@font/be_vietnam_pro_medium"/>
 
@@ -245,8 +245,9 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/continue_btn"
+        android:id="@+id/logOut_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -256,7 +257,7 @@
         android:textFontWeight="1000"
         android:paddingHorizontal="16dp"
         android:paddingVertical="10dp"
-        android:text="Выйти"
+        tools:text="Выйти"
         android:textAllCaps="false"
         android:textColor="?attr/colorPrimaryVariant"
         android:textSize="16sp"

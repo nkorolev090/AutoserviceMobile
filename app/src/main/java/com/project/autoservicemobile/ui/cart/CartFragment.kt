@@ -36,7 +36,25 @@ class CartFragment : Fragment() {
     }
 
     private fun setup(){
-        //binding.subTotalText.text = _viewModel.titleText
+        binding.totalText.text = _viewModel.totalText
+        binding.saleText.text = _viewModel.saleText
+        binding.subTotalText.text = _viewModel.subTotalText
+
+        binding.totalValueText.text = _viewModel.totalValueText
+        binding.saleValueText.text = _viewModel.saleValueText
+        binding.subTotalValueText.text = _viewModel.subTotalValueText
+
+        binding.promocodeInput.hint = _viewModel.promocodeHintText
+
+        binding.applyPromocodeBtn.text = _viewModel.applyBtnText
+        binding.applyPromocodeBtn.setOnClickListener(View.OnClickListener {_ ->
+            _viewModel.onApplyPromocodeClick()
+        })
+
+        binding.createRegBtn.text = _viewModel.createRegBtnText
+        binding.createRegBtn.setOnClickListener(View.OnClickListener {_ ->
+            _viewModel.onCreateRegistrationClick()
+        })
 
         binding.cartRecycler.layoutManager = LinearLayoutManager(context)
         _viewModel.cartItems.observe(viewLifecycleOwner){

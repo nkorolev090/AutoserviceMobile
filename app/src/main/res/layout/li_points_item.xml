@@ -24,18 +24,18 @@
         android:fontFamily="@font/be_vietnam_pro_regular"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="14sp"
-        android:text="30$"
+        tools:text="30$"
         app:layout_constraintTop_toBottomOf="@id/titleText"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/countText"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/be_vietnam_pro_medium"
-        android:textColor="?attr/colorOnSecondary"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="18sp"
-        android:text="222"
+        tools:text="222"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

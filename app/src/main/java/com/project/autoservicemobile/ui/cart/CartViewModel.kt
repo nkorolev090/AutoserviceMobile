@@ -3,17 +3,13 @@ package com.project.autoservicemobile.ui.cart
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.autoservicemobile.rubleSimbol
 import com.project.autoservicemobile.ui.services.models.ServiceUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(): ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
-    }
-    val text: LiveData<String> = _text
 
     private var _cartItems: List<ServiceUI> = listOf(
         ServiceUI(
@@ -68,5 +64,25 @@ class CartViewModel @Inject constructor(): ViewModel() {
     )
     val cartItems = MutableLiveData<List<ServiceUI>>().apply {
         value = _cartItems
+    }
+
+    val promocode = ""
+
+    val promocodeHintText = "Введите промокод"
+    val applyBtnText = "Применить"
+    val createRegBtnText = "Записться"
+    val subTotalText = "Сумма"
+    val saleText = "Скидка"
+    val totalText = "Итого"
+    val subTotalValueText = "777 $rubleSimbol"
+    val saleValueText = "-30 $rubleSimbol"
+    val totalValueText = "747 $rubleSimbol"
+
+    public fun onApplyPromocodeClick(){
+
+    }
+
+    public fun onCreateRegistrationClick(){
+
     }
 }

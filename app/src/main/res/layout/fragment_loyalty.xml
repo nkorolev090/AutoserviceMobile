@@ -44,11 +44,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:paddingHorizontal="20dp"
                 android:fontFamily="@font/be_vietnam_pro_bold"
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="28sp"
                 android:textAlignment="center"
-                android:text="The future of mobility is here. Are you in?"
+                tools:text="The future of mobility is here. Are you in?"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/loyaltyImage" />
@@ -58,10 +59,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/be_vietnam_pro_regular"
-                android:text="Get access to exclusive benefits and rewards."
+                tools:text="Get access to exclusive benefits and rewards."
                 android:textColor="?attr/colorOnSecondary"
                 android:textAlignment="center"
                 android:layout_marginTop="12dp"
+                android:paddingHorizontal="20dp"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/titleText"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -77,7 +79,7 @@
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="18sp"
                 android:textAlignment="textStart"
-                android:text="How it works?"
+                tools:text="How it works?"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/descriptionText" />
 
@@ -106,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/be_vietnam_pro_regular"
-                        android:text="Get access "
+                        tools:text="Get access "
                         android:textColor="?attr/colorSecondaryVariant"
                         android:layout_marginTop="12dp"
                         android:textSize="16sp"/>
@@ -128,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/be_vietnam_pro_regular"
-                        android:text="Get access "
+                        tools:text="Get access "
                         android:textColor="?attr/colorSecondaryVariant"
                         android:layout_marginTop="12dp"
                         android:textSize="16sp"/>
@@ -150,7 +152,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/be_vietnam_pro_regular"
-                        android:text="Get access "
+                        tools:text="Get access "
                         android:textColor="?attr/colorSecondaryVariant"
                         android:layout_marginTop="12dp"
                         android:textSize="16sp"/>
@@ -169,7 +171,7 @@
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="18sp"
                 android:textAlignment="textStart"
-                android:text="Earning Points"
+                tools:text="Earning Points"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lp_table" />
 
@@ -194,7 +196,7 @@
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="18sp"
                 android:textAlignment="textStart"
-                android:text="Availeble rewards"
+                tools:text="Availeble rewards"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pointsRecycler" />
 
@@ -218,7 +220,7 @@
         android:id="@+id/joinBtnContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="55dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.button.MaterialButton
@@ -226,13 +228,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="20dp"
+            android:layout_marginVertical="15dp"
             android:backgroundTint="?attr/colorPrimary"
             android:fontFamily="@font/inter_medium"
             android:textFontWeight="1000"
             android:paddingHorizontal="16dp"
             android:paddingVertical="10dp"
-            android:text="Присоединиться"
+            tools:text="Присоединиться"
             android:textAllCaps="false"
             android:textColor="?attr/colorPrimaryVariant"
             android:textSize="16sp"

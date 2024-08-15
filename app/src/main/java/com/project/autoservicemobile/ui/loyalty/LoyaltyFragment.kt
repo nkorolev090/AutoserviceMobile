@@ -38,6 +38,15 @@ class LoyaltyFragment : Fragment() {
     }
 
     private fun setup(){
+        binding.titleText.text = _viewModel.titleText
+        binding.descriptionText.text = _viewModel.descriptionText
+        binding.howItText.text = _viewModel.howItText
+        binding.lpStartText.text = _viewModel.startText
+        binding.lpMidText.text = _viewModel.midText
+        binding.lpFinalText.text = _viewModel.finText
+        binding.pointsTitleText.text = _viewModel.pointsTitleText
+        binding.rewardsTitleText.text = _viewModel.rewardsTitleText
+        binding.joinBtn.text = _viewModel.joinBtnText
 
         binding.pointsRecycler.layoutManager = LinearLayoutManager(context)
         _viewModel.points.observe(viewLifecycleOwner){

@@ -2,6 +2,7 @@ package com.project.autoservicemobile.ui.loyalty
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.autoservicemobile.rubleSimbol
 import com.project.autoservicemobile.ui.loyalty.models.PointUI
 import com.project.autoservicemobile.ui.loyalty.models.RewardUI
 import com.project.autoservicemobile.ui.services.models.ServiceUI
@@ -13,20 +14,20 @@ class LoyaltyViewModel @Inject constructor() : ViewModel() {
 
     private var _points: List<PointUI> = listOf(
         PointUI(
-            "Rides & Drives",
-            "Every \$1 spent earns 1 point",
+            "Регулярное обслуживание",
+            "За каждый потраченный $rubleSimbol вы получите 1 балл",
             "200"
         ),
 
         PointUI(
-            "Gift Cards",
-            "Every \$1 spent earns 1 point",
+            "Подарочные карты",
+            "За каждый балл на карте вы получите 1 $rubleSimbol",
             "200"
         ),
 
         PointUI(
-            "Merchandise",
-            "Every \$2 spent earns 1 point",
+            "Баллы за товары",
+            "За каждый потраченный $rubleSimbol вы получите 1 балл",
             "200"
         ),
 
@@ -57,4 +58,13 @@ class LoyaltyViewModel @Inject constructor() : ViewModel() {
         value = _rewards
     }
 
+    val titleText = "Будущее автомобилей уже наступило. Вы в деле?"
+    val descriptionText = "Получите доступ к эксклюзивным преимуществам и вознаграждениям."
+    val howItText = "Как это работает?"
+    val startText = "Приезжайте к нам"
+    val midText = "Зарабатывайте очки"
+    val finText = "Получайте вознаграждения"
+    val pointsTitleText = "Баллы"
+    val rewardsTitleText = "Награды"
+    val joinBtnText = "Присоединяйтесь к нам"
 }
