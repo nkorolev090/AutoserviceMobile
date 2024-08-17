@@ -37,6 +37,11 @@ class HomeFragment : Fragment() {
 
     private fun setup(){
         binding.textTitle.text = _viewModel.titleText
+        binding.regsTitle.text = _viewModel.regsTitle
+        binding.regsDescription.text = _viewModel.regsDescription
+        binding.registrationsContainer.setOnClickListener(View.OnClickListener {
+            _viewModel.onGoToRegistrationsClick()
+        })
 
         binding.newsRecycler.layoutManager = LinearLayoutManager(context)
         _viewModel.articles.observe(viewLifecycleOwner){

@@ -16,6 +16,37 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleText="@string/services_title" />
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:hintTextColor="?attr/colorOnSecondary"
+        tools:hint="Начните вводить название"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorOnContainer"
+            android:inputType="text"
+            android:drawableEnd="@drawable/ic_search"
+            android:fontFamily="@font/be_vietnam_pro_medium"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <TextView
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
@@ -27,7 +58,7 @@
         tools:text="Рекомендованные"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBar" />
+        app:layout_constraintTop_toBottomOf="@id/searchLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/servicesRecycler"

@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.project.autoservicemobile.ui.home.HomeFragment"
         android:label="home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_registrationsFragment"
+            app:destination="@id/registrationsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_services"
@@ -34,5 +38,14 @@
         android:name="com.project.autoservicemobile.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/registrationsFragment"
+        android:name="com.project.autoservicemobile.ui.registrations.RegistrationsFragment"
+        android:label="fragment_registrations"
+        tools:layout="@layout/fragment_registrations" >
+        <action
+            android:id="@+id/action_registrationsFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 
 </navigation>

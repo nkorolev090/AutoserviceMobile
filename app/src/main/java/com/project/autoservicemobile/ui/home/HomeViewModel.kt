@@ -2,6 +2,8 @@ package com.project.autoservicemobile.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.autoservicemobile.MAIN
+import com.project.autoservicemobile.R
 import com.project.autoservicemobile.ui.home.models.NewsArticleUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.net.URL
@@ -11,6 +13,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor() : ViewModel() {
 
     val titleText: String = "Новости"
+    val regsTitle: String = "Записи"
+    val regsDescription: String = "Вы можете просмотреть предыдущие записи"
+
     private var _articles: List<NewsArticleUI> = listOf(
         NewsArticleUI(
             "How to load Image in ImageView from Url in Android | Android studio | Kotlin",
@@ -58,5 +63,9 @@ class HomeViewModel @Inject constructor() : ViewModel() {
 
     val articles = MutableLiveData<List<NewsArticleUI>>().apply {
         value = _articles
+    }
+
+    public fun onGoToRegistrationsClick(){
+        MAIN.navController.navigate(R.id.action_navigation_home_to_registrationsFragment)
     }
 }

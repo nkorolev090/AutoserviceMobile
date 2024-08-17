@@ -10,6 +10,8 @@ import javax.inject.Inject
 class ServicesViewModel @Inject constructor() : ViewModel() {
 
     val titleText: String = "Рекомендации"
+    val searchInputHint = "Начните вводить название услуги"
+
     private var _services: List<ServiceUI> = listOf(
         ServiceUI(
             "Замена тормозных колодок",
@@ -71,5 +73,9 @@ class ServicesViewModel @Inject constructor() : ViewModel() {
 
     fun onFavoritesBtnClick(service: ServiceUI){
         service.inFavourites = !service.inFavourites
+    }
+
+    fun searchServices(searchString: String){
+
     }
 }

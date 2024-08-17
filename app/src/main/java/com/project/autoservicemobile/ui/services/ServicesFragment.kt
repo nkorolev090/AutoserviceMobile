@@ -1,6 +1,7 @@
 package com.project.autoservicemobile.ui.services
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,13 @@ class ServicesFragment : Fragment() {
     }
 private fun setup(){
     binding.textTitle.text = _viewModel.titleText
-
+    binding.searchLayout.hint = _viewModel.searchInputHint
+    binding.searchInput.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+            _viewModel.searchServices(binding.searchInput.text.toString())
+        }
+    false
+    })
     binding.servicesRecycler.layoutManager = LinearLayoutManager(context)
     _viewModel.services.observe(viewLifecycleOwner){
         binding.servicesRecycler.adapter = ServicesRecyclerAdapter(it,
@@ -47,6 +54,7 @@ private fun setup(){
                 _viewModel.onFavoritesBtnClick(item)
             })
     }
+
 }
     override fun onDestroyView() {
         super.onDestroyView()
