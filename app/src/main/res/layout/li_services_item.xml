@@ -47,13 +47,13 @@ xmlns:tools="http://schemas.android.com/tools">
         android:fontFamily="@font/be_vietnam_pro_regular"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toCartBtn"
-        app:layout_constraintEnd_toStartOf="@+id/toCartBtn"
-        app:layout_constraintTop_toTopOf="@+id/toCartBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/warrantyBtn"
+        app:layout_constraintEnd_toStartOf="@+id/warrantyBtn"
+        app:layout_constraintTop_toTopOf="@+id/warrantyBtn"
         tools:text="$79.99" />
 
 <com.google.android.material.button.MaterialButton
-    android:id="@+id/toCartBtn"
+    android:id="@+id/warrantyBtn"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/to_cart"

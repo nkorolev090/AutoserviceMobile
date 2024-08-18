@@ -5,5 +5,7 @@ data class ServiceUI(
     var priceText: String,
     val imageUrl: String,
     var inFavourites: Boolean,
-    var inCart: Boolean,
+    var inCart: Boolean = false,
+    var inWarranty: Boolean = false,
+    val mechanicName: String? = null,
 )

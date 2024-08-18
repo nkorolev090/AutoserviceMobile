@@ -41,9 +41,10 @@ class RegistrationsFragment : Fragment() {
 
         binding.registrationsRecycler.layoutManager = LinearLayoutManager(context)
         _viewModel.registrations.observe(viewLifecycleOwner){
-            binding.registrationsRecycler.adapter = RegistrationsRecyclerAdapter(it,
-                {item -> {}}
-            )
+            binding.registrationsRecycler.adapter = RegistrationsRecyclerAdapter(it
+            ) { item ->
+                _viewModel.openRegistrationDetails(item)
+            }
         }
     }
 }

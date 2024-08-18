@@ -1,0 +1,81 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="20dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_margin="2dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/serviceImage"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/news_image" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAlignment="textEnd"
+        android:fontFamily="@font/be_vietnam_pro_bold"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@id/favourites_btn"
+        app:layout_constraintStart_toEndOf="@+id/card_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Заменатормозных колодок" />
+
+    <TextView
+        android:id="@+id/priceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/be_vietnam_pro_regular"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/titleText"
+        app:layout_constraintEnd_toEndOf="@+id/warrantyBtn"
+        tools:text="$79.99" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/warrantyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Обратится по гарантии"
+        android:textColor="?attr/colorPrimaryVariant"
+        android:backgroundTint="@color/blue_300"
+        android:textAllCaps="false"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="5dp"
+        app:cornerRadius="15dp"
+        android:textSize="14sp"
+        android:fontFamily="@font/inter_medium"
+        android:textFontWeight="1000"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/priceText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/favourites_btn"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_favourites"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
