@@ -10,8 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationDetailsViewModel @Inject constructor() : ViewModel() {
-    val titleText = "Запись"
-    val totalText = "Итого"
+    val totalText = "Стоимость работ"
 
     private val _registration = RegistrationUI(
         "Запись от 20 августа",
@@ -24,28 +23,32 @@ class RegistrationDetailsViewModel @Inject constructor() : ViewModel() {
                 "2500₽",
                 "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
                 inFavourites = false,
-                inCart = false
+                inCart = false,
+                mechanicName = "Петров А.А."
             ),
             ServiceUI(
                 "Замена тормозных колодок",
                 "2500₽",
                 "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
                 inFavourites = false,
-                inCart = false
+                inCart = false,
+                mechanicName = "Петров А.А."
             ),
             ServiceUI(
                 "Замена тормозных колодок",
                 "2500₽",
                 "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
                 inFavourites = false,
-                inCart = false
+                inCart = false,
+                mechanicName = "Петров А.А."
             ),
             ServiceUI(
                 "Замена тормозных колодок",
                 "2500₽",
                 "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
                 inFavourites = false,
-                inCart = false
+                inCart = false,
+                mechanicName = "Петров А.А."
             )
         )
     )

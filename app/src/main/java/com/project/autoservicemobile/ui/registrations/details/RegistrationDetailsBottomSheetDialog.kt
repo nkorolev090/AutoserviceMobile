@@ -34,12 +34,13 @@ class RegistrationDetailsBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     private fun setup(){
-        binding.textTitle.text = _viewModel.titleText
         binding.totalText.text = _viewModel.totalText
         binding.totalValueText.text = _viewModel.registration.value!!.price
 
         binding.regServicesRecycler.layoutManager = LinearLayoutManager(context)
         _viewModel.registration.observe(viewLifecycleOwner){
+            binding.textTitle.text = it.registrationTitle
+            binding.completeOnText.text = it.completedDate
             binding.regServicesRecycler.adapter = RegServicesRecyclerAdapter(it.services.orEmpty(),
                 {item -> _viewModel.onWarrantyBtnClick(item)},
                 {item -> _viewModel.onFavoritesBtnClick(item)})

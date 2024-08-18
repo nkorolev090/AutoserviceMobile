@@ -47,9 +47,21 @@
         android:fontFamily="@font/be_vietnam_pro_regular"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/titleText"
+        app:layout_constraintTop_toBottomOf="@+id/mechanicText"
         app:layout_constraintEnd_toEndOf="@+id/warrantyBtn"
         tools:text="$79.99" />
+
+    <TextView
+        android:id="@+id/mechanicText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/be_vietnam_pro_regular"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/titleText"
+        app:layout_constraintEnd_toEndOf="@+id/warrantyBtn"
+        tools:text="Петров А.А." />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/warrantyBtn"

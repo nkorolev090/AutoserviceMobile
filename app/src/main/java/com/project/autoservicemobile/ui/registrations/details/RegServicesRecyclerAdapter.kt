@@ -23,7 +23,7 @@ class RegServicesRecyclerAdapter (
 
         private val titleTextView: TextView = itemView.requireViewById(R.id.titleText)
         private val priceTextView: TextView = itemView.requireViewById(R.id.priceText)
-        //private val mechanicTextView: TextView = itemView.requireViewById(R.id.priceText)
+        private val mechanicTextView: TextView = itemView.requireViewById(R.id.mechanicText)
         private val imageView: ImageView = itemView.requireViewById(R.id.serviceImage)
         private var favoritesBtn: ImageView = itemView.requireViewById(R.id.favourites_btn)
         private var warrantyButton: Button = itemView.requireViewById(R.id.warrantyBtn)
@@ -34,7 +34,7 @@ class RegServicesRecyclerAdapter (
         fun bind(item: ServiceUI, onToWarrantyClick: (ServiceUI) -> Unit, onFavoritesClick: (ServiceUI) -> Unit){
             titleTextView.text = item.title
             priceTextView.text = item.priceText
-            //mechanicTextView.text = item.mechanicName
+            mechanicTextView.text = item.mechanicName
 
             if(item.inWarranty){
                 warrantyButton.text = fromWarranty

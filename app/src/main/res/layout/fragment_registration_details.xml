@@ -31,22 +31,35 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/be_vietnam_pro_bold"
-            android:text="Запись от 10 августа"
+            tools:text="Запись от 10 августа"
             android:textColor="?attr/colorSecondaryVariant"
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/puller" />
 
+        <TextView
+            android:id="@+id/completeOnText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/be_vietnam_pro_regular"
+            tools:text="Запись от 10 августа"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_title" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/regServicesRecycler"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="400dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/totalText"
             tools:listitem="@layout/li_cart_item" />
 
         <TextView
@@ -60,9 +73,8 @@
             tools:text="Итог"
             android:textColor="?attr/colorSecondaryVariant"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/regServicesRecycler"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/completeOnText"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
             android:id="@+id/totalValueText"
