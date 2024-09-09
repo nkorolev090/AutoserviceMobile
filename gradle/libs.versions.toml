@@ -23,6 +23,7 @@ ksp = "1.9.22-1.0.17"
 dagger = "2.50"
 jakarta-inject = "2.0.1"
 kotlin-serialization-json= "1.6.3"
+jetbrainsKotlinJvm = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,4 +60,6 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 

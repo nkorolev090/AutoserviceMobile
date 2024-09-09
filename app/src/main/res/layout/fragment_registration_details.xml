@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="?attr/bottomSheetDialogTheme"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -25,6 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/puller"/>
+
         <TextView
             android:id="@+id/text_title"
             android:layout_width="wrap_content"

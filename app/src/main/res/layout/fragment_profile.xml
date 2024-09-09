@@ -78,6 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="?attr/colorOnContainer"
+                    android:textColor="?attr/colorSecondaryVariant"
                     android:inputType="text"
                     android:fontFamily="@font/be_vietnam_pro_medium"/>
 
@@ -117,9 +118,9 @@
                     android:id="@+id/surnameInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
                     android:backgroundTint="?attr/colorOnContainer"
-                    android:fontFamily="@font/be_vietnam_pro_medium"/>
+                    android:fontFamily="@font/be_vietnam_pro_medium"
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -159,6 +160,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="date"
                     android:backgroundTint="?attr/colorOnContainer"
+                    android:textColor="?attr/colorSecondaryVariant"
                     android:fontFamily="@font/be_vietnam_pro_medium"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -199,6 +201,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:backgroundTint="?attr/colorOnContainer"
+                    android:textColor="?attr/colorSecondaryVariant"
                     android:fontFamily="@font/be_vietnam_pro_medium"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -239,6 +242,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:backgroundTint="?attr/colorOnContainer"
+                    android:textColor="?attr/colorSecondaryVariant"
                     android:fontFamily="@font/be_vietnam_pro_medium"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -256,7 +260,7 @@
         android:fontFamily="@font/inter_medium"
         android:textFontWeight="1000"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp"
+        android:paddingVertical="12dp"
         tools:text="Выйти"
         android:textAllCaps="false"
         android:textColor="?attr/colorPrimaryVariant"

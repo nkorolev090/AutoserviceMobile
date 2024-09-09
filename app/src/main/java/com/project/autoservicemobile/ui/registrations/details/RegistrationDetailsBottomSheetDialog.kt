@@ -1,12 +1,16 @@
 package com.project.autoservicemobile.ui.registrations.details
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.project.autoservicemobile.MAIN
+import com.project.autoservicemobile.R
 import com.project.autoservicemobile.databinding.FragmentRegistrationDetailsBinding
 import com.project.autoservicemobile.ui.registrations.RegistrationsRecyclerAdapter
 
@@ -30,7 +34,6 @@ class RegistrationDetailsBottomSheetDialog : BottomSheetDialogFragment() {
         setup()
 
         return root;
-        //return inflater.inflate(R.layout.fragment_registration_details, container, false)
     }
 
     private fun setup(){
@@ -47,6 +50,6 @@ class RegistrationDetailsBottomSheetDialog : BottomSheetDialogFragment() {
         }
     }
     companion object {
-        const val TAG = "ModalBottomSheet"
+        const val TAG = "RegistrationDetailsBottomSheetDialog"
     }
 }

@@ -2,7 +2,11 @@ package com.project.autoservicemobile.ui.profile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.autoservicemobile.MAIN
+import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.autoservicemobile.ui.profile.models.UserDataUI
+import com.project.autoservicemobile.ui.registrations.details.RegistrationDetailsBottomSheetDialog
+import com.project.autoservicemobile.ui.registrations.models.RegistrationUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -31,10 +35,20 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
         )
     }
 
+    init {
+        openSingBottomSheet()
+    }
+
     public fun onLogOutBtnClick(){
 
     }
     public fun onUserDataChange(userData: UserDataUI){
 
+    }
+
+    private fun openSingBottomSheet(){
+        val modalBottomSheet = SignInOrUpBottomSheetDialog()
+        modalBottomSheet.setCancelable(false)
+        modalBottomSheet.show(MAIN.supportFragmentManager, SignInOrUpBottomSheetDialog.TAG)
     }
 }
