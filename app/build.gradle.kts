@@ -17,6 +17,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+//        buildConfigField("String", "WEATHER_API_KEY", "\"0ab1b21790762bc0577c8fd4b075fb23\"")
+        buildConfigField("String", "LOGIN_API_BASE_URL", "\"api/account/\"")
+//        buildConfigField("String", "API_BASE_URL", "\"https://192.168.0.16:7130/\"")
+        buildConfigField("String", "API_BASE_URL", "\"https://192.168.1.205:7130/\"")
     }
 
     buildTypes {
@@ -36,6 +41,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         viewBinding = true
     }
 }
@@ -58,4 +64,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation("com.squareup.picasso:picasso:2.71828")
+
+    implementation(project(":autoserviceAPI"))
+    implementation(project(":autoserviceData"))
 }

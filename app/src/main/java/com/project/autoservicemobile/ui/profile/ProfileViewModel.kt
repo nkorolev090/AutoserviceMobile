@@ -31,6 +31,8 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
             "-",
             "-",
             "-",
+            "-",
+            "-",
             "-"
         )
     }

@@ -13,7 +13,9 @@ import com.project.autoservicemobile.MAIN
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.databinding.FragmentRegistrationDetailsBinding
 import com.project.autoservicemobile.ui.registrations.RegistrationsRecyclerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegistrationDetailsBottomSheetDialog : BottomSheetDialogFragment() {
 
     private var _binding: FragmentRegistrationDetailsBinding? = null

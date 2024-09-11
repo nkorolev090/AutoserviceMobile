@@ -11,7 +11,9 @@ import com.project.autoservicemobile.R
 import com.project.autoservicemobile.databinding.FragmentProfileBinding
 import com.project.autoservicemobile.databinding.FragmentRegistrationsBinding
 import com.project.autoservicemobile.ui.cart.CartRecyclerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegistrationsFragment : Fragment() {
 
     private var _binding: FragmentRegistrationsBinding? = null

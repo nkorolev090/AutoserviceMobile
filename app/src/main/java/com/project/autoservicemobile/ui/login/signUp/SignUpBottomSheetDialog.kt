@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.project.autoservicemobile.databinding.FragmentSignUpBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpBottomSheetDialog : BottomSheetDialogFragment() {
 
     private var _binding: FragmentSignUpBinding? = null
@@ -26,17 +28,23 @@ class SignUpBottomSheetDialog : BottomSheetDialogFragment() {
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val bottomSheetBehavior = BottomSheetBehavior.from(binding.root)
-//        bottomSheetBehavior.skipCollapsed = true
-//        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-
         setup()
 
         return root;
     }
 
     private fun setup(){
+        binding.titleText.text = _viewModel.title
 
+        binding.nameLayout.hint = _viewModel.nameHintText
+        binding.emailLayout.hint = _viewModel.emailHintText
+        binding.passwordLayout.hint = _viewModel.passwordHintText
+        binding.passwordApplyLayout.hint = _viewModel.passwordApplyHintText
+
+        binding.signUpBtn.text = _viewModel.signUpBtnText
+        binding.signUpBtn.setOnClickListener(View.OnClickListener {
+            _viewModel.onSignUpBtnClick()
+        })
     }
     companion object {
         const val TAG = "SignUpBottomSheetDialog"

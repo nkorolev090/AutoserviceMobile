@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.project.autoservicemobile.databinding.FragmentSignInOrUpBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignInOrUpBottomSheetDialog : BottomSheetDialogFragment() {
 
     private var _binding: FragmentSignInOrUpBinding? = null

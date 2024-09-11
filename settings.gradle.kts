@@ -23,3 +23,4 @@ rootProject.name = "AutoserviceMobile"
 include(":app")
 include(":autoserviceAPI")
 include(":autoserviceAPI")
+include(":autoserviceData")

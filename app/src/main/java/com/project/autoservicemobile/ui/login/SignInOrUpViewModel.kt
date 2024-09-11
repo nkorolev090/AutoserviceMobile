@@ -4,8 +4,11 @@ import androidx.lifecycle.ViewModel
 import com.project.autoservicemobile.MAIN
 import com.project.autoservicemobile.ui.login.signIn.SignInBottomSheetDialog
 import com.project.autoservicemobile.ui.login.signUp.SignUpBottomSheetDialog
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignInOrUpViewModel : ViewModel() {
+@HiltViewModel
+class SignInOrUpViewModel @Inject constructor() : ViewModel() {
     val title = "Присоединяйтесь к нам!"
     val signInDescription = "Войдите в существующий аккаунт"
     val signInBtn = "Войти"

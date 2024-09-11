@@ -61,15 +61,15 @@ class ProfileFragment : Fragment() {
 
     private val onKeyListener = View.OnKeyListener { v, keyCode, event ->
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-            _viewModel.onUserDataChange(
-                UserDataUI(
-                    binding.nameInput.text.toString(),
-                    binding.surnameInput.text.toString(),
-                    binding.emailInput.text.toString(),
-                    binding.dateInput.text.toString(),
-                    binding.passwordInput.text.toString()
-                )
-            )
+//            _viewModel.onUserDataChange(
+//                UserDataUI(
+//                    binding.nameInput.text.toString(),
+//                    binding.surnameInput.text.toString(),
+//                    binding.emailInput.text.toString(),
+//                    binding.dateInput.text.toString(),
+//                    binding.passwordInput.text.toString()
+//                )
+//            )
         }
         false
     }
