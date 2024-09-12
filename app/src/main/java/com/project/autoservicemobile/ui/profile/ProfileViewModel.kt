@@ -2,16 +2,21 @@ package com.project.autoservicemobile.ui.profile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
+import com.project.autoservicedata.profile.UserContext
 import com.project.autoservicemobile.MAIN
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.autoservicemobile.ui.profile.models.UserDataUI
+import com.project.autoservicemobile.ui.profile.models.toUserDataUI
 import com.project.autoservicemobile.ui.registrations.details.RegistrationDetailsBottomSheetDialog
 import com.project.autoservicemobile.ui.registrations.models.RegistrationUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor() : ViewModel() {
+class ProfileViewModel @Inject constructor(
+    userContext: UserContext
+) : ViewModel() {
     val personal_infoText = "Информация о пользователе"
     val nameTitleText = "Имя"
     val nameHintText = "Введите имя"
@@ -25,8 +30,9 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
     val passwordHintText = "Введите пароль"
     val logOutBtnText = "Выйти"
 
-    var userData = MutableLiveData<UserDataUI>().apply {
-        value = UserDataUI(
+    var userData = userContext.userData.map {
+        it?.toUserDataUI() ?:
+        UserDataUI(
             "-",
             "-",
             "-",
@@ -38,13 +44,14 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
     }
 
     init {
-        openSingBottomSheet()
+        if(userContext.isAuthorize.value == false)
+            openSingBottomSheet()
     }
 
-    public fun onLogOutBtnClick(){
+    fun onLogOutBtnClick(){
 
     }
-    public fun onUserDataChange(userData: UserDataUI){
+    fun onUserDataChange(userData: UserDataUI){
 
     }
 

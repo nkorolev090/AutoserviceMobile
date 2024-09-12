@@ -57,6 +57,14 @@ class ProfileFragment : Fragment() {
         binding.logOutBtn.setOnClickListener(View.OnClickListener {
             _viewModel.onLogOutBtnClick()
         })
+
+        _viewModel.userData.observe(viewLifecycleOwner){
+            binding.nameInput.setText(it.name)
+            binding.surnameInput.setText(it.surname)
+            binding.emailInput.setText(it.email)
+            binding.dateInput.setText(it.birthDate)
+            binding.passwordInput.setText(it.password)
+        }
     }
 
     private val onKeyListener = View.OnKeyListener { v, keyCode, event ->

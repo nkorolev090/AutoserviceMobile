@@ -47,6 +47,13 @@ class SignInOrUpBottomSheetDialog : BottomSheetDialogFragment() {
 
         binding.descriptionSignInText.text = _viewModel.signInDescription
         binding.descriptionSignUpText.text = _viewModel.signUpDescription
+
+        _viewModel.isAuthorize.observe(viewLifecycleOwner){
+            when(it){
+                true -> dismiss()
+                false -> {}
+            }
+        }
     }
     companion object {
         const val TAG = "SignInOrUpBottomSheetDialog"

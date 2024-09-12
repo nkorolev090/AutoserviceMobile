@@ -65,7 +65,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
         value = _articles
     }
 
-    public fun onGoToRegistrationsClick(){
+    fun onGoToRegistrationsClick(){
         MAIN.navController.navigate(R.id.action_navigation_home_to_registrationsFragment)
     }
 }
