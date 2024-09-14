@@ -1,13 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-
-    alias(libs.plugins.dagger.hilt.android)
-    alias(libs.plugins.kapt)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.project.autoservicedata"
+    namespace = "com.project.autoservicedatabase"
     compileSdk = 34
 
     defaultConfig {
@@ -41,13 +39,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-    implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
-    implementation(libs.retrofit)
-
-    implementation ("androidx.datastore:datastore-preferences:1.0.0")
-
-    implementation(project(":autoserviceAPI"))
-    implementation(project(":autoserviceDatabase"))
 }

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 open class BaseViewModel : ViewModel() {
     private var mJob: Job? = null
 
-    protected fun <T, E> baseRequest(liveData: MutableLiveData<E>, errorHandler: CoroutinesErrorHandler, request: () -> Flow<T>, mapper: (T) -> E) {
+    protected fun <T, E> baseRequest(liveData: MutableLiveData<E>, errorHandler: CoroutinesErrorHandler, request: suspend () -> Flow<T>, mapper: (T) -> E) {
         mJob = viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, error ->
             viewModelScope.launch(Dispatchers.Main) {
                 errorHandler.onError(error.localizedMessage ?: "Error occured! Please try again.")
@@ -23,7 +23,7 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
-    protected fun <T> baseRequest(liveData: MutableLiveData<T>, errorHandler: CoroutinesErrorHandler, request: () -> Flow<T>) {
+    protected fun <T> baseRequest(liveData: MutableLiveData<T>, errorHandler: CoroutinesErrorHandler, request: suspend () -> Flow<T>) {
         mJob = viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, error ->
             viewModelScope.launch(Dispatchers.Main) {
                 errorHandler.onError(error.localizedMessage ?: "Error occured! Please try again.")

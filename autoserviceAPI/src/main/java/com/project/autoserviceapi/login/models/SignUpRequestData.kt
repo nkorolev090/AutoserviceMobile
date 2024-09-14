@@ -6,14 +6,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SignUpRequestData (
     @SerialName("name")
-    var name: String?,
+    val name: String?,
 
     @SerialName("email")
-    var email: String,
+    val email: String,
 
     @SerialName("password")
-    var password: String,
+    val password: String,
 
     @SerialName("passwordConfirm")
-    var passwordApply: String
+    val passwordApply: String
 )

@@ -4,30 +4,30 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserDTO (
+data class UserDataDTO (
     @SerialName("id")
-    var id : String,
+    val id : String,
 
     @SerialName("name")
-    var name : String?,
+    val name : String?,
 
     @SerialName("surname")
-    var surname : String?,
+    val surname : String?,
 
     @SerialName("midname")
-    var midname : String?,
+    val midname : String?,
 
     @SerialName("email")
-    var email : String?,
+    val email : String,
 
     @SerialName("userName")
-    var userName : String?,
+    val userName : String,
 
     @SerialName("phoneNumber")
-    var phoneNumber : String?,
+    val phoneNumber : String?,
 
     @SerialName("isClient")
-    var isClient : Boolean?,
+    val isClient : Boolean?,
 //
 //    var Client : ClientDTO?,
 //    var Mechanic : MechanicDTO?

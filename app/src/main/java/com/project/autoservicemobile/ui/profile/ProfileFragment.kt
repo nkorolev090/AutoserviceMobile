@@ -2,12 +2,17 @@ package com.project.autoservicemobile.ui.profile
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.project.autoservicedata.common.RequestResult
+import com.project.autoservicemobile.MAIN
+import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentProfileBinding
+import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.autoservicemobile.ui.profile.models.UserDataUI
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +38,16 @@ class ProfileFragment : Fragment() {
         return root;
     }
 
-    private fun setup(){
+    override fun onResume() {
+        super.onResume()
+        _viewModel.isAuthenticated(object : CoroutinesErrorHandler {
+            override fun onError(message: String) {
+                Log.d("SignInBottomSheetDialog", "Error! $message")
+            }
+        })
+    }
+
+    private fun setup() {
         binding.personalInfoText.text = _viewModel.personal_infoText
 
         binding.nameTitle.text = _viewModel.nameTitleText
@@ -58,12 +72,32 @@ class ProfileFragment : Fragment() {
             _viewModel.onLogOutBtnClick()
         })
 
-        _viewModel.userData.observe(viewLifecycleOwner){
-            binding.nameInput.setText(it.name)
-            binding.surnameInput.setText(it.surname)
-            binding.emailInput.setText(it.email)
-            binding.dateInput.setText(it.birthDate)
-            binding.passwordInput.setText(it.password)
+        _viewModel.userData.observe(viewLifecycleOwner) {
+           when(it){
+               is RequestResult.Error -> Log.d("ProfileFragment", it.message.toString())
+               is RequestResult.Loading -> Log.d("ProfileFragment", "Loading")
+               is RequestResult.Success -> {
+                   binding.nameInput.setText(it.data.name)
+                   binding.surnameInput.setText(it.data.surname)
+                   binding.emailInput.setText(it.data.email)
+                   binding.dateInput.setText(it.data.birthDate)
+                   binding.passwordInput.setText(it.data.password)
+               }
+           }
+        }
+
+        _viewModel.isAuth.observe(viewLifecycleOwner){
+            when (it) {
+                is RequestResult.Error -> openSignBottomSheet()
+                is RequestResult.Loading -> {}
+                is RequestResult.Success -> _viewModel.updateUserData(
+                    object : CoroutinesErrorHandler {
+                        override fun onError(message: String) {
+                            Log.d("SignInBottomSheetDialog", "Error! $message")
+                        }
+                    }
+                )
+            }
         }
     }
 
@@ -80,5 +114,14 @@ class ProfileFragment : Fragment() {
 //            )
         }
         false
+    }
+
+    private fun openSignBottomSheet() {
+        val modalBottomSheet = SignInOrUpBottomSheetDialog()
+        modalBottomSheet.setCancelable(false)
+        modalBottomSheet.show(
+            requireActivity().supportFragmentManager,
+            SignInOrUpBottomSheetDialog.TAG
+        )
     }
 }

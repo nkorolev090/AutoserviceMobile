@@ -3,25 +3,38 @@
 package com.project.autoserviceapi.login
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.project.autoserviceapi.login.models.AuthorizationResponse
+import com.project.autoserviceapi.login.models.AuthorizationResponseDTO
 import com.project.autoserviceapi.login.models.SignInRequestData
+import com.project.autoserviceapi.login.models.SignUpRequestData
 import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.create
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
-interface LogInApi {
+interface AccountApi {
     @POST("login")
     suspend fun loginResponse(
         @Body model: SignInRequestData,
-    ): Response<AuthorizationResponse>
+    ): Response<AuthorizationResponseDTO>
+
+    @POST("register")
+    suspend fun logupResponse(
+        @Body model: SignUpRequestData,
+    ): Response<AuthorizationResponseDTO>
+
+    @GET("isauthenticated")
+    suspend fun isAuthenticatedResponse(
+        @Header("Authorization") token: String,
+    ): Response<AuthorizationResponseDTO>
 }
+
 //suspend fun <T : Any> handleApi(
 //    execute: suspend () -> Response<T>
 //): RequestResultAPI<T> {
@@ -47,11 +60,11 @@ sealed class RequestResultAPI<out E>{
     data class Exception(val throwable: Throwable? = null) : RequestResultAPI<Nothing>()
 }
 
-fun LogInApi(
+fun AccountApi(
     baseUrl: String,
     okHttpClient: OkHttpClient? = null,
     json: Json = Json,
-): LogInApi{
+): AccountApi{
     return retrofit(baseUrl, okHttpClient, json).create()
 }
 
@@ -61,6 +74,7 @@ private fun retrofit(
     json: Json = Json,
     ): Retrofit {
     val jsonConverterFactory = Json{
+        explicitNulls = false
         isLenient = true
         ignoreUnknownKeys = true
     }.asConverterFactory("application/json".toMediaType())

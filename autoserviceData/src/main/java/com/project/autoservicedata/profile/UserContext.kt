@@ -1,33 +1,66 @@
 package com.project.autoservicedata.profile
 
-import android.service.autofill.UserData
 import androidx.lifecycle.MutableLiveData
-import com.project.autoservicedata.login.models.User
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.project.autoservicedata.common.RequestResult
+import com.project.autoservicedata.login.models.UserData
+import com.project.autoservicedatabase.AutoserviceDatabase
+import com.project.autoservicedatabase.models.UserDataDBO
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import java.time.LocalDateTime
+import javax.inject.Inject
 
-class UserContext {
-    private  val _isAuthorize = MutableLiveData<Boolean>().apply {
-        value = false
+class UserContext @Inject constructor(
+    private val database: AutoserviceDatabase
+) {
+    private var _isAuthorize = false
+
+    suspend fun setUserData(data: UserData) {
+        database.userDataDao.insert(data.toUserDataDBO())
+        _isAuthorize = true
+//        CoroutineScope(Dispatchers.Main)
+//            .launch{
+//                _userData.value = data
+//                _isAuthorize.value = true
+//            }
     }
 
-    val isAuthorize = _isAuthorize
+    suspend fun getUserData(): Flow<RequestResult<UserData>> = flow {
+        emit(RequestResult.Loading())
 
-    private val _userData = MutableLiveData<User?>().apply {
-        value = null
-    }
-    val userData = _userData
-
-    fun setUserData (data: User){
-        CoroutineScope(Dispatchers.Main)
-            .launch{
-                withContext(Dispatchers.Main) {
-                _userData.value = data
-                _isAuthorize.value = true
-                }
+        if (_isAuthorize) {
+            val userData = database.userDataDao.getAll().firstOrNull()
+            if (userData == null) {
+                emit(RequestResult.Error(message = "cached user data empty"))
+            } else {
+                emit(RequestResult.Success(userData.toUserData()))
             }
+        }
     }
-    // add cache
+}
+
+private fun UserDataDBO.toUserData() : UserData {
+    return UserData(
+        id = this.id,
+        name = this.name,
+        surname = this.surname,
+        midname = this.midname,
+        email = this.email,
+        userName = this.userName,
+        phoneNumber = this.phoneNumber,
+    )
+}
+
+private fun UserData.toUserDataDBO(): UserDataDBO {
+    return UserDataDBO(
+        id = this.id,
+        name = this.name,
+        surname = this.surname,
+        midname = this.midname,
+        email = this.email,
+        userName = this.userName,
+        phoneNumber = this.phoneNumber,
+        requestDateTime = LocalDateTime.now()
+    )
 }

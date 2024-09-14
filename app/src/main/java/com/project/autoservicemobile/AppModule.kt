@@ -1,9 +1,10 @@
 package com.project.autoservicemobile
 
 import android.content.Context
-import com.project.autoserviceapi.login.LogInApi
+import com.project.autoserviceapi.login.AccountApi
 import com.project.autoservicedata.profile.UserContext
 import com.project.autoservicedata.token.TokenManager
+import com.project.autoservicedatabase.AutoserviceDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -97,9 +98,8 @@ object AppModule {
     }
     @Provides
     @Singleton
-    fun provideLoginApi(okHttpClient: OkHttpClient?): LogInApi {
-
-        return LogInApi(
+    fun provideAccountApi(okHttpClient: OkHttpClient?): AccountApi {
+        return AccountApi(
             baseUrl = BuildConfig.API_BASE_URL + BuildConfig.LOGIN_API_BASE_URL,
             okHttpClient = okHttpClient
         )
@@ -110,13 +110,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUserContext(): UserContext = UserContext()
+    fun provideUserContext(autoserviceDatabase: AutoserviceDatabase): UserContext = UserContext(autoserviceDatabase)
 
-//    @Provides
-//    @Singleton
-//    fun provideWeatherDatabase(@ApplicationContext context: Context): WeatherDatabase{
-//        return WeatherDatabase(context)
-//    }
+    @Provides
+    @Singleton
+    fun provideWeatherDatabase(@ApplicationContext context: Context): AutoserviceDatabase {
+        return AutoserviceDatabase(context)
+    }
 //    @Provides
 //    @Singleton
 //    fun provideClothesDatabase(@ApplicationContext context: Context): ClothesDatabase {

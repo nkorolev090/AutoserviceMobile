@@ -11,11 +11,12 @@ class TokenManager(private val context: Context) {
     companion object {
         private const val TOKEN_KEY = "jwt_token"
         private const val PREFERENCES_KEY = "token_preferences"
+        private const val KEY_WERB = "Bearer "
     }
 
     fun getToken(): String? {
         var prefs = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE)
-        return prefs.getString(TOKEN_KEY,null)
+        return KEY_WERB + prefs.getString(TOKEN_KEY,null)
 
     }
 

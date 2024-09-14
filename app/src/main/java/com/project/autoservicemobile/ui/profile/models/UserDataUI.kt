@@ -1,6 +1,6 @@
 package com.project.autoservicemobile.ui.profile.models
 
-import com.project.autoservicedata.login.models.User
+import com.project.autoservicedata.login.models.UserData
 
 data class UserDataUI(
     var name: String,
@@ -12,7 +12,7 @@ data class UserDataUI(
     var password: String
 )
 
-fun User.toUserDataUI(): UserDataUI{
+fun UserData.toUserDataUI(): UserDataUI{
     return UserDataUI(
         name = this.name ?: "-",
         surname = this.surname ?: "-",

@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/autoserviceAPI" />
             <option value="$PROJECT_DIR$/autoserviceData" />
+            <option value="$PROJECT_DIR$/autoserviceDatabase" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

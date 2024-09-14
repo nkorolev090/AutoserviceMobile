@@ -4,16 +4,16 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AuthorizationResponse (
+data class AuthorizationResponseDTO (
     @SerialName("message")
-    var message: String?,
+    val message: String? = null,
 
     @SerialName("user")
-    var user: UserDTO?,
+    val user: UserDataDTO? = null,
 
     @SerialName("userRole")
-    var userRole: String?,
+    val userRole: String? = null,
 
     @SerialName("token")
-    var token: String?,
+    val token: String? = null,
     )
