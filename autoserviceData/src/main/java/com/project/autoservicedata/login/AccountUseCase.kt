@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 class AccountUseCase @Inject constructor(
     private val repository: AccountRepository,
-    private val userContext: UserContext
 ) {
     suspend fun logIn(data: SignInData): Flow<RequestResult<Boolean>> {
         return repository.logIn(data)
@@ -24,6 +23,10 @@ class AccountUseCase @Inject constructor(
 
     suspend fun isAuthenticated(): Flow<RequestResult<Boolean>> {
         return repository.isAuthenticated()
+    }
+
+    suspend fun logOff(){
+        repository.logOff()
     }
 
 //    flow {

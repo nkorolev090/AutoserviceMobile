@@ -137,6 +137,11 @@ class AccountRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun logOff(){
+        tokenManager.deleteToken()
+        userContext.clearUserDataCache()
+    }
 }
 
 private fun SignUpData.toSignUpRequestData(): SignUpRequestData {

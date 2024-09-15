@@ -1,5 +1,6 @@
 package com.project.autoservicemobile.ui.login.signUp
 
+import android.content.DialogInterface
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
@@ -9,14 +10,16 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.project.autoservicedata.common.RequestResult
+import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentSignUpBinding
+import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.autoservicemobile.ui.login.models.SignInDataUI
 import com.project.autoservicemobile.ui.login.models.SignUpDataUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignUpBottomSheetDialog : BottomSheetDialogFragment() {
+class SignUpBottomSheetDialog(private val authenticatedListener: AuthenticatedListener) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentSignUpBinding? = null
 
@@ -38,27 +41,36 @@ class SignUpBottomSheetDialog : BottomSheetDialogFragment() {
         return root;
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        if(_viewModel.isAuthorize.value !is RequestResult.Success)
+            openSingInOrUpBottomSheet()
+    }
+
     private fun setup(){
-        binding.titleText.text = _viewModel.title
+        with(binding){
+            titleText.text = _viewModel.title
 
-        binding.nameLayout.hint = _viewModel.nameHintText
-        binding.emailLayout.hint = _viewModel.emailHintText
-        binding.passwordLayout.hint = _viewModel.passwordHintText
-        binding.passwordApplyLayout.hint = _viewModel.passwordApplyHintText
+            nameLayout.hint = _viewModel.nameHintText
+            emailLayout.hint = _viewModel.emailHintText
+            passwordLayout.hint = _viewModel.passwordHintText
+            passwordApplyLayout.hint = _viewModel.passwordApplyHintText
 
-        binding.signUpBtn.text = _viewModel.signUpBtnText
-        binding.signUpBtn.setOnClickListener(View.OnClickListener {
-            _viewModel.signUp(
-                SignUpDataUI(
-                    binding.nameInput.text.toString(),
-                    binding.emailInput.text.toString(),
-                    binding.passwordInput.text.toString()),
-                object: CoroutinesErrorHandler {
-                    override fun onError(message: String) {
-                        Log.d("SignInBottomSheetDialog", "Error! $message")
-                    }
-                })
-        })
+            signUpBtn.text = _viewModel.signUpBtnText
+            signUpBtn.setOnClickListener {
+                _viewModel.signUp(
+                    SignUpDataUI(
+                        binding.nameInput.text.toString(),
+                        binding.emailInput.text.toString(),
+                        binding.passwordInput.text.toString()
+                    ),
+                    object : CoroutinesErrorHandler {
+                        override fun onError(message: String) {
+                            Log.d("SignInBottomSheetDialog", "Error! $message")
+                        }
+                    })
+            }
+        }
 
         _viewModel.isAuthorize.observe(viewLifecycleOwner) {
             var loggingText: String
@@ -67,12 +79,20 @@ class SignUpBottomSheetDialog : BottomSheetDialogFragment() {
                 is RequestResult.Loading -> loggingText = "Loading"
                 is RequestResult.Success -> {
                     loggingText = "Authorize"
+                    authenticatedListener.onAuthenticated()
                     dismiss()
                 }
             }
             Log.d("SignInBottomSheetDialog", loggingText)
         }
     }
+
+    private fun openSingInOrUpBottomSheet() {
+        val modalBottomSheet = SignInOrUpBottomSheetDialog(authenticatedListener)
+        modalBottomSheet.setCancelable(false)
+        modalBottomSheet.show(requireActivity().supportFragmentManager, SignInOrUpBottomSheetDialog.TAG)
+    }
+
     companion object {
         const val TAG = "SignUpBottomSheetDialog"
     }

@@ -1,22 +1,19 @@
 package com.project.autoservicemobile.ui.login.signIn
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.project.autoservicedata.common.RequestResult
+import com.project.autoservicedata.login.AccountRepository
 import com.project.autoservicedata.login.AccountUseCase
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.ui.login.models.SignInDataUI
 import com.project.autoservicemobile.ui.login.models.toSignInData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val accountUseCase: AccountUseCase
+    private val accountRepository: AccountRepository
 ) : BaseViewModel() {
     val title = "C возвращением!"
     val emailHintText = "Введите email"
@@ -29,6 +26,6 @@ class SignInViewModel @Inject constructor(
         baseRequest(
             _isAuthorize,
             coroutinesErrorHandler,
-            request = { accountUseCase.logIn(signInDataUI.toSignInData()) }
+            request = { accountRepository.logIn(signInDataUI.toSignInData()) }
         )
 }

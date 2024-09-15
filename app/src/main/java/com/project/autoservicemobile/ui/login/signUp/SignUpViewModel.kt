@@ -1,21 +1,19 @@
 package com.project.autoservicemobile.ui.login.signUp
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.project.autoservicedata.common.RequestResult
+import com.project.autoservicedata.login.AccountRepository
 import com.project.autoservicedata.login.AccountUseCase
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
-import com.project.autoservicemobile.ui.login.models.SignInDataUI
 import com.project.autoservicemobile.ui.login.models.SignUpDataUI
-import com.project.autoservicemobile.ui.login.models.toSignInData
 import com.project.autoservicemobile.ui.login.models.toSignUpData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val accountUseCase: AccountUseCase
+    private val accountRepository: AccountRepository
 ) : BaseViewModel() {
     val title = "Добро пожаловать!"
     val nameHintText = "Введите имя"
@@ -31,6 +29,6 @@ class SignUpViewModel @Inject constructor(
         baseRequest(
             _isAuthorize,
             coroutinesErrorHandler,
-            request = { accountUseCase.logUp(signUpDataUI.toSignUpData()) }
+            request = { accountRepository.logUp(signUpDataUI.toSignUpData()) }
         )
 }

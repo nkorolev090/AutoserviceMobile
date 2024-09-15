@@ -14,12 +14,12 @@ data class UserDataUI(
 
 fun UserData.toUserDataUI(): UserDataUI{
     return UserDataUI(
-        name = this.name ?: "-",
-        surname = this.surname ?: "-",
-        midname = this.midname  ?: "-",
-        email = this.email ?: "-",
-        birthDate = "-",
-        phoneNumber = this.phoneNumber  ?: "-",
-        password = "********"
+        name = this.name ?: "",
+        surname = this.surname ?: "",
+        midname = this.midname  ?: "",
+        email = this.email ?: "",
+        birthDate = "",
+        phoneNumber = this.phoneNumber  ?: "",
+        password = ""
     )
 }

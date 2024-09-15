@@ -3,13 +3,19 @@ package com.project.autoservicemobile.ui.cart
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.autoservicedata.common.RequestResult
+import com.project.autoservicedata.login.AccountRepository
+import com.project.autoservicemobile.common.BaseViewModel
+import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.rubleSimbol
 import com.project.autoservicemobile.ui.services.models.ServiceUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CartViewModel @Inject constructor(): ViewModel() {
+class CartViewModel @Inject constructor(
+    private val accountRepository: AccountRepository
+): BaseViewModel() {
 
     private var _cartItems: List<ServiceUI> = listOf(
         ServiceUI(
@@ -78,11 +84,21 @@ class CartViewModel @Inject constructor(): ViewModel() {
     val saleValueText = "-30 $rubleSimbol"
     val totalValueText = "747 $rubleSimbol"
 
-    public fun onApplyPromocodeClick(){
+    val isAuth = MutableLiveData<RequestResult<Boolean>>().apply {
+        value = RequestResult.Loading()
+    }
+
+    fun isAuthenticated(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
+        isAuth,
+        coroutinesErrorHandler,
+        request = { accountRepository.isAuthenticated() },
+    )
+
+    fun onApplyPromocodeClick(){
 
     }
 
-    public fun onCreateRegistrationClick(){
+    fun onCreateRegistrationClick(){
 
     }
 }

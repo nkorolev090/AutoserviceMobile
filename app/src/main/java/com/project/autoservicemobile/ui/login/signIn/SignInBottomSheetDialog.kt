@@ -1,5 +1,6 @@
 package com.project.autoservicemobile.ui.login.signIn
 
+import android.content.DialogInterface
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
@@ -8,13 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.project.autoservicedata.common.RequestResult
+import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentSignInBinding
+import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.autoservicemobile.ui.login.models.SignInDataUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignInBottomSheetDialog : BottomSheetDialogFragment() {
+class SignInBottomSheetDialog(private val authenticatedListener: AuthenticatedListener) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentSignInBinding? = null
 
@@ -37,22 +40,24 @@ class SignInBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     private fun setup(){
-        binding.titleText.text = _viewModel.title
-        binding.emailLayout.hint = _viewModel.emailHintText
-        binding.passwordLayout.hint = _viewModel.passwordHintText
+       with(binding){
+           titleText.text = _viewModel.title
+           emailLayout.hint = _viewModel.emailHintText
+           passwordLayout.hint = _viewModel.passwordHintText
 
-        binding.signInBtn.text = _viewModel.signInBtnText
-        binding.signInBtn.setOnClickListener(View.OnClickListener {
-            _viewModel.signIn(
-                SignInDataUI(
-                    binding.emailInput.text.toString(),
-                    binding.passwordInput.text.toString()),
-                object: CoroutinesErrorHandler {
-                override fun onError(message: String) {
-                    Log.d("SignInBottomSheetDialog", "Error! $message")
-                }
-            })
-        })
+           signInBtn.text = _viewModel.signInBtnText
+           signInBtn.setOnClickListener(View.OnClickListener {
+               _viewModel.signIn(
+                   SignInDataUI(
+                       emailInput.text.toString(),
+                       passwordInput.text.toString()),
+                   object: CoroutinesErrorHandler {
+                       override fun onError(message: String) {
+                           Log.d("SignInBottomSheetDialog", "Error! $message")
+                       }
+                   })
+           })
+       }
 
         _viewModel.isAuthorize.observe(viewLifecycleOwner) {
             var loggingText: String
@@ -61,6 +66,7 @@ class SignInBottomSheetDialog : BottomSheetDialogFragment() {
                 is RequestResult.Loading -> loggingText = "Loading"
                 is RequestResult.Success -> {
                     loggingText = "Authorize"
+                    authenticatedListener.onAuthenticated()
                     dismiss()
                 }
             }
@@ -68,6 +74,18 @@ class SignInBottomSheetDialog : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        if(_viewModel.isAuthorize.value !is RequestResult.Success)
+            openSingInOrUpBottomSheet()
+    }
+
+
+    private fun openSingInOrUpBottomSheet() {
+        val modalBottomSheet = SignInOrUpBottomSheetDialog(authenticatedListener)
+        modalBottomSheet.setCancelable(false)
+        modalBottomSheet.show(requireActivity().supportFragmentManager, SignInOrUpBottomSheetDialog.TAG)
+    }
     companion object {
         const val TAG = "SignInBottomSheetDialog"
     }

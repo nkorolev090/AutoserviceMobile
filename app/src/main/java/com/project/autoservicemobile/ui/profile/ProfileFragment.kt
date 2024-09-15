@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.project.autoservicedata.common.RequestResult
 import com.project.autoservicemobile.MAIN
+import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentProfileBinding
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
@@ -17,7 +18,7 @@ import com.project.autoservicemobile.ui.profile.models.UserDataUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), AuthenticatedListener {
     private var _binding: FragmentProfileBinding? = null
 
     // This property is only valid between onCreateView and
@@ -47,60 +48,104 @@ class ProfileFragment : Fragment() {
         })
     }
 
-    private fun setup() {
-        binding.personalInfoText.text = _viewModel.personal_infoText
-
-        binding.nameTitle.text = _viewModel.nameTitleText
-        binding.nameLayout.hint = _viewModel.nameHintText
-        binding.surnameTitle.text = _viewModel.surnameTitleText
-        binding.surnameLayout.hint = _viewModel.surnameHintText
-        binding.emailTitle.text = _viewModel.emailTitleText
-        binding.emailLayout.hint = _viewModel.emailHintText
-        binding.dateTitle.text = _viewModel.dateTitleText
-        binding.dateLayout.hint = _viewModel.dateHintText
-        binding.passwordTitle.text = _viewModel.passwordTitleText
-        binding.passwordLayout.hint = _viewModel.passwordHintText
-
-        binding.nameInput.setOnKeyListener(onKeyListener)
-        binding.surnameInput.setOnKeyListener(onKeyListener)
-        binding.emailInput.setOnKeyListener(onKeyListener)
-        binding.dateInput.setOnKeyListener(onKeyListener)
-        binding.passwordInput.setOnKeyListener(onKeyListener)
-
-        binding.logOutBtn.text = _viewModel.logOutBtnText
-        binding.logOutBtn.setOnClickListener(View.OnClickListener {
-            _viewModel.onLogOutBtnClick()
+    override fun onPause() {
+        super.onPause()
+        _viewModel.isAuth.postValue(RequestResult.Loading())
+    }
+    override fun onAuthenticated() {
+        _viewModel.updateUserData(object : CoroutinesErrorHandler {
+            override fun onError(message: String) {
+                Log.d("SignInBottomSheetDialog", "Error! $message")
+            }
         })
+    }
+    private fun setup() {
+        with(binding){
+            personalInfoText.text = _viewModel.personal_infoText
 
-        _viewModel.userData.observe(viewLifecycleOwner) {
-           when(it){
-               is RequestResult.Error -> Log.d("ProfileFragment", it.message.toString())
-               is RequestResult.Loading -> Log.d("ProfileFragment", "Loading")
-               is RequestResult.Success -> {
-                   binding.nameInput.setText(it.data.name)
-                   binding.surnameInput.setText(it.data.surname)
-                   binding.emailInput.setText(it.data.email)
-                   binding.dateInput.setText(it.data.birthDate)
-                   binding.passwordInput.setText(it.data.password)
-               }
-           }
+            nameTitle.text = _viewModel.nameTitleText
+            nameLayout.hint = _viewModel.nameHintText
+            surnameTitle.text = _viewModel.surnameTitleText
+            surnameLayout.hint = _viewModel.surnameHintText
+            emailTitle.text = _viewModel.emailTitleText
+            emailLayout.hint = _viewModel.emailHintText
+            dateTitle.text = _viewModel.dateTitleText
+            dateLayout.hint = _viewModel.dateHintText
+            passwordTitle.text = _viewModel.passwordTitleText
+            passwordLayout.hint = _viewModel.passwordHintText
+
+            nameInput.setOnKeyListener(onKeyListener)
+            surnameInput.setOnKeyListener(onKeyListener)
+            emailInput.setOnKeyListener(onKeyListener)
+            dateInput.setOnKeyListener(onKeyListener)
+            passwordInput.setOnKeyListener(onKeyListener)
+
+            logOutBtn.text = _viewModel.logOutBtnText
+            logOutBtn.setOnClickListener {
+                _viewModel.logOff()
+            }
         }
 
-        _viewModel.isAuth.observe(viewLifecycleOwner){
-            when (it) {
-                is RequestResult.Error -> openSignBottomSheet()
-                is RequestResult.Loading -> {}
-                is RequestResult.Success -> _viewModel.updateUserData(
-                    object : CoroutinesErrorHandler {
+        with(_viewModel){
+            userData.observe(viewLifecycleOwner) {
+                when(it){
+                    is RequestResult.Error -> {
+                        Log.d("ProfileFragment", it.message.toString())
+
+                        setUserDataFields(
+                            UserDataUI(
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                            )
+                        )
+                    }
+                    is RequestResult.Loading -> {
+                        Log.d("ProfileFragment", "Loading")
+
+                        setUserDataFields(
+                            UserDataUI(
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                            )
+                        )
+                    }
+                    is RequestResult.Success -> setUserDataFields(it.data)
+                }
+            }
+
+            isAuth.observe(viewLifecycleOwner){
+                if (it is RequestResult.Error) {
+                    openSignBottomSheet()
+                }
+                if(it is RequestResult.Success){
+                    _viewModel.updateUserData(object : CoroutinesErrorHandler {
                         override fun onError(message: String) {
                             Log.d("SignInBottomSheetDialog", "Error! $message")
                         }
-                    }
-                )
+                    })
+                }
             }
         }
     }
 
+    private fun setUserDataFields(userdata: UserDataUI){
+        with(binding){
+            nameInput.setText(userdata.name)
+            surnameInput.setText(userdata.surname)
+            emailInput.setText(userdata.email)
+            dateInput.setText(userdata.birthDate)
+            passwordInput.setText(userdata.password)}
+    }
     private val onKeyListener = View.OnKeyListener { v, keyCode, event ->
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
 //            _viewModel.onUserDataChange(
@@ -117,7 +162,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun openSignBottomSheet() {
-        val modalBottomSheet = SignInOrUpBottomSheetDialog()
+        val modalBottomSheet = SignInOrUpBottomSheetDialog(this)
         modalBottomSheet.setCancelable(false)
         modalBottomSheet.show(
             requireActivity().supportFragmentManager,

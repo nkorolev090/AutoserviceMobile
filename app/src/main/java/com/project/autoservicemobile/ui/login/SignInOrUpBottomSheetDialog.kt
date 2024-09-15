@@ -1,5 +1,6 @@
 package com.project.autoservicemobile.ui.login
 
+import android.content.DialogInterface
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
@@ -8,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.project.autoservicedata.common.RequestResult
+import com.project.autoservicemobile.MAIN
+import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentSignInOrUpBinding
+import com.project.autoservicemobile.ui.login.signIn.SignInBottomSheetDialog
+import com.project.autoservicemobile.ui.login.signUp.SignUpBottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignInOrUpBottomSheetDialog : BottomSheetDialogFragment() {
+class SignInOrUpBottomSheetDialog(private val authenticatedListener: AuthenticatedListener) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentSignInOrUpBinding? = null
 
@@ -22,6 +27,7 @@ class SignInOrUpBottomSheetDialog : BottomSheetDialogFragment() {
 
     private val _viewModel: SignInOrUpViewModel by viewModels()
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,9 +43,10 @@ class SignInOrUpBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
+        Log.d(TAG, "onResume")
         _viewModel.isAuthenticated(object : CoroutinesErrorHandler {
             override fun onError(message: String) {
-                Log.d("SignInBottomSheetDialog", "Error! $message")
+                Log.d(TAG, "Error! $message")
             }
         })
     }
@@ -49,30 +56,42 @@ class SignInOrUpBottomSheetDialog : BottomSheetDialogFragment() {
             titleText.text = _viewModel.title
 
             signInBtn.text = _viewModel.signInBtn
-            signInBtn.setOnClickListener(View.OnClickListener {_ ->
-                _viewModel.openSingInBottomSheet()
-            })
+            signInBtn.setOnClickListener { _ ->
+                openSingInBottomSheet()
+                dismiss()
+            }
 
             signUpBtn.text = _viewModel.signUpBtn
-            signUpBtn.setOnClickListener(View.OnClickListener {_ ->
-                _viewModel.openSingUpBottomSheet()
-            })
+            signUpBtn.setOnClickListener { _ ->
+                openSingUpBottomSheet()
+                dismiss()
+            }
 
             descriptionSignInText.text = _viewModel.signInDescription
             descriptionSignUpText.text = _viewModel.signUpDescription
 
             _viewModel.isAuth.observe(viewLifecycleOwner){
                 when(it){
-                    is RequestResult.Error -> Log.d("ProfileFragment", it.message.toString())
-                    is RequestResult.Loading -> Log.d("ProfileFragment", "Loading")
+                    is RequestResult.Error -> Log.d(TAG, it.message.toString())
+                    is RequestResult.Loading -> Log.d(TAG, "Loading")
                     is RequestResult.Success -> {
                         dismiss()
                     }
                 }
             }
-
         }
     }
+
+    private fun openSingInBottomSheet() {
+        val modalBottomSheet = SignInBottomSheetDialog(authenticatedListener)
+        modalBottomSheet.show(requireActivity().supportFragmentManager, SignInBottomSheetDialog.TAG)
+    }
+
+    private fun openSingUpBottomSheet() {
+        val modalBottomSheet = SignUpBottomSheetDialog(authenticatedListener)
+        modalBottomSheet.show(requireActivity().supportFragmentManager, SignUpBottomSheetDialog.TAG)
+    }
+
     companion object {
         const val TAG = "SignInOrUpBottomSheetDialog"
     }
