@@ -67,8 +67,11 @@ class SignInOrUpBottomSheetDialog(private val authenticatedListener: Authenticat
                 dismiss()
             }
 
+            goHomeBtn.text = _viewModel.goHomeBtn
+
             descriptionSignInText.text = _viewModel.signInDescription
             descriptionSignUpText.text = _viewModel.signUpDescription
+            descriptionGoHomeText.text = _viewModel.goHomeDescription
 
             _viewModel.isAuth.observe(viewLifecycleOwner){
                 when(it){

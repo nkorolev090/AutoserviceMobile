@@ -18,6 +18,8 @@ class SignInOrUpViewModel @Inject constructor(
     val signInBtn = "Войти"
     val signUpDescription = "Или зарегистрируйте новый аккаунт"
     val signUpBtn = "Зарегистрироваться"
+    val goHomeDescription = "Или продолжите без регистрации"
+    val goHomeBtn = "На главную"
 
     val isAuth = MutableLiveData<RequestResult<Boolean>>().apply {
         value = RequestResult.Loading()

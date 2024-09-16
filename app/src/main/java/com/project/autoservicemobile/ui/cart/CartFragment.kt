@@ -10,13 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.autoservicedata.common.RequestResult
+import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentCartBinding
+import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.autoservicemobile.ui.services.ServicesRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CartFragment : Fragment() {
+class CartFragment : Fragment(), AuthenticatedListener {
 
     private var _binding: FragmentCartBinding? = null
 
@@ -46,34 +49,64 @@ class CartFragment : Fragment() {
         })
     }
 
+    override fun onPause() {
+        super.onPause()
+        _viewModel.isAuth.postValue(RequestResult.Loading())
+    }
+
+    override fun onAuthenticated() {
+        //getCartData
+    }
+
     private fun setup(){
-        binding.totalText.text = _viewModel.totalText
-        binding.saleText.text = _viewModel.saleText
-        binding.subTotalText.text = _viewModel.subTotalText
+       with(binding){
+           totalText.text = _viewModel.totalText
+           saleText.text = _viewModel.saleText
+           subTotalText.text = _viewModel.subTotalText
 
-        binding.totalValueText.text = _viewModel.totalValueText
-        binding.saleValueText.text = _viewModel.saleValueText
-        binding.subTotalValueText.text = _viewModel.subTotalValueText
+           totalValueText.text = _viewModel.totalValueText
+           saleValueText.text = _viewModel.saleValueText
+           subTotalValueText.text = _viewModel.subTotalValueText
 
-        binding.promocodeInput.hint = _viewModel.promocodeHintText
+           promocodeInput.hint = _viewModel.promocodeHintText
 
-        binding.applyPromocodeBtn.text = _viewModel.applyBtnText
-        binding.applyPromocodeBtn.setOnClickListener(View.OnClickListener {_ ->
-            _viewModel.onApplyPromocodeClick()
-        })
+           applyPromocodeBtn.text = _viewModel.applyBtnText
+           applyPromocodeBtn.setOnClickListener{_ ->
+               _viewModel.onApplyPromocodeClick()
+           }
 
-        binding.createRegBtn.text = _viewModel.createRegBtnText
-        binding.createRegBtn.setOnClickListener(View.OnClickListener {_ ->
-            _viewModel.onCreateRegistrationClick()
-        })
+           createRegBtn.text = _viewModel.createRegBtnText
+           createRegBtn.setOnClickListener{_ ->
+               _viewModel.onCreateRegistrationClick()
+           }
 
-        binding.cartRecycler.layoutManager = LinearLayoutManager(context)
-        _viewModel.cartItems.observe(viewLifecycleOwner){
-            binding.cartRecycler.adapter = CartRecyclerAdapter(it,
-                {item -> {}}
-            )
+           cartRecycler.layoutManager = LinearLayoutManager(context)
+           _viewModel.cartItems.observe(viewLifecycleOwner){
+               cartRecycler.adapter = CartRecyclerAdapter(it,
+                   {item -> {}}
+               )
+           }
+       }
+
+        _viewModel.isAuth.observe(viewLifecycleOwner){
+            if (it is RequestResult.Error) {
+                openSignBottomSheet()
+            }
+            if(it is RequestResult.Success){
+                //getCartData
+            }
         }
     }
+
+    private fun openSignBottomSheet() {
+        val modalBottomSheet = SignInOrUpBottomSheetDialog(this)
+        modalBottomSheet.setCancelable(false)
+        modalBottomSheet.show(
+            requireActivity().supportFragmentManager,
+            SignInOrUpBottomSheetDialog.TAG
+        )
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -2,15 +2,21 @@ package com.project.autoservicemobile.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.project.autoservicedata.common.RequestResult
+import com.project.autoservicedata.login.AccountRepository
 import com.project.autoservicemobile.MAIN
 import com.project.autoservicemobile.R
+import com.project.autoservicemobile.common.BaseViewModel
+import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.ui.home.models.NewsArticleUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.net.URL
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val accountRepository: AccountRepository
+) : BaseViewModel() {
 
     val titleText: String = "Новости"
     val regsTitle: String = "Записи"
@@ -64,6 +70,16 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     val articles = MutableLiveData<List<NewsArticleUI>>().apply {
         value = _articles
     }
+
+    val isAuth = MutableLiveData<RequestResult<Boolean>>().apply {
+        value = RequestResult.Loading()
+    }
+
+    fun isAuthenticated(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
+        isAuth,
+        coroutinesErrorHandler,
+        request = { accountRepository.isAuthenticated() },
+    )
 
     fun onGoToRegistrationsClick(){
         MAIN.navController.navigate(R.id.action_navigation_home_to_registrationsFragment)
