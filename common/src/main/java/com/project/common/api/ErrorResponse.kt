@@ -1,4 +1,4 @@
-package com.project.autoserviceapi
+package com.project.common.api
 
 data class ErrorResponse(
     val code: Int,

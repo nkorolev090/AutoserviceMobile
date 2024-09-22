@@ -8,13 +8,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.project.autoservicedata.common.RequestResult
-import com.project.autoservicemobile.MAIN
 import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentProfileBinding
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.autoservicemobile.ui.profile.models.UserDataUI
+import com.project.common.data.RequestResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

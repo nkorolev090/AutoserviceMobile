@@ -1,6 +1,5 @@
-package com.project.autoservicedata.common
+package com.project.common.data
 
-import com.project.autoserviceapi.login.RequestResultAPI
 
 sealed class RequestResult<out E: Any>(open val data: E? = null){
     class Loading<E : Any>() : RequestResult<E>()

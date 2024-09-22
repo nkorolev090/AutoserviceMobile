@@ -1,79 +1,44 @@
 package com.project.autoservicemobile.ui.home
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.project.autoservicedata.common.RequestResult
 import com.project.autoservicedata.login.AccountRepository
 import com.project.autoservicemobile.MAIN
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.ui.home.models.NewsArticleUI
+import com.project.autoservicemobile.ui.home.models.toNewsArticleUI
+import com.project.autoservicemobile.ui.profile.models.toUserDataUI
+import com.project.common.data.RequestResult
+import com.project.common.data.map
+import com.project.newsdata.repository.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.net.URL
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val accountRepository: AccountRepository
+    private val accountRepository: AccountRepository,
+    private val newsRepository: NewsRepository
 ) : BaseViewModel() {
 
     val titleText: String = "Новости"
     val regsTitle: String = "Записи"
     val regsDescription: String = "Вы можете просмотреть предыдущие записи"
 
-    private var _articles: List<NewsArticleUI> = listOf(
-        NewsArticleUI(
-            "How to load Image in ImageView from Url in Android | Android studio | Kotlin",
-            "2022",
-            "Узнать больше",
-            "https://images.unsplash.com/photo-1723145886817-1a2ee70a251b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        ),
-        NewsArticleUI(
-            "How to load Image in ImageView from Url in Android | Android studio | Kotlin",
-            "2022",
-            "Узнать больше",
-            "https://images.unsplash.com/photo-1723083661302-ca5b3459e278?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        ),
-        NewsArticleUI(
-            "How to load Image in ImageView from Url in Android | Android studio | Kotlin",
-            "2022",
-            "Узнать больше",
-            "https://images.unsplash.com/photo-1723249593301-93100100f1e1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        ),
-        NewsArticleUI(
-            "How to load Image in ImageView from Url in Android | Android studio | Kotlin",
-            "2022",
-            "Узнать больше",
-            "https://images.unsplash.com/photo-1723083661302-ca5b3459e278?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        ),
-        NewsArticleUI(
-            "How to load Image in ImageView from Url in Android | Android studio | Kotlin",
-            "2022",
-            "Узнать больше",
-            "https://images.unsplash.com/photo-1723249593301-93100100f1e1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        ),
-        NewsArticleUI(
-            "How to load Image in ImageView from Url in Android | Android studio | Kotlin",
-            "2022",
-            "Узнать больше",
-            "https://images.unsplash.com/photo-1723249593301-93100100f1e1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        ),
-        NewsArticleUI(
-            "How to load Image in ImageView from Url in Android | Android studio | Kotlin",
-            "2022",
-            "Узнать больше",
-            "https://images.unsplash.com/photo-1723145886817-1a2ee70a251b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        )
-    )
-
-    val articles = MutableLiveData<List<NewsArticleUI>>().apply {
-        value = _articles
+    val articles = MutableLiveData<RequestResult<List<NewsArticleUI>>>().apply {
+        value = RequestResult.Loading()
     }
 
     val isAuth = MutableLiveData<RequestResult<Boolean>>().apply {
         value = RequestResult.Loading()
     }
+
+    fun updateArticles(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
+        articles,
+        coroutinesErrorHandler,
+        request = { newsRepository.getNews() },
+        mapper = { data -> data.map { list -> list.map { it.toNewsArticleUI() } } }
+    )
 
     fun isAuthenticated(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
         isAuth,

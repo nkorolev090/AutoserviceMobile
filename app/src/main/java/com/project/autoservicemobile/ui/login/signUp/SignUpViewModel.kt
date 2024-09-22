@@ -1,13 +1,12 @@
 package com.project.autoservicemobile.ui.login.signUp
 
 import androidx.lifecycle.MutableLiveData
-import com.project.autoservicedata.common.RequestResult
 import com.project.autoservicedata.login.AccountRepository
-import com.project.autoservicedata.login.AccountUseCase
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.ui.login.models.SignUpDataUI
 import com.project.autoservicemobile.ui.login.models.toSignUpData
+import com.project.common.data.RequestResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

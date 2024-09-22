@@ -1,8 +1,6 @@
-package com.project.autoserviceapi.utils
+package com.project.common.api
 
 import com.google.gson.Gson
-import com.project.autoserviceapi.ErrorResponse
-import com.project.autoserviceapi.login.RequestResultAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

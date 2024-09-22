@@ -1,7 +1,6 @@
 package com.project.autoservicedata.profile
 
-import androidx.lifecycle.MutableLiveData
-import com.project.autoservicedata.common.RequestResult
+import com.project.common.data.RequestResult
 import com.project.autoservicedata.login.models.UserData
 import com.project.autoservicedatabase.AutoserviceDatabase
 import com.project.autoservicedatabase.models.UserDataDBO

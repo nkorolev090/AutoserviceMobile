@@ -18,7 +18,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-//        buildConfigField("String", "WEATHER_API_KEY", "\"0ab1b21790762bc0577c8fd4b075fb23\"")
+        buildConfigField("String", "NEWS_API_KEY", "\"c4bf3d2d4c9a4b278aec23a1c09203c0\"")
+        buildConfigField("String", "NEWS_API_URL", "\"https://newsapi.org/v2/\"")
+
         buildConfigField("String", "LOGIN_API_BASE_URL", "\"api/account/\"")
         buildConfigField("String", "API_BASE_URL", "\"https://192.168.0.16:7130/\"")
 //        buildConfigField("String", "API_BASE_URL", "\"https://192.168.1.205:7130/\"")
@@ -59,13 +61,17 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.dagger.hilt.android)
-    implementation(project(":autoserviceDatabase"))
+    implementation(project(":common"))
+
     kapt(libs.dagger.hilt.compiler)
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation(libs.logging.interceptor)
     implementation(libs.kotlinx.serialization.json)
 
-    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation(libs.picasso)
 
     implementation(project(":autoserviceAPI"))
+    implementation(project(":newsAPI"))
+    implementation(project(":newsData"))
     implementation(project(":autoserviceData"))
+    implementation(project(":autoserviceDatabase"))
 }

@@ -2,21 +2,18 @@ package com.project.autoservicedata.login
 
 import android.annotation.SuppressLint
 import com.project.autoserviceapi.login.AccountApi
-import com.project.autoserviceapi.login.RequestResultAPI
 import com.project.autoserviceapi.login.models.SignInRequestData
 import com.project.autoserviceapi.login.models.SignUpRequestData
 import com.project.autoserviceapi.login.models.UserDataDTO
-import com.project.autoserviceapi.utils.apiRequestFlow
-import com.project.autoservicedata.common.RequestResult
+import com.project.common.data.RequestResult
 import com.project.autoservicedata.login.models.SignInData
 import com.project.autoservicedata.login.models.SignUpData
 import com.project.autoservicedata.login.models.UserData
 import com.project.autoservicedata.profile.UserContext
 import com.project.autoservicedata.token.TokenManager
+import com.project.common.api.RequestResultAPI
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -26,7 +23,7 @@ class AccountRepository @Inject constructor(
     private val userContext: UserContext
 ) {
     suspend fun logIn(data: SignInData): Flow<RequestResult<Boolean>> {
-        return apiRequestFlow {
+        return com.project.common.api.apiRequestFlow {
             api.loginResponse(data.toSignInRequestData())
         }.map { response ->
             when (response) {
@@ -63,7 +60,7 @@ class AccountRepository @Inject constructor(
     }
 
     suspend fun logUp(data: SignUpData): Flow<RequestResult<Boolean>> {
-        return apiRequestFlow {
+        return com.project.common.api.apiRequestFlow {
             api.logupResponse(data.toSignUpRequestData())
         }.map { response ->
             when (response) {
@@ -104,9 +101,9 @@ class AccountRepository @Inject constructor(
         val token = tokenManager.getToken()
             ?: return flowOf(RequestResult.Error(message = "token is null"))
 
-        return apiRequestFlow {
+        return com.project.common.api.apiRequestFlow {
             api.isAuthenticatedResponse(token)
-        }.map {response ->
+        }.map { response ->
             when (response) {
                 is RequestResultAPI.Success -> {
 //                    saveNetResponseToCache(response.data)

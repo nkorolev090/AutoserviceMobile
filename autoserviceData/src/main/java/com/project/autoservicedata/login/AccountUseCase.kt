@@ -1,13 +1,9 @@
 package com.project.autoservicedata.login
 
-import com.project.autoservicedata.common.RequestResult
+import com.project.common.data.RequestResult
 import com.project.autoservicedata.login.models.SignInData
 import com.project.autoservicedata.login.models.SignUpData
-import com.project.autoservicedata.login.models.UserData
-import com.project.autoservicedata.profile.UserContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withTimeoutOrNull
 import javax.inject.Inject
 
 class AccountUseCase @Inject constructor(

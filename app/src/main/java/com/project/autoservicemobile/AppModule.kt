@@ -5,11 +5,13 @@ import com.project.autoserviceapi.login.AccountApi
 import com.project.autoservicedata.profile.UserContext
 import com.project.autoservicedata.token.TokenManager
 import com.project.autoservicedatabase.AutoserviceDatabase
+import com.project.newsapi.news.NewsApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.security.KeyStore
@@ -42,6 +44,15 @@ object AppModule {
         return null
     }
 
+    @Provides
+    @Singleton
+    fun provideJsonForConverterFactory(): Json?{
+        return Json{
+            explicitNulls = false
+            isLenient = true
+            ignoreUnknownKeys = true
+        }
+    }
     private fun getUnsafeOkHttpClient(): OkHttpClient? {
         return try {
             // Create a trust manager that does not validate certificate chains
@@ -98,12 +109,25 @@ object AppModule {
     }
     @Provides
     @Singleton
-    fun provideAccountApi(okHttpClient: OkHttpClient?): AccountApi {
+    fun provideAccountApi(okHttpClient: OkHttpClient?, json: Json?): AccountApi {
         return AccountApi(
             baseUrl = BuildConfig.API_BASE_URL + BuildConfig.LOGIN_API_BASE_URL,
-            okHttpClient = okHttpClient
+            okHttpClient = okHttpClient,
+            json = json
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideNewsCarsApi(okHttpClient: OkHttpClient?, json: Json?): NewsApi {
+        return NewsApi(
+            baseUrl = BuildConfig.NEWS_API_URL,
+            okHttpClient = okHttpClient,
+            apiKey = BuildConfig.NEWS_API_KEY,
+            json = json
+        )
+    }
+
     @Provides
     @Singleton
     fun provideTokenManager(@ApplicationContext context: Context): TokenManager = TokenManager(context)

@@ -1,5 +1,7 @@
 package com.project.autoservicemobile.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,10 +11,11 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.autoservicedata.common.RequestResult
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentHomeBinding
+import com.project.autoservicemobile.ui.home.models.NewsArticleUI
+import com.project.common.data.RequestResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,13 +46,19 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        startAnims()
+        _viewModel.updateArticles(object : CoroutinesErrorHandler {
+            override fun onError(message: String) {
+                Log.d("HomeFragment", "Error! $message")
+            }
+        })
 
         _viewModel.isAuthenticated(object : CoroutinesErrorHandler {
             override fun onError(message: String) {
-                Log.d("SignInBottomSheetDialog", "Error! $message")
+                Log.d("HomeFragment", "Error! $message")
             }
         })
+
+        startAnims()
     }
 
     override fun onPause() {
@@ -68,9 +77,21 @@ class HomeFragment : Fragment() {
 
             newsRecycler.layoutManager = LinearLayoutManager(context)
             _viewModel.articles.observe(viewLifecycleOwner) {
-                newsRecycler.adapter = NewsRecyclerAdapter(it) { item ->
-                    {}
+                when (it) {
+                    is RequestResult.Error -> {newsRecycler.adapter = NewsRecyclerAdapter(listOf()) { item ->
+                        {}
+                    }}
+                    is RequestResult.Loading -> {newsRecycler.adapter = NewsRecyclerAdapter(listOf()) { item ->
+                        {}
+                    }}
+                    is RequestResult.Success -> {
+                        newsRecycler.adapter = NewsRecyclerAdapter(it.data) { item ->
+                            openNews(item)
+                        }
+                        newsRecycler.adapter?.notifyDataSetChanged()
+                    }
                 }
+
             }
 
             _viewModel.isAuth.observe(viewLifecycleOwner) {
@@ -78,7 +99,10 @@ class HomeFragment : Fragment() {
                     registrationsContainer.visibility = View.GONE
                 }
                 if (it is RequestResult.Success) {
-                    val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.top_to_bottom_appearance)
+                    val anim = AnimationUtils.loadAnimation(
+                        requireContext(),
+                        R.anim.top_to_bottom_appearance
+                    )
 
                     registrationsContainer.visibility = View.VISIBLE
                     registrationsContainer.startAnimation(anim)
@@ -87,12 +111,22 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun startAnims(){
+    private fun startAnims() {
         val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.top_to_bottom_appearance)
-        with(binding){
+        with(binding) {
             newsRecycler.startAnimation(anim)
             textTitle.startAnimation(anim)
         }
+    }
+
+    private fun openNews(newsArticle: NewsArticleUI){
+        var url = newsArticle.url
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "http://$url"
+        }
+
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
     }
 
     override fun onDestroyView() {

@@ -35,35 +35,10 @@ interface AccountApi {
     ): Response<AuthorizationResponseDTO>
 }
 
-//suspend fun <T : Any> handleApi(
-//    execute: suspend () -> Response<T>
-//): RequestResultAPI<T> {
-//    return try {
-//        val response= execute()
-//        val body = response.body()
-//        if (response.isSuccessful) {
-//            RequestResultAPI.Success(data = checkNotNull(body))
-//        } else {
-//            RequestResultAPI.Error(code = response.code(), message = response.message())
-//        }
-//    } catch (e: HttpException) {
-//        RequestResultAPI.Error(code = e.code(), message = e.message())
-//    } catch (e: Throwable) {
-//        RequestResultAPI.Exception(throwable = e)
-//    }
-//}
-
-sealed class RequestResultAPI<out E>{
-    data object Loading: RequestResultAPI<Nothing>()
-    data class Success<out E>(val data: E) : RequestResultAPI<E>()
-    data class Error(val code: Any? = null,val message: Any? = null) : RequestResultAPI<Nothing>()
-    data class Exception(val throwable: Throwable? = null) : RequestResultAPI<Nothing>()
-}
-
 fun AccountApi(
     baseUrl: String,
     okHttpClient: OkHttpClient? = null,
-    json: Json = Json,
+    json: Json? = null,
 ): AccountApi{
     return retrofit(baseUrl, okHttpClient, json).create()
 }
@@ -71,13 +46,9 @@ fun AccountApi(
 private fun retrofit(
     baseUrl: String,
     okHttpClient: OkHttpClient? = null,
-    json: Json = Json,
+    json: Json? = null,
     ): Retrofit {
-    val jsonConverterFactory = Json{
-        explicitNulls = false
-        isLenient = true
-        ignoreUnknownKeys = true
-    }.asConverterFactory("application/json".toMediaType())
+    val jsonConverterFactory = (json ?: Json).asConverterFactory("application/json".toMediaType())
 
     val modifiedOkHttpClient = (okHttpClient?.newBuilder() ?: OkHttpClient.Builder())
         .build()

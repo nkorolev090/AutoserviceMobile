@@ -3,7 +3,6 @@ package com.project.autoservicemobile.ui.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -23,14 +22,18 @@ class NewsRecyclerAdapter (private val articles: List<NewsArticleUI>, private va
 
 
         fun bind(item: NewsArticleUI, onClick: (NewsArticleUI) -> Unit){
-            mainTextView.text = item.mainText
-            descriptionTextView.text = item.descriptionText
+            mainTextView.text = item.titleText
+            descriptionTextView.text = item.sourceText
 
-            loadMoreButton.text = item.btnText
+            loadMoreButton.setText(R.string.load_more_btn_text)
+            loadMoreButton.isEnabled = item.btnEnabled
             loadMoreButton.setOnClickListener{onClick(item)}
 
             //imageView.setImageResource(R.drawable.news_image)
-            Picasso.get().load(item.imageUrl).into(imageView)
+            if(item.urlToImage != null)
+                Picasso.get().load(item.urlToImage).error(R.drawable.news_image).into(imageView)
+            else
+                imageView.setImageResource(R.drawable.news_image)
         }
     }
 

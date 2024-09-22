@@ -1,6 +1,5 @@
 package com.project.autoservicemobile.ui.login
 
-import android.content.DialogInterface
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
@@ -8,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.project.autoservicedata.common.RequestResult
-import com.project.autoservicemobile.MAIN
 import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentSignInOrUpBinding
 import com.project.autoservicemobile.ui.login.signIn.SignInBottomSheetDialog
 import com.project.autoservicemobile.ui.login.signUp.SignUpBottomSheetDialog
+import com.project.common.data.RequestResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
