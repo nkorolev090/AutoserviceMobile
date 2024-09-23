@@ -15,59 +15,8 @@ class CartViewModel @Inject constructor(
     private val accountRepository: AccountRepository
 ): BaseViewModel() {
 
-    private var _cartItems: List<ServiceUI> = listOf(
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-    )
     val cartItems = MutableLiveData<List<ServiceUI>>().apply {
-        value = _cartItems
+        value = listOf()
     }
 
     val promocode = ""

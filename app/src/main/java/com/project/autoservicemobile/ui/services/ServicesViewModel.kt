@@ -1,71 +1,35 @@
 package com.project.autoservicemobile.ui.services
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.project.autoservicedata.breakdown.BreakdownRepository
+import com.project.autoservicedata.breakdown.models.Breakdown
+import com.project.autoservicemobile.common.BaseViewModel
+import com.project.autoservicemobile.common.CoroutinesErrorHandler
+import com.project.autoservicemobile.rubleSimbol
 import com.project.autoservicemobile.ui.services.models.ServiceUI
+import com.project.common.data.RequestResult
+import com.project.common.data.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ServicesViewModel @Inject constructor() : ViewModel() {
+class ServicesViewModel @Inject constructor(
+    private val breakdownRepository: BreakdownRepository
+) : BaseViewModel() {
 
     val titleText: String = "Рекомендации"
     val searchInputHint = "Начните вводить название услуги"
 
-    private var _services: List<ServiceUI> = listOf(
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-        ServiceUI(
-            "Замена тормозных колодок",
-            "2500₽",
-            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-            inFavourites = false,
-            inCart = false
-        ),
-    )
-    val services = MutableLiveData<List<ServiceUI>>().apply {
-        value = _services
+    val services = MutableLiveData<RequestResult<List<ServiceUI>>>().apply {
+        value = RequestResult.Loading()
     }
+
+    fun updateServices(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
+        services,
+        coroutinesErrorHandler,
+        request = { breakdownRepository.getAllBreakdowns() },
+        mapper = { data -> data.map { list -> list.map { it.toServiceUI() } } }
+    )
 
     fun onCartBtnClick(service: ServiceUI){
         service.inCart = !service.inCart
@@ -78,4 +42,25 @@ class ServicesViewModel @Inject constructor() : ViewModel() {
     fun searchServices(searchString: String){
 
     }
+}
+
+private fun Breakdown.toServiceUI(): ServiceUI {
+    return ServiceUI(
+        title = this.title,
+        priceText = this.price.toString() + rubleSimbol,
+        imageUrl = this.imageUrl,
+        warrantyText = this.warranty.toWarrantyText()
+    )
+}
+
+private fun Int.toWarrantyText(): String {
+    val postfix = when{
+        this == 0 -> "Не предусмотрена"
+        this in 10..14 || this % 10 in 5..9 -> "Лет"
+        this % 10 == 1 -> "Год"
+        this % 10 in 2..4 -> "Года"
+        else -> "Ошибка"
+    }
+
+    return "$this $postfix"
 }

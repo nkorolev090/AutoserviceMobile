@@ -66,6 +66,7 @@ class HomeFragment : Fragment() {
         _viewModel.isAuth.postValue(RequestResult.Loading())
     }
 
+
     private fun setup() {
         with(binding) {
             textTitle.text = _viewModel.titleText
@@ -76,18 +77,14 @@ class HomeFragment : Fragment() {
             })
 
             newsRecycler.layoutManager = LinearLayoutManager(context)
+            newsRecycler.adapter = NewsRecyclerAdapter{item ->
+                openNews(item)}
             _viewModel.articles.observe(viewLifecycleOwner) {
                 when (it) {
-                    is RequestResult.Error -> {newsRecycler.adapter = NewsRecyclerAdapter(listOf()) { item ->
-                        {}
-                    }}
-                    is RequestResult.Loading -> {newsRecycler.adapter = NewsRecyclerAdapter(listOf()) { item ->
-                        {}
-                    }}
+                    is RequestResult.Error -> {}
+                    is RequestResult.Loading -> {}
                     is RequestResult.Success -> {
-                        newsRecycler.adapter = NewsRecyclerAdapter(it.data) { item ->
-                            openNews(item)
-                        }
+                        (newsRecycler.adapter as NewsRecyclerAdapter).items = it.data
                         newsRecycler.adapter?.notifyDataSetChanged()
                     }
                 }

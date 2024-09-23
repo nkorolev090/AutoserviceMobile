@@ -11,9 +11,10 @@ import com.project.autoservicemobile.R
 import com.project.autoservicemobile.ui.home.models.NewsArticleUI
 import com.squareup.picasso.Picasso
 
-class NewsRecyclerAdapter (private val articles: List<NewsArticleUI>, private val onClick: (NewsArticleUI) -> Unit) : RecyclerView
+class NewsRecyclerAdapter (private val onClick: (NewsArticleUI) -> Unit) : RecyclerView
 .Adapter<NewsRecyclerAdapter.NewsViewHolder>() {
 
+    var items: List<NewsArticleUI> = listOf()
     class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val mainTextView: TextView = itemView.requireViewById(R.id.mainText)
         private val descriptionTextView: TextView = itemView.requireViewById(R.id.descriptionText)
@@ -44,8 +45,8 @@ class NewsRecyclerAdapter (private val articles: List<NewsArticleUI>, private va
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.bind(articles[position], onClick)
+        holder.bind(items[position], onClick)
     }
 
-    override fun getItemCount() = articles.size
+    override fun getItemCount() = items.size
 }

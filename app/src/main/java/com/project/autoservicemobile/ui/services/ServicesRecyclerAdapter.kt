@@ -14,11 +14,11 @@ import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.squareup.picasso.Picasso
 
 class ServicesRecyclerAdapter (
-    private val items: List<ServiceUI>,
     private val onToCartClick: (ServiceUI) -> Unit,
     private val onFavoritesClick: (ServiceUI) -> Unit) : RecyclerView
 .Adapter<ServicesRecyclerAdapter.ServicesViewHolder>() {
 
+    var items: List<ServiceUI> = listOf()
     class ServicesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val titleTextView: TextView = itemView.requireViewById(R.id.titleText)
@@ -44,7 +44,10 @@ class ServicesRecyclerAdapter (
 
             favoritesBtn.setOnClickListener{onFavoritesClick(item)}
 
-            Picasso.get().load(item.imageUrl).into(imageView)
+            if(item.imageUrl != null)
+                Picasso.get().load(item.imageUrl).error(R.drawable.news_image).into(imageView)
+            else
+                imageView.setImageResource(R.drawable.news_image)
         }
 
         private fun onCartBtnClick(service: ServiceUI){

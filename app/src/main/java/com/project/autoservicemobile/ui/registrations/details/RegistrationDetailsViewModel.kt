@@ -17,41 +17,9 @@ class RegistrationDetailsViewModel @Inject constructor() : ViewModel() {
         "Завершена 30 августа",
         "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
         "3000$rubleSimbol",
-        listOf(
-            ServiceUI(
-                "Замена тормозных колодок",
-                "2500₽",
-                "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-                inFavourites = false,
-                inCart = false,
-                mechanicName = "Петров А.А."
-            ),
-            ServiceUI(
-                "Замена тормозных колодок",
-                "2500₽",
-                "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-                inFavourites = false,
-                inCart = false,
-                mechanicName = "Петров А.А."
-            ),
-            ServiceUI(
-                "Замена тормозных колодок",
-                "2500₽",
-                "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-                inFavourites = false,
-                inCart = false,
-                mechanicName = "Петров А.А."
-            ),
-            ServiceUI(
-                "Замена тормозных колодок",
-                "2500₽",
-                "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-                inFavourites = false,
-                inCart = false,
-                mechanicName = "Петров А.А."
-            )
-        )
+        listOf()
     )
+
     var registration = MutableLiveData<RegistrationUI>().apply {
         value = _registration
     }

@@ -16,7 +16,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface BreakdownApi {
-    @GET
+    @GET("everything")
     suspend fun getAllBreakdowns(): Response<List<BreakdownDTO>>
 
     @GET("byQuery")

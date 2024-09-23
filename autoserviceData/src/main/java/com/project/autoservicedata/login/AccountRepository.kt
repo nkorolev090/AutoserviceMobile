@@ -2,6 +2,7 @@ package com.project.autoservicedata.login
 
 import android.annotation.SuppressLint
 import com.project.autoserviceapi.login.AccountApi
+import com.project.autoserviceapi.login.models.AuthorizationResponseDTO
 import com.project.autoserviceapi.login.models.SignInRequestData
 import com.project.autoserviceapi.login.models.SignUpRequestData
 import com.project.autoserviceapi.login.models.UserDataDTO
@@ -12,6 +13,7 @@ import com.project.autoservicedata.login.models.UserData
 import com.project.autoservicedata.profile.UserContext
 import com.project.autoservicedata.token.TokenManager
 import com.project.common.api.RequestResultAPI
+import com.project.common.data.StatusCodeEnum
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -25,75 +27,13 @@ class AccountRepository @Inject constructor(
     suspend fun logIn(data: SignInData): Flow<RequestResult<Boolean>> {
         return com.project.common.api.apiRequestFlow {
             api.loginResponse(data.toSignInRequestData())
-        }.map { response ->
-            when (response) {
-                is RequestResultAPI.Success -> {
-//                    saveNetResponseToCache(response.data)
-                    if (response.data.token != null && response.data.user != null) {
-                        tokenManager.saveToken(response.data.token!!)
-                        userContext.setUserData(response.data.user!!.toUserData())
-
-                        RequestResult.Success(true)
-                    } else {
-                        RequestResult.Error(message = "token is null")
-                    }
-
-                }
-
-                is RequestResultAPI.Error -> {
-                    RequestResult.Error(message = response.message, code = response.code)
-                    //getFromDatabase(city)
-                    //RequestResult.Error(code = response.code, message = response.message)
-                }
-
-                is RequestResultAPI.Exception -> {
-                    RequestResult.Error(error = response.throwable)
-                    //getFromDatabase(city)
-//                    RequestResult.Error(error = response.throwable)
-                }
-
-                is RequestResultAPI.Loading -> {
-                    RequestResult.Loading()
-                }
-            }
-        }
+        }.map { it.toAuthorizationRequestResult() }
     }
 
     suspend fun logUp(data: SignUpData): Flow<RequestResult<Boolean>> {
         return com.project.common.api.apiRequestFlow {
             api.logupResponse(data.toSignUpRequestData())
-        }.map { response ->
-            when (response) {
-                is RequestResultAPI.Success -> {
-//                    saveNetResponseToCache(response.data)
-                    if (response.data.token != null && response.data.user != null) {
-                        tokenManager.saveToken(response.data.token!!)
-                        userContext.setUserData(response.data.user!!.toUserData())
-
-                        RequestResult.Success(true)
-                    } else {
-                        RequestResult.Error(message = "token is null")
-                    }
-
-                }
-
-                is RequestResultAPI.Error -> {
-                    RequestResult.Error(message = response.message, code = response.code)
-                    //getFromDatabase(city)
-                    //RequestResult.Error(code = response.code, message = response.message)
-                }
-
-                is RequestResultAPI.Exception -> {
-                    RequestResult.Error(error = response.throwable)
-                    //getFromDatabase(city)
-//                    RequestResult.Error(error = response.throwable)
-                }
-
-                is RequestResultAPI.Loading -> {
-                    RequestResult.Loading()
-                }
-            }
-        }
+        }.map { it.toAuthorizationRequestResult() }
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -110,9 +50,9 @@ class AccountRepository @Inject constructor(
                     if (response.data.user != null) {
                         userContext.setUserData(response.data.user!!.toUserData())
 
-                       RequestResult.Success(true)
+                        RequestResult.Success(true)
                     } else {
-                        RequestResult.Error(message = "userData is null")
+                        RequestResult.Error(code = StatusCodeEnum.NO_CONTENT, message = "userData is null")
                     }
                 }
 
@@ -135,37 +75,70 @@ class AccountRepository @Inject constructor(
         }
     }
 
-    suspend fun logOff(){
+    suspend fun logOff() {
         tokenManager.deleteToken()
         userContext.clearUserDataCache()
+    }
+
+    private suspend fun RequestResultAPI<AuthorizationResponseDTO>.toAuthorizationRequestResult(): RequestResult<Boolean> {
+        return when (this) {
+            is RequestResultAPI.Success -> {
+//                    saveNetResponseToCache(response.data)
+                if (this.data.token != null && this.data.user != null) {
+                    tokenManager.saveToken(this.data.token!!)
+                    userContext.setUserData(this.data.user!!.toUserData())
+
+                    RequestResult.Success(true)
+                } else {
+                    RequestResult.Error(message = "token is null")
+                }
+
+            }
+
+            is RequestResultAPI.Error -> {
+                RequestResult.Error(message = this.message, code = this.code)
+                //getFromDatabase(city)
+                //RequestResult.Error(code = response.code, message = response.message)
+            }
+
+            is RequestResultAPI.Exception -> {
+                RequestResult.Error(error = this.throwable)
+                //getFromDatabase(city)
+//                    RequestResult.Error(error = response.throwable)
+            }
+
+            is RequestResultAPI.Loading -> {
+                RequestResult.Loading()
+            }
+        }
     }
 }
 
 private fun SignUpData.toSignUpRequestData(): SignUpRequestData {
-return SignUpRequestData(
-    name = this.name,
-    email = this.email,
-    password = this.password,
-    passwordApply = this.password
-)
+    return SignUpRequestData(
+        name = this.name,
+        email = this.email,
+        password = this.password,
+        passwordApply = this.password
+    )
 }
 
 private fun UserDataDTO.toUserData(): UserData {
-return UserData(
-    id = this.id,
-    name = this.name,
-    surname = this.surname,
-    midname = this.midname,
-    email = this.email,
-    userName = this.userName,
-    phoneNumber = this.phoneNumber,
-)
+    return UserData(
+        id = this.id,
+        name = this.name,
+        surname = this.surname,
+        midname = this.midname,
+        email = this.email,
+        userName = this.userName,
+        phoneNumber = this.phoneNumber,
+    )
 }
 
 private fun SignInData.toSignInRequestData(): SignInRequestData {
-return SignInRequestData(
-    email = this.email,
-    password = this.password,
-    rememberMe = true
-)
+    return SignInRequestData(
+        email = this.email,
+        password = this.password,
+        rememberMe = true
+    )
 }

@@ -1,6 +1,7 @@
 package com.project.autoservicemobile
 
 import android.content.Context
+import com.project.autoserviceapi.breakdown.BreakdownApi
 import com.project.autoserviceapi.login.AccountApi
 import com.project.autoservicedata.profile.UserContext
 import com.project.autoservicedata.token.TokenManager
@@ -112,6 +113,16 @@ object AppModule {
     fun provideAccountApi(okHttpClient: OkHttpClient?, json: Json?): AccountApi {
         return AccountApi(
             baseUrl = BuildConfig.API_BASE_URL + BuildConfig.LOGIN_API_BASE_URL,
+            okHttpClient = okHttpClient,
+            json = json
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideBreakdownApi(okHttpClient: OkHttpClient?, json: Json?): BreakdownApi {
+        return BreakdownApi(
+            baseUrl = BuildConfig.API_BASE_URL + BuildConfig.BREAKDOWNS_API_BASE_URL,
             okHttpClient = okHttpClient,
             json = json
         )

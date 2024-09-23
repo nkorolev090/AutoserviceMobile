@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class BreakdownDTO(
     @SerialName("id")
-    val id : Int,
+    val id: Int,
 
     @SerialName("title")
-    val title : String,
+    val title: String,
 
     @SerialName("info")
-    val info : String?,
+    val info: String?,
 
     @SerialName("price")
     val price: Double,
@@ -20,6 +20,6 @@ data class BreakdownDTO(
     @SerialName("warranty")
     val warranty: Int,
 
-    @SerialName("imageUrl")
+    @SerialName("image_url")
     val imageUrl: String?
 )
