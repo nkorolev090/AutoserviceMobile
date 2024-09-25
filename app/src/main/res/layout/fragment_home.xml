@@ -96,4 +96,14 @@
         app:layout_constraintTop_toBottomOf="@id/text_title"
         tools:listitem="@layout/li_news_item" />
 
+    <com.project.autoservicemobile.ui.customViews.Trobber
+        android:id="@+id/trobber"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

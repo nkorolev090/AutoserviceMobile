@@ -12,9 +12,8 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<RequestResultAPI<T>
     emit(RequestResultAPI.Loading)
 
     withTimeoutOrNull(20000L) {
-        val response = call()
-
         try {
+            val response = call()
             if (response.isSuccessful) {
                 response.body()?.let { data ->
                     emit(RequestResultAPI.Success(data))

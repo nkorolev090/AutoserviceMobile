@@ -3,17 +3,22 @@ package com.project.autoservicemobile.ui.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentHomeBinding
+import com.project.autoservicemobile.ui.customViews.ErrorPage
 import com.project.autoservicemobile.ui.home.models.NewsArticleUI
 import com.project.common.data.RequestResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,7 +63,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        startAnims()
+        _viewModel.newsPage = 2
     }
 
     override fun onPause() {
@@ -79,16 +84,37 @@ class HomeFragment : Fragment() {
             newsRecycler.layoutManager = LinearLayoutManager(context)
             newsRecycler.adapter = NewsRecyclerAdapter{item ->
                 openNews(item)}
+
+            newsRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if((recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition() == _viewModel.articles.value?.data?.size?.minus(1)){
+                        _viewModel.loadMoreArticles()
+                    }
+                }
+            })
+
             _viewModel.articles.observe(viewLifecycleOwner) {
                 when (it) {
-                    is RequestResult.Error -> {}
-                    is RequestResult.Loading -> {}
+                    is RequestResult.Error -> {
+                        trobber.visibility = View.GONE
+
+                        addErrorPage(ErrorPage.NoConnection(requireContext()))
+                    }
+                    is RequestResult.Loading -> {
+                        trobber.visibility = View.VISIBLE
+                    }
                     is RequestResult.Success -> {
+                        trobber.visibility = View.GONE
+
+                        if(newsRecycler.childCount == 0){
+                            startAnims()
+                        }
+
                         (newsRecycler.adapter as NewsRecyclerAdapter).items = it.data
                         newsRecycler.adapter?.notifyDataSetChanged()
                     }
                 }
-
             }
 
             _viewModel.isAuth.observe(viewLifecycleOwner) {
@@ -106,6 +132,20 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun addErrorPage(errorPage: ErrorPage) {
+        val layout = binding.root
+        val layoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.MATCH_PARENT,
+            ConstraintLayout.LayoutParams.MATCH_PARENT)
+        layoutParams.topToTop = layout.id
+        layoutParams.startToStart = layout.id
+        layoutParams.endToEnd = layout.id
+        layoutParams.bottomToBottom = layout.id
+
+        errorPage.layoutParams = layoutParams
+        layout.addView(errorPage);
     }
 
     private fun startAnims() {
