@@ -1,6 +1,10 @@
 package com.project.autoservicemobile
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -32,5 +36,14 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         //NavigationUI.setupWithNavController(navView, navController, false)
         navView.setupWithNavController(navController)
+    }
+
+    fun hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

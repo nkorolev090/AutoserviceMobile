@@ -17,93 +17,116 @@
         app:rightIcon="@drawable/ic_bell"
         app:titleText="@string/home_title" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/registrationsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:background="@drawable/secondary_bg"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBar">
-
-        <TextView
-            android:id="@+id/regsTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Записи"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:fontFamily="@font/be_vietnam_pro_bold"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <TextView
-            android:id="@+id/regsDescription"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/be_vietnam_pro_regular"
-            android:textColor="?attr/colorOnSecondary"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/arrowImg"
-            app:layout_constraintTop_toBottomOf="@id/regsTitle"
-            tools:text="Вы можете просмотреть предыдущие записи" />
-
-        <ImageView
-            android:id="@+id/arrowImg"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="20dp"
-            android:src="@drawable/ic_arrow_right"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/text_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/be_vietnam_pro_bold"
-        android:textColor="?attr/colorSecondaryVariant"
-        tools:text="Последнее"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registrationsContainer" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/newsRecycler"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="15dp"
         android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_title"
-        tools:listitem="@layout/li_news_item" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <com.project.autoservicemobile.ui.customViews.Trobber
-        android:id="@+id/trobber"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBar"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/registrationsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:background="@drawable/secondary_bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/regsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Записи"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/be_vietnam_pro_bold"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/regsDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/be_vietnam_pro_regular"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/arrowImg"
+                    app:layout_constraintTop_toBottomOf="@id/regsTitle"
+                    tools:text="Вы можете просмотреть предыдущие записи" />
+
+                <ImageView
+                    android:id="@+id/arrowImg"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/ic_arrow_right"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/be_vietnam_pro_bold"
+                android:textColor="?attr/colorSecondaryVariant"
+                tools:text="Последнее"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/registrationsContainer" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newsRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_title"
+                tools:listitem="@layout/li_news_item" />
+
+            <com.project.autoservicemobile.ui.customViews.Trobber
+                android:id="@+id/trobber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

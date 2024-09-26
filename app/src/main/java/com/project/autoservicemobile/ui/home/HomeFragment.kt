@@ -21,6 +21,7 @@ import com.project.autoservicemobile.databinding.FragmentHomeBinding
 import com.project.autoservicemobile.ui.customViews.ErrorPage
 import com.project.autoservicemobile.ui.home.models.NewsArticleUI
 import com.project.common.data.RequestResult
+import com.project.common.data.StatusCodeEnum
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,6 +34,8 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val _viewModel: HomeViewModel by viewModels()
+
+    private var _errorPage: ErrorPage? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,19 +54,25 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        loadData()
+
+        _viewModel.newsPage = 2
+    }
+
+    private fun loadData(){
         _viewModel.updateArticles(object : CoroutinesErrorHandler {
             override fun onError(message: String) {
-                Log.d("HomeFragment", "Error! $message")
+                Log.d("HomeFragment", "Error updateArticles! $message")
             }
         })
 
         _viewModel.isAuthenticated(object : CoroutinesErrorHandler {
             override fun onError(message: String) {
-                Log.d("HomeFragment", "Error! $message")
+                Log.d("HomeFragment", "Error isAuthenticated! $message")
             }
         })
 
-        _viewModel.newsPage = 2
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     override fun onPause() {
@@ -94,17 +103,29 @@ class HomeFragment : Fragment() {
                 }
             })
 
+            swipeRefreshLayout.setOnRefreshListener {
+                loadData()
+            }
+
             _viewModel.articles.observe(viewLifecycleOwner) {
                 when (it) {
                     is RequestResult.Error -> {
                         trobber.visibility = View.GONE
 
-                        addErrorPage(ErrorPage.NoConnection(requireContext()))
+                        if(_errorPage == null) {
+                            showErrorPage(StatusCodeEnum.CONNECTION_TIMED_OUT)
+                        }
                     }
                     is RequestResult.Loading -> {
+                        if(_errorPage != null){
+                            removeErrorPage()
+                        }
                         trobber.visibility = View.VISIBLE
                     }
                     is RequestResult.Success -> {
+                        if(_errorPage != null){
+                            removeErrorPage()
+                        }
                         trobber.visibility = View.GONE
 
                         if(newsRecycler.childCount == 0){
@@ -134,18 +155,51 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun addErrorPage(errorPage: ErrorPage) {
-        val layout = binding.root
-        val layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_PARENT,
-            ConstraintLayout.LayoutParams.MATCH_PARENT)
-        layoutParams.topToTop = layout.id
-        layoutParams.startToStart = layout.id
-        layoutParams.endToEnd = layout.id
-        layoutParams.bottomToBottom = layout.id
+    private fun showErrorPage(statusCode: StatusCodeEnum) {
+        when(statusCode){
+            StatusCodeEnum.CONNECTION_TIMED_OUT ->{
+                _errorPage = ErrorPage.NoConnection(requireContext())
+                val errorPage = _errorPage as ErrorPage.NoConnection
+                errorPage.id = View.generateViewId()
 
-        errorPage.layoutParams = layoutParams
-        layout.addView(errorPage);
+                val layout = binding.contentContainer
+                val layoutParams = ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.MATCH_PARENT,
+                    ConstraintLayout.LayoutParams.MATCH_PARENT)
+                layoutParams.topToTop = layout.id
+                layoutParams.startToStart = layout.id
+                layoutParams.endToEnd = layout.id
+                layoutParams.bottomToBottom = layout.id
+
+                errorPage.layoutParams = layoutParams
+                layout.addView(errorPage);
+            }
+            StatusCodeEnum.NO_CONTENT ->{
+                _errorPage = ErrorPage.NoContent(requireContext())
+                val errorPage = _errorPage as ErrorPage.NoContent
+                errorPage.id = View.generateViewId()
+
+                val layout = binding.contentContainer
+                val layoutParams = ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.MATCH_PARENT,
+                    ConstraintLayout.LayoutParams.MATCH_PARENT)
+                layoutParams.topToTop = layout.id
+                layoutParams.startToStart = layout.id
+                layoutParams.endToEnd = layout.id
+                layoutParams.bottomToBottom = layout.id
+
+                errorPage.layoutParams = layoutParams
+                layout.addView(errorPage);
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    private fun removeErrorPage(){
+        binding.contentContainer.removeView(_errorPage)
+        _errorPage = null
     }
 
     private fun startAnims() {
