@@ -10,6 +10,7 @@
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/gray_400</item>
         <item name="colorOnContainer">@color/gray_200</item>
+        <item name="colorError">@color/red_400</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorOnPrimary</item>
         <item name="android:windowLightStatusBar">@color/black</item>

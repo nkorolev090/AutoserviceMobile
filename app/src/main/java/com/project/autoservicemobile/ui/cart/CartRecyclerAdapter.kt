@@ -7,22 +7,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.autoservicemobile.R
-import com.project.autoservicemobile.ui.services.models.ServiceUI
+import com.project.autoservicemobile.ui.cart.models.CartItemUI
 
 class CartRecyclerAdapter (
-    private val items: List<ServiceUI>,
-    private val onDeleteClick: (ServiceUI) -> Unit) : RecyclerView
+    private val onDeleteClick: (CartItemUI) -> Unit) : RecyclerView
 .Adapter<CartRecyclerAdapter.CartViewHolder>() {
 
+    var items: List<CartItemUI> = listOf()
     class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val titleTextView: TextView = itemView.requireViewById(R.id.titleText)
         private val priceTextView: TextView = itemView.requireViewById(R.id.priceText)
         private var deleteButton: ImageView = itemView.requireViewById(R.id.deleteBtn)
 
-        fun bind(item: ServiceUI, onToCartClick: (ServiceUI) -> Unit){
-            titleTextView.text = item.title
-            priceTextView.text = item.priceText
+        fun bind(item: CartItemUI, onToCartClick: (CartItemUI) -> Unit){
+            titleTextView.text = item.slot.breakdownName
+            priceTextView.text = item.slot.costText
 
 
             deleteButton.setOnClickListener{

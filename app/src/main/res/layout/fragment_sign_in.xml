@@ -62,9 +62,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="?attr/colorOnContainer"
-                android:textColor="?attr/colorSecondaryVariant"
+                android:fontFamily="@font/be_vietnam_pro_medium"
                 android:inputType="textEmailAddress"
-                android:fontFamily="@font/be_vietnam_pro_medium"/>
+                android:textColor="?attr/colorSecondaryVariant" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

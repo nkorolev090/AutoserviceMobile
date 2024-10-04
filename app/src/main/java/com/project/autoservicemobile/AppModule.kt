@@ -2,6 +2,7 @@ package com.project.autoservicemobile
 
 import android.content.Context
 import com.project.autoserviceapi.breakdown.BreakdownApi
+import com.project.autoserviceapi.cart.CartApi
 import com.project.autoserviceapi.login.AccountApi
 import com.project.autoservicedata.profile.UserContext
 import com.project.autoservicedata.token.TokenManager
@@ -130,6 +131,18 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideCartApi(okHttpClient: OkHttpClient?, json: Json?, tokenManager: TokenManager?): CartApi {
+        val token = tokenManager?.getToken() ?: ""
+        return CartApi(
+            baseUrl = BuildConfig.API_BASE_URL + BuildConfig.BREAKDOWNS_API_BASE_URL,
+            okHttpClient = okHttpClient,
+            json = json,
+            apiKey = token
+        )
+    }
+
+    @Provides
+    @Singleton
     fun provideNewsCarsApi(okHttpClient: OkHttpClient?, json: Json?): NewsApi {
         return NewsApi(
             baseUrl = BuildConfig.NEWS_API_URL,
@@ -152,14 +165,4 @@ object AppModule {
     fun provideWeatherDatabase(@ApplicationContext context: Context): AutoserviceDatabase {
         return AutoserviceDatabase(context)
     }
-//    @Provides
-//    @Singleton
-//    fun provideClothesDatabase(@ApplicationContext context: Context): ClothesDatabase {
-//        return ClothesDatabase(context)
-//    }
-//    @Provides
-//    @Singleton
-//    fun provideAppCoroutineDispatchers(): AppDispatchers{
-//        return AppDispatchers()
-//    }
 }

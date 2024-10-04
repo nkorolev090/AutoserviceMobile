@@ -5,6 +5,7 @@ import com.project.autoservicedata.login.AccountRepository
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.rubleSimbol
+import com.project.autoservicemobile.ui.cart.models.CartItemUI
 import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.project.common.data.RequestResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +16,8 @@ class CartViewModel @Inject constructor(
     private val accountRepository: AccountRepository
 ): BaseViewModel() {
 
-    val cartItems = MutableLiveData<List<ServiceUI>>().apply {
-        value = listOf()
+    val cartItems = MutableLiveData<RequestResult<List<CartItemUI>>>().apply {
+        value = RequestResult.Loading()
     }
 
     val promocode = ""

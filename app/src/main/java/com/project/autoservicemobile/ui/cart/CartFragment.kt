@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentCartBinding
+import com.project.autoservicemobile.ui.home.NewsRecyclerAdapter
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.common.data.RequestResult
+import com.project.common.data.StatusCodeEnum
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -78,10 +80,41 @@ class CartFragment : Fragment(), AuthenticatedListener {
            }
 
            cartRecycler.layoutManager = LinearLayoutManager(context)
+           cartRecycler.adapter = CartRecyclerAdapter(
+               {item -> {}}
+           )
+
            _viewModel.cartItems.observe(viewLifecycleOwner){
-               cartRecycler.adapter = CartRecyclerAdapter(it,
-                   {item -> {}}
-               )
+               when (it) {
+                   is RequestResult.Error -> {
+                       //trobber.visibility = View.GONE
+
+//                       if(_errorPage == null) {
+//                           showErrorPage(StatusCodeEnum.CONNECTION_TIMED_OUT)
+//                       }
+                   }
+
+                   is RequestResult.Loading -> {
+//                       if(_errorPage != null){
+//                           removeErrorPage()
+//                       }
+//                       trobber.visibility = View.VISIBLE
+                   }
+
+                   is RequestResult.Success -> {
+//                       if(_errorPage != null){
+//                           removeErrorPage()
+//                       }
+//                       trobber.visibility = View.GONE
+//
+//                       if(newsRecycler.childCount == 0){
+//                           startAnims()
+//                       }
+
+                       (cartRecycler.adapter as CartRecyclerAdapter).items = it.data
+                       cartRecycler.adapter?.notifyDataSetChanged()
+                   }
+               }
            }
        }
 

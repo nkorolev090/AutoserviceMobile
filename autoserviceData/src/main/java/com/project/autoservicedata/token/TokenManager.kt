@@ -14,19 +14,19 @@ class TokenManager(private val context: Context) {
         private const val KEY_WERB = "Bearer "
     }
 
-    fun getToken(): String? {
-        var prefs = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE)
+    fun getToken(): String {
+        val prefs = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE)
         return KEY_WERB + prefs.getString(TOKEN_KEY,null)
 
     }
 
     fun saveToken(token: String) {
-        var prefs = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE)
+        val prefs = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE)
         prefs.edit().putString(TOKEN_KEY, token).apply()
     }
 
     fun deleteToken() {
-        var prefs = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE)
+        val prefs = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE)
         prefs.edit().remove(TOKEN_KEY).apply()
     }
 }

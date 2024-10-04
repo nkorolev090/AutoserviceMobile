@@ -10,6 +10,8 @@
     <color name="gray_500">#243647</color>
     <color name="gray_400">#637587</color>
     <color name="gray_300">#94ADC7</color>
+    <color name="red_400">#DF0D0D</color>
+    <color name="red_300">#FF0000</color>
     <color name="gray_200">#E8E8F2</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
