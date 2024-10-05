@@ -10,15 +10,19 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.project.autoservicemobile.MAIN
 import com.project.autoservicemobile.R
+import com.project.autoservicemobile.common.ToCartListener
+import com.project.autoservicemobile.ui.cart.models.SlotUI
 import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.squareup.picasso.Picasso
 
-class ServicesRecyclerAdapter (
+class ServicesRecyclerAdapter(
     private val onToCartClick: (ServiceUI) -> Unit,
-    private val onFavoritesClick: (ServiceUI) -> Unit) : RecyclerView
-.Adapter<ServicesRecyclerAdapter.ServicesViewHolder>() {
+    private val onFavoritesClick: (ServiceUI) -> Unit
+) : RecyclerView
+.Adapter<ServicesRecyclerAdapter.ServicesViewHolder>(), ToCartListener {
 
     var items: List<ServiceUI> = listOf()
+
     class ServicesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val titleTextView: TextView = itemView.requireViewById(R.id.titleText)
@@ -27,46 +31,50 @@ class ServicesRecyclerAdapter (
         private var favoritesBtn: ImageView = itemView.requireViewById(R.id.favourites_btn)
         private var toCartButton: Button = itemView.requireViewById(R.id.warrantyBtn)
 
-        fun bind(item: ServiceUI, onToCartClick: (ServiceUI) -> Unit, onFavoritesClick: (ServiceUI) -> Unit){
+        fun bind(
+            item: ServiceUI,
+            onAddOrRemoveToCartClick: (ServiceUI) -> Unit,
+            onFavoritesClick: (ServiceUI) -> Unit
+        ) {
             titleTextView.text = item.title
             priceTextView.text = item.priceText
 
-            if(item.inCart){
+            if (item.inCart) {
                 toCartButton.setText(R.string.from_cart)
-            }else{
+                toCartButton.backgroundTintList =
+                    ContextCompat.getColorStateList(MAIN.applicationContext, R.color.gray_400)
+            } else {
                 toCartButton.setText(R.string.to_cart)
+                toCartButton.backgroundTintList =
+                    ContextCompat.getColorStateList(MAIN.applicationContext, R.color.blue_300)
             }
+            toCartButton.setOnClickListener { onAddOrRemoveToCartClick(item) }
 
-            toCartButton.setOnClickListener{
-                onCartBtnClick(item)
-                onToCartClick(item)
-            }
+            favoritesBtn.setOnClickListener { onFavoritesClick(item) }
 
-            favoritesBtn.setOnClickListener{onFavoritesClick(item)}
-
-            if(item.imageUrl != null)
+            if (item.imageUrl != null)
                 Picasso.get().load(item.imageUrl).error(R.drawable.news_image).into(imageView)
             else
                 imageView.setImageResource(R.drawable.news_image)
         }
 
-        private fun onCartBtnClick(service: ServiceUI){
-            //val resId: TypedValue = TypedValue()
-
-            if(service.inCart){
-                toCartButton.setText(R.string.to_cart)
-                //MAIN.applicationContext.theme.resolveAttribute(
-                   // com.google.android.material.R.attr.colorOnSecondary,  resId, true )
-                toCartButton.backgroundTintList = ContextCompat.getColorStateList(MAIN.applicationContext, R.color.blue_300)
-            }
-            else{
-                toCartButton.setText(R.string.from_cart)
-                //MAIN.applicationContext.theme.resolveAttribute(
-                    //com.google.android.material.R.attr.colorPrimary,  resId, true )
-                toCartButton.backgroundTintList = ContextCompat.getColorStateList(MAIN.applicationContext, R.color.gray_400)
-            }
-
-        }
+//        private fun onCartBtnClick(service: ServiceUI){
+//            //val resId: TypedValue = TypedValue()
+//
+//            if(service.inCart){
+//                toCartButton.setText(R.string.to_cart)
+//                //MAIN.applicationContext.theme.resolveAttribute(
+//                   // com.google.android.material.R.attr.colorOnSecondary,  resId, true )
+//                toCartButton.backgroundTintList = ContextCompat.getColorStateList(MAIN.applicationContext, R.color.blue_300)
+//            }
+//            else{
+//                toCartButton.setText(R.string.from_cart)
+//                //MAIN.applicationContext.theme.resolveAttribute(
+//                    //com.google.android.material.R.attr.colorPrimary,  resId, true )
+//                toCartButton.backgroundTintList = ContextCompat.getColorStateList(MAIN.applicationContext, R.color.gray_400)
+//            }
+//
+//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServicesViewHolder {
@@ -80,4 +88,13 @@ class ServicesRecyclerAdapter (
     }
 
     override fun getItemCount() = items.size
+
+    override fun onAddOrRemoveToCart(service: ServiceUI) {
+        var i = -1
+        items.forEach { if (it.id == service.id) i = items.indexOf(it) }
+
+        if (i == RecyclerView.NO_POSITION) return
+        items[i].inCart = items[i].inCart.not()
+        notifyItemChanged(i)
+    }
 }

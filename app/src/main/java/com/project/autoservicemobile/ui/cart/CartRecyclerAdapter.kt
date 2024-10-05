@@ -21,8 +21,8 @@ class CartRecyclerAdapter (
         private var deleteButton: ImageView = itemView.requireViewById(R.id.deleteBtn)
 
         fun bind(item: CartItemUI, onToCartClick: (CartItemUI) -> Unit){
-            titleTextView.text = item.slot.breakdownName
-            priceTextView.text = item.slot.costText
+            titleTextView.text = item.slot.service?.title ?: "Упс... Что-то пошло не так"
+            priceTextView.text = item.slot.service?.priceText  ?: "Упс... Что-то пошло не так"
 
 
             deleteButton.setOnClickListener{

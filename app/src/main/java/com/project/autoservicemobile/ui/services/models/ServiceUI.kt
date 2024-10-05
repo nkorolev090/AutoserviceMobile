@@ -5,10 +5,11 @@ import com.project.autoservicemobile.rubleSimbol
 import com.project.autoservicemobile.toWarrantyText
 
 data class ServiceUI(
+    val id: Int,
     val title: String,
     val priceText: String,
-    val imageUrl: String?,
     val warrantyText: String,
+    val imageUrl: String? = null,
     var inFavourites: Boolean = false,
     var inCart: Boolean = false,
     var inWarranty: Boolean = false,
@@ -17,6 +18,7 @@ data class ServiceUI(
 
 fun Breakdown.toServiceUI(): ServiceUI {
     return ServiceUI(
+        id = this.id,
         title = this.title,
         priceText = this.price.toString() + rubleSimbol,
         imageUrl = this.imageUrl,

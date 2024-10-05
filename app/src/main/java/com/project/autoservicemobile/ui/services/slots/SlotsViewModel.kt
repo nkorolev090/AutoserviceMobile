@@ -24,10 +24,7 @@ class SlotsViewModel @Inject constructor(
             listOf(
                 SlotUI(
                     id = 0,
-                    breakdownName = "",
-                    breakdownWarrantyText = "",
-                    breakdownId = null,
-                    costText = "",
+                    service = null,
                     mechanicId = 0,
                     mechanicNameText = "Иванов. И.И.",
                     startTimeText = "10:00",
@@ -36,10 +33,7 @@ class SlotsViewModel @Inject constructor(
                 ),
                 SlotUI(
                     id = 0,
-                    breakdownName = "",
-                    breakdownWarrantyText = "",
-                    breakdownId = null,
-                    costText = "",
+                    service = null,
                     mechanicId = 0,
                     mechanicNameText = "Иванов. И.И.",
                     startTimeText = "10:00",
@@ -48,10 +42,7 @@ class SlotsViewModel @Inject constructor(
                 ),
                 SlotUI(
                     id = 0,
-                    breakdownName = "",
-                    breakdownWarrantyText = "",
-                    breakdownId = null,
-                    costText = "",
+                    service = null,
                     mechanicId = 0,
                     mechanicNameText = "Иванов. И.И.",
                     startTimeText = "10:00",
@@ -60,10 +51,7 @@ class SlotsViewModel @Inject constructor(
                 ),
                 SlotUI(
                     id = 0,
-                    breakdownName = "",
-                    breakdownWarrantyText = "",
-                    breakdownId = null,
-                    costText = "",
+                    service = null,
                     mechanicId = 0,
                     mechanicNameText = "Иванов. И.И.",
                     startTimeText = "10:00",
@@ -74,13 +62,12 @@ class SlotsViewModel @Inject constructor(
         )
     }
 
+    var selectedSlot: SlotUI? = null
+
     fun isAuthenticated(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
         isAuth,
         coroutinesErrorHandler,
         request = { accountRepository.isAuthenticated() },
     )
 
-    fun setSlot(slotUI: SlotUI){
-
-    }
 }

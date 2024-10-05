@@ -7,24 +7,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.whenCreated
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.project.autoservicemobile.R
-import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
-import com.project.autoservicemobile.databinding.FragmentSignInOrUpBinding
+import com.project.autoservicemobile.common.ToCartListener
 import com.project.autoservicemobile.databinding.FragmentSlotsBinding
-import com.project.autoservicemobile.ui.login.signIn.SignInBottomSheetDialog
-import com.project.autoservicemobile.ui.login.signUp.SignUpBottomSheetDialog
+import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.project.common.data.RequestResult
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
 @AndroidEntryPoint
-class SlotsBottomSheetDialog() : BottomSheetDialogFragment() {
+class SlotsBottomSheetDialog(private val service: ServiceUI, private val toCartListener: ToCartListener) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentSlotsBinding? = null
 
@@ -101,7 +98,15 @@ class SlotsBottomSheetDialog() : BottomSheetDialogFragment() {
             slotsRecycler.addItemDecoration(dividerItemDecoration)
 
             slotsRecycler.adapter = SlotsRecyclerAdapter{
-                _viewModel.setSlot(it)
+                _viewModel.selectedSlot = it
+                _viewModel.selectedSlot!!.service = service
+            }
+
+            toCartBtn.setText(R.string.to_cart)
+            toCartBtn.setOnClickListener {
+                if(_viewModel.selectedSlot != null)
+                    toCartListener.onAddOrRemoveToCart(_viewModel.selectedSlot!!.service!!)
+                dismiss()
             }
 
             _viewModel.slots.observe(viewLifecycleOwner) {

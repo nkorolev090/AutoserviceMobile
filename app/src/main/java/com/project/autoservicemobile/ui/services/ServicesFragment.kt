@@ -13,6 +13,7 @@ import com.project.autoservicemobile.MainActivity
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentServicesBinding
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
+import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.project.autoservicemobile.ui.services.slots.SlotsBottomSheetDialog
 import com.project.common.data.RequestResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,7 +83,11 @@ class ServicesFragment : Fragment() {
 
         binding.servicesRecycler.layoutManager = LinearLayoutManager(context)
         binding.servicesRecycler.adapter = ServicesRecyclerAdapter({ item ->
-            openSlotsBottomSheetDialog()
+            if (item.inCart) { // remove from cart
+                (binding.servicesRecycler.adapter as ServicesRecyclerAdapter).onAddOrRemoveToCart(item)
+            } else { //open dialog to set slot
+                openSlotsBottomSheetDialog(item)
+            }
         }, { item ->
             _viewModel.onFavoritesBtnClick(item)
         })
@@ -99,8 +104,11 @@ class ServicesFragment : Fragment() {
 
     }
 
-    private fun openSlotsBottomSheetDialog() {
-        val modalBottomSheet = SlotsBottomSheetDialog()
+    private fun openSlotsBottomSheetDialog(service: ServiceUI) {
+        val modalBottomSheet = SlotsBottomSheetDialog(
+            service,
+            (binding.servicesRecycler.adapter as ServicesRecyclerAdapter)
+        )
         modalBottomSheet.show(
             requireActivity().supportFragmentManager,
             SlotsBottomSheetDialog.TAG
