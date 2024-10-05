@@ -3,7 +3,9 @@ package com.project.autoservicemobile.ui.services.slots
 import android.app.DatePickerDialog
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.project.autoservicemobile.MainActivity
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.common.ToCartListener
@@ -18,6 +21,7 @@ import com.project.autoservicemobile.databinding.FragmentSlotsBinding
 import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.project.common.data.RequestResult
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import java.util.Calendar
 
 @AndroidEntryPoint
@@ -47,16 +51,23 @@ class SlotsBottomSheetDialog(private val service: ServiceUI, private val toCartL
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume")
-        _viewModel.isAuthenticated(object : CoroutinesErrorHandler {
-            override fun onError(message: String) {
-                Log.d(TAG, "Error! $message")
-            }
-        })
+
+        _viewModel.updateSlots(
+            binding.dateInput.text.toString(),
+            service.id,
+            object : CoroutinesErrorHandler {
+                override fun onError(message: String) {
+                    Log.d(TAG, "Error! $message")
+                }
+            })
     }
 
     private fun setup() {
         with(binding) {
             titleText.text = _viewModel.title
+
+            val date = LocalDate.now()
+            dateInput.setText("${date.dayOfMonth}.${date.monthValue}.${date.year}")
 
             dateInput.setOnClickListener {
                 // on below line we are getting
@@ -79,6 +90,15 @@ class SlotsBottomSheetDialog(private val service: ServiceUI, private val toCartL
                         // date to our edit text.
                         val dat = (dayOfMonth.toString() + "." + (monthOfYear + 1) + "." + year)
                         dateInput.setText(dat)
+
+                        _viewModel.updateSlots(
+                            dat,
+                            service.id,
+                            object : CoroutinesErrorHandler {
+                                override fun onError(message: String) {
+                                    Log.d(TAG, "Error! $message")
+                                }
+                            })
                     },
                     // on below line we are passing year, month
                     // and day for the selected date in our date picker.
@@ -111,19 +131,15 @@ class SlotsBottomSheetDialog(private val service: ServiceUI, private val toCartL
 
             _viewModel.slots.observe(viewLifecycleOwner) {
                 when (it) {
-                    is RequestResult.Error -> Log.d(TAG, it.message.toString())
+                    is RequestResult.Error -> {
+                        Log.d(TAG, it.message.toString())
+                        (slotsRecycler.adapter as SlotsRecyclerAdapter).items = listOf()
+                        slotsRecycler.adapter?.notifyDataSetChanged()
+                    }
                     is RequestResult.Loading -> Log.d(TAG, "Loading")
                     is RequestResult.Success -> {
                         (slotsRecycler.adapter as SlotsRecyclerAdapter).items = it.data
-                    }
-                }
-            }
-
-            _viewModel.isAuth.observe(viewLifecycleOwner) {
-                when (it) {
-                    is RequestResult.Error -> Log.d(TAG, it.message.toString())
-                    is RequestResult.Loading -> Log.d(TAG, "Loading")
-                    is RequestResult.Success -> {
+                        slotsRecycler.adapter?.notifyDataSetChanged()
                     }
                 }
             }

@@ -2,10 +2,8 @@ package com.project.autoservicemobile.ui.services
 
 import androidx.lifecycle.MutableLiveData
 import com.project.autoservicedata.breakdown.BreakdownRepository
-import com.project.autoservicedata.breakdown.models.Breakdown
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
-import com.project.autoservicemobile.rubleSimbol
 import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.project.autoservicemobile.ui.services.models.toServiceUI
 import com.project.common.data.RequestResult

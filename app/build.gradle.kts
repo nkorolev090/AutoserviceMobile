@@ -19,6 +19,7 @@ android {
         buildConfigField("String", "NEWS_API_KEY", "\"c4bf3d2d4c9a4b278aec23a1c09203c0\"")
         buildConfigField("String", "NEWS_API_URL", "\"https://newsapi.org/v2/\"")
 
+        buildConfigField("String", "SLOTS_API_BASE_URL", "\"api/Slots/\"")
         buildConfigField("String", "BREAKDOWNS_API_BASE_URL", "\"api/Breakdowns/\"")
         buildConfigField("String", "LOGIN_API_BASE_URL", "\"api/account/\"")
         buildConfigField("String", "API_BASE_URL", "\"https://192.168.0.16:7130/\"")
@@ -73,4 +74,5 @@ dependencies {
     implementation(project(":newsData"))
     implementation(project(":autoserviceData"))
     implementation(project(":autoserviceDatabase"))
+    implementation(project(":token"))
 }

@@ -33,6 +33,12 @@ data class SlotDTO (
     @SerialName("start_date")
     val startDate: String?,
 
+    @SerialName("finish_time")
+    val finishTime: String?,
+
+    @SerialName("finish_date")
+    val finishDate: String?,
+
     @SerialName("registration_id")
     val registrationId: Int?,
 )

@@ -1,11 +1,6 @@
-package com.project.autoservicedata.token
+package com.project.token
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TokenManager(private val context: Context) {
     companion object {

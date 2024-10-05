@@ -37,7 +37,7 @@ fun Slot.toSlotUI(): SlotUI =
             ),
         mechanicId = this.mechanicId,
         mechanicNameText = this.mechanicName ?: "",
-        startTimeText = this.startTime ?: "",
-        startDateText = this.startDate ?: "",
+        startTimeText = "%02d:%02d".format(this.startDateTime?.hour, this.startDateTime?.minute),
+        startDateText = "${this.startDateTime?.dayOfMonth}.${this.startDateTime?.monthValue}.${this.startDateTime?.year}",
         registrationId = registrationId
     )

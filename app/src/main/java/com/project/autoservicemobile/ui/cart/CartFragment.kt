@@ -84,7 +84,40 @@ class CartFragment : Fragment(), AuthenticatedListener {
                {item -> {}}
            )
 
-           _viewModel.cartItems.observe(viewLifecycleOwner){
+//           _viewModel.cartItems.observe(viewLifecycleOwner){
+//               when (it) {
+//                   is RequestResult.Error -> {
+//                       //trobber.visibility = View.GONE
+//
+////                       if(_errorPage == null) {
+////                           showErrorPage(StatusCodeEnum.CONNECTION_TIMED_OUT)
+////                       }
+//                   }
+//
+//                   is RequestResult.Loading -> {
+////                       if(_errorPage != null){
+////                           removeErrorPage()
+////                       }
+////                       trobber.visibility = View.VISIBLE
+//                   }
+//
+//                   is RequestResult.Success -> {
+////                       if(_errorPage != null){
+////                           removeErrorPage()
+////                       }
+////                       trobber.visibility = View.GONE
+////
+////                       if(newsRecycler.childCount == 0){
+////                           startAnims()
+////                       }
+//
+//                       (cartRecycler.adapter as CartRecyclerAdapter).items = it.data
+//                       cartRecycler.adapter?.notifyDataSetChanged()
+//                   }
+//               }
+//           }
+
+           _viewModel.cart.observe(viewLifecycleOwner){
                when (it) {
                    is RequestResult.Error -> {
                        //trobber.visibility = View.GONE
@@ -111,7 +144,7 @@ class CartFragment : Fragment(), AuthenticatedListener {
 //                           startAnims()
 //                       }
 
-                       (cartRecycler.adapter as CartRecyclerAdapter).items = it.data
+                       (cartRecycler.adapter as CartRecyclerAdapter).items = it.data.cartItems
                        cartRecycler.adapter?.notifyDataSetChanged()
                    }
                }
@@ -123,7 +156,11 @@ class CartFragment : Fragment(), AuthenticatedListener {
                 openSignBottomSheet()
             }
             if(it is RequestResult.Success){
-                //getCartData
+                _viewModel.updateCart(object : CoroutinesErrorHandler {
+                    override fun onError(message: String) {
+                        Log.d("SignInBottomSheetDialog", "Error! $message")
+                    }
+                })
             }
         }
     }

@@ -4,8 +4,9 @@ import android.content.Context
 import com.project.autoserviceapi.breakdown.BreakdownApi
 import com.project.autoserviceapi.cart.CartApi
 import com.project.autoserviceapi.login.AccountApi
+import com.project.autoserviceapi.slot.SlotApi
 import com.project.autoservicedata.profile.UserContext
-import com.project.autoservicedata.token.TokenManager
+import com.project.token.TokenManager
 import com.project.autoservicedatabase.AutoserviceDatabase
 import com.project.newsapi.news.NewsApi
 import dagger.Module
@@ -32,7 +33,7 @@ import javax.net.ssl.X509TrustManager
 object AppModule {
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient?{
+    fun provideHttpClient(): OkHttpClient? {
 //        if(BuildConfig.DEBUG){
 //            val logging = HttpLoggingInterceptor()
 //                .setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -48,13 +49,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideJsonForConverterFactory(): Json?{
-        return Json{
+    fun provideJsonForConverterFactory(): Json? {
+        return Json {
             explicitNulls = false
             isLenient = true
             ignoreUnknownKeys = true
         }
     }
+
     private fun getUnsafeOkHttpClient(): OkHttpClient? {
         return try {
             // Create a trust manager that does not validate certificate chains
@@ -109,6 +111,7 @@ object AppModule {
             throw RuntimeException(e)
         }
     }
+
     @Provides
     @Singleton
     fun provideAccountApi(okHttpClient: OkHttpClient?, json: Json?): AccountApi {
@@ -131,13 +134,31 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCartApi(okHttpClient: OkHttpClient?, json: Json?, tokenManager: TokenManager?): CartApi {
-        val token = tokenManager?.getToken() ?: ""
+    fun provideCartApi(
+        okHttpClient: OkHttpClient?,
+        json: Json?,
+        tokenManager: TokenManager?
+    ): CartApi {
         return CartApi(
             baseUrl = BuildConfig.API_BASE_URL + BuildConfig.BREAKDOWNS_API_BASE_URL,
             okHttpClient = okHttpClient,
             json = json,
-            apiKey = token
+            tokenManager = tokenManager
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSlotApi(
+        okHttpClient: OkHttpClient?,
+        json: Json?,
+        tokenManager: TokenManager?
+    ): SlotApi {
+        return SlotApi(
+            baseUrl = BuildConfig.API_BASE_URL + BuildConfig.SLOTS_API_BASE_URL,
+            okHttpClient = okHttpClient,
+            json = json,
+            tokenManager
         )
     }
 
@@ -154,11 +175,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideTokenManager(@ApplicationContext context: Context): TokenManager = TokenManager(context)
+    fun provideTokenManager(@ApplicationContext context: Context): TokenManager =
+        TokenManager(context)
 
     @Provides
     @Singleton
-    fun provideUserContext(autoserviceDatabase: AutoserviceDatabase): UserContext = UserContext(autoserviceDatabase)
+    fun provideUserContext(autoserviceDatabase: AutoserviceDatabase): UserContext =
+        UserContext(autoserviceDatabase)
 
     @Provides
     @Singleton

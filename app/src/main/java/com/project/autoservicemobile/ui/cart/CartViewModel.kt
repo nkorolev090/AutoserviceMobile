@@ -1,22 +1,31 @@
 package com.project.autoservicemobile.ui.cart
 
 import androidx.lifecycle.MutableLiveData
+import com.project.autoservicedata.cart.CartRepository
 import com.project.autoservicedata.login.AccountRepository
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.rubleSimbol
 import com.project.autoservicemobile.ui.cart.models.CartItemUI
+import com.project.autoservicemobile.ui.cart.models.CartUI
+import com.project.autoservicemobile.ui.cart.models.toCartUI
 import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.project.common.data.RequestResult
+import com.project.common.data.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(
-    private val accountRepository: AccountRepository
+    private val accountRepository: AccountRepository,
+    private val cartRepository: CartRepository
 ): BaseViewModel() {
 
     val cartItems = MutableLiveData<RequestResult<List<CartItemUI>>>().apply {
+        value = RequestResult.Loading()
+    }
+
+    val cart = MutableLiveData<RequestResult<CartUI>>().apply {
         value = RequestResult.Loading()
     }
 
@@ -40,6 +49,13 @@ class CartViewModel @Inject constructor(
         isAuth,
         coroutinesErrorHandler,
         request = { accountRepository.isAuthenticated() },
+    )
+
+    fun updateCart(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
+        cart,
+        coroutinesErrorHandler,
+        request = { cartRepository.getCart() },
+        mapper = {data -> data.map { it.toCartUI() }}
     )
 
     fun onApplyPromocodeClick(){

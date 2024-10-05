@@ -50,4 +50,5 @@ dependencies {
     implementation(project(":autoserviceAPI"))
     implementation(project(":autoserviceDatabase"))
     implementation(project(":common"))
+    implementation(project(":token"))
 }

@@ -2,11 +2,12 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
 
-    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.kapt)
 }
 
 android {
-    namespace = "com.project.autoserviceapi"
+    namespace = "com.project.token"
     compileSdk = 34
 
     defaultConfig {
@@ -39,13 +40,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-    implementation(libs.retrofit)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.retrofit2.kotlinx.serialization.converter)
-    implementation(libs.retrofit.adapters.result)
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.compiler)
 
-    implementation(libs.okhttp)
-    implementation (libs.gson.serializer)
-    implementation(project(":token"))
+    implementation (libs.datastore.preferences)
 }
