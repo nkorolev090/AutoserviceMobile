@@ -14,13 +14,13 @@ import javax.inject.Inject
 class BreakdownRepository @Inject constructor(
     private val api: BreakdownApi
 ) {
-    fun getAllBreakdowns(): Flow<RequestResult<List<Breakdown>>> {
+    suspend fun getAllBreakdowns(): Flow<RequestResult<List<Breakdown>>> {
         return apiRequestFlow {
             api.getAllBreakdowns()
         }.map { it.toBreakdownList() }
     }
 
-    fun getBreakdownsByQuery(query: String): Flow<RequestResult<List<Breakdown>>> {
+    suspend fun getBreakdownsByQuery(query: String): Flow<RequestResult<List<Breakdown>>> {
         return apiRequestFlow {
             api.getBreakdownsByQuery(query)
         }.map { it.toBreakdownList() }

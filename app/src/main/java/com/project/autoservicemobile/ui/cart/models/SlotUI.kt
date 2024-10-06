@@ -41,3 +41,17 @@ fun Slot.toSlotUI(): SlotUI =
         startDateText = "${this.startDateTime?.dayOfMonth}.${this.startDateTime?.monthValue}.${this.startDateTime?.year}",
         registrationId = registrationId
     )
+
+fun SlotUI.toSlot(): Slot =
+    Slot(
+        id = this.id,
+        breakdownId = this.service?.id,
+        breakdownName = this.service?.title,
+        breakdownWarranty = null,
+        cost = null,
+        startDateTime = null,
+        finishDateTime = null,
+        mechanicId = this.mechanicId,
+        mechanicName = this.mechanicNameText,
+        registrationId = registrationId,
+    )

@@ -58,6 +58,12 @@ class CartViewModel @Inject constructor(
         mapper = {data -> data.map { it.toCartUI() }}
     )
 
+    fun removeBreakdownFromCart(breakdownId: Int, coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
+        cart,
+        coroutinesErrorHandler,
+        request = { cartRepository.removeBreakdownFromCart(breakdownId) },
+        mapper = {data -> data.map { it.toCartUI() }}
+    )
     fun onApplyPromocodeClick(){
 
     }

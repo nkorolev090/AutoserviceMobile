@@ -140,7 +140,7 @@ object AppModule {
         tokenManager: TokenManager?
     ): CartApi {
         return CartApi(
-            baseUrl = BuildConfig.API_BASE_URL + BuildConfig.BREAKDOWNS_API_BASE_URL,
+            baseUrl = BuildConfig.API_BASE_URL + BuildConfig.CART_API_BASE_URL,
             okHttpClient = okHttpClient,
             json = json,
             tokenManager = tokenManager

@@ -25,12 +25,13 @@ interface CartApi {
 
     @PUT("AddCartItem")
     suspend fun addCartItem(
-        @Body slotDTO: SlotDTO,
+        @Query("slotId") slotId: Int,
+        @Query("breakdownId") breakdownId: Int
     ): Response<CartDTO>
 
     @PUT("RemoveCartItem")
     suspend fun removeCartItem(
-        @Body cartItem: CartItemDTO,
+        @Query("breakdownId") breakdownId: Int,
     ): Response<CartDTO>
 
     @PUT("SetPromocode")

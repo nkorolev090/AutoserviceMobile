@@ -84,6 +84,7 @@ class ServicesFragment : Fragment() {
         binding.servicesRecycler.layoutManager = LinearLayoutManager(context)
         binding.servicesRecycler.adapter = ServicesRecyclerAdapter({ item ->
             if (item.inCart) { // remove from cart
+                Log.d(TAG, "${item?.title}", )
                 (binding.servicesRecycler.adapter as ServicesRecyclerAdapter).onAddOrRemoveToCart(item)
             } else { //open dialog to set slot
                 openSlotsBottomSheetDialog(item)
@@ -118,5 +119,9 @@ class ServicesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val TAG = "ServicesFragment"
     }
 }

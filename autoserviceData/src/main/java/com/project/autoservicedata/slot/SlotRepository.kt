@@ -15,7 +15,7 @@ import javax.inject.Inject
 class SlotRepository @Inject constructor(
     private val api: SlotApi
 ) {
-    fun getSlotsByDateBreakdown(date: String, breakdownId: Int): Flow<RequestResult<List<Slot>>> {
+    suspend fun getSlotsByDateBreakdown(date: String, breakdownId: Int): Flow<RequestResult<List<Slot>>> {
         return apiRequestFlow {
             api.getSlotsByDateBreakdown(date, breakdownId)
         }.map { it.toBreakdownList() }

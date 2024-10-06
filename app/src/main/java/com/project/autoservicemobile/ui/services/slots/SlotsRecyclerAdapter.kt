@@ -78,8 +78,16 @@ class SlotsRecyclerAdapter(
 
         notifyItemChanged(selectedPosition)
 
-        selectedPosition = position
-        notifyItemChanged(selectedPosition)
+        if (selectedPosition != RecyclerView.NO_POSITION) items[selectedPosition].selected = false
+
+        if(selectedPosition != position){
+            selectedPosition = position
+            notifyItemChanged(selectedPosition)
+            items[selectedPosition].selected = true
+        }
+        else{
+            selectedPosition = -1
+        }
     }
 
     override fun getItemCount() = items.size

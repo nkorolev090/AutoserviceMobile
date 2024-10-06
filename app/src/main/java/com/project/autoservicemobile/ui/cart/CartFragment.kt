@@ -80,9 +80,15 @@ class CartFragment : Fragment(), AuthenticatedListener {
            }
 
            cartRecycler.layoutManager = LinearLayoutManager(context)
-           cartRecycler.adapter = CartRecyclerAdapter(
-               {item -> {}}
-           )
+           cartRecycler.adapter = CartRecyclerAdapter{
+               _viewModel.removeBreakdownFromCart(
+                   it.slot.service!!.id,
+                   object : CoroutinesErrorHandler {
+                       override fun onError(message: String) {
+                           Log.d("SignInBottomSheetDialog", "Error! $message")
+                       }
+                   })
+           }
 
 //           _viewModel.cartItems.observe(viewLifecycleOwner){
 //               when (it) {

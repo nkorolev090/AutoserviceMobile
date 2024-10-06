@@ -20,13 +20,13 @@ class CartRecyclerAdapter (
         private val priceTextView: TextView = itemView.requireViewById(R.id.priceText)
         private var deleteButton: ImageView = itemView.requireViewById(R.id.deleteBtn)
 
-        fun bind(item: CartItemUI, onToCartClick: (CartItemUI) -> Unit){
+        fun bind(item: CartItemUI, onDeleteClick: (CartItemUI) -> Unit){
             titleTextView.text = item.slot.service?.title ?: "Упс... Что-то пошло не так"
             priceTextView.text = item.slot.service?.priceText  ?: "Упс... Что-то пошло не так"
 
 
             deleteButton.setOnClickListener{
-                onToCartClick(item)
+                onDeleteClick(item)
             }
         }
     }
