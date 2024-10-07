@@ -26,4 +26,9 @@
         <item name="android:fontFamily">@font/be_vietnam_pro_regular</item>
         <item name="android:textSize">16sp</item>
     </style>
+    <style name="textError">
+        <item name="android:textColor">?attr/colorOnError</item>
+        <item name="android:fontFamily">@font/be_vietnam_pro_bold</item>
+        <item name="android:textSize">62sp</item>
+    </style>
 </resources>

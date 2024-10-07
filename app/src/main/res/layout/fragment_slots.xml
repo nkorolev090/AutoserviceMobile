@@ -66,6 +66,15 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dateInputLayout">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/slotsRecycler"
             android:layout_width="match_parent"
@@ -75,7 +84,7 @@
             app:layout_constraintBottom_toTopOf="@+id/toCartBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dateInputLayout"
+            app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/li_slots_item" />
 
         <com.google.android.material.button.MaterialButton
@@ -96,6 +105,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

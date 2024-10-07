@@ -13,6 +13,10 @@
     <string name="to_cart">В корзину</string>
     <string name="from_cart">Удалить</string>
     <string name="load_more_btn_text">Узнать больше</string>
+
     <string name="no_connection_text">Нет соединения с интернетом</string>
     <string name="no_content_text">Ничего не найдено</string>
+    <string name="no_slots_text">Для выбранной даты нет доступного времени для записи</string>
+    <string name="slots_set_date_text">Выбрать другую дату</string>
+    <string name="error_text">Ошибка</string>
 </resources>
