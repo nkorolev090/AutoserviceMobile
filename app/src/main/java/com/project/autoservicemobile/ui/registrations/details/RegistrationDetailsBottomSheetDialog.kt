@@ -45,7 +45,7 @@ class RegistrationDetailsBottomSheetDialog : BottomSheetDialogFragment() {
         binding.regServicesRecycler.layoutManager = LinearLayoutManager(context)
         _viewModel.registration.observe(viewLifecycleOwner){
             binding.textTitle.text = it.registrationTitle
-            binding.completeOnText.text = it.completedDate
+            binding.completeOnText.text = it.statusTitle
             binding.regServicesRecycler.adapter = RegServicesRecyclerAdapter(it.services.orEmpty(),
                 {item -> _viewModel.onWarrantyBtnClick(item)},
                 {item -> _viewModel.onFavoritesBtnClick(item)})

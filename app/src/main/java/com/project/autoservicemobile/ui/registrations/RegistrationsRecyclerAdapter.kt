@@ -11,9 +11,10 @@ import com.project.autoservicemobile.R
 import com.project.autoservicemobile.ui.registrations.models.RegistrationUI
 import com.squareup.picasso.Picasso
 
-class RegistrationsRecyclerAdapter (private val articles: List<RegistrationUI>, private val onClick: (RegistrationUI) -> Unit) : RecyclerView
+class RegistrationsRecyclerAdapter (private val onClick: (RegistrationUI) -> Unit) : RecyclerView
 .Adapter<RegistrationsRecyclerAdapter.RegistrationsViewHolder>() {
 
+    var items: List<RegistrationUI> = listOf()
     class RegistrationsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val mainTextView: TextView = itemView.requireViewById(R.id.titleText)
         private val completedDateTextView: TextView = itemView.requireViewById(R.id.completeOnText)
@@ -23,7 +24,7 @@ class RegistrationsRecyclerAdapter (private val articles: List<RegistrationUI>, 
         private val viewMoreText = "Узнать больше"
         fun bind(item: RegistrationUI, onClick: (RegistrationUI) -> Unit){
             mainTextView.text = item.registrationTitle
-            completedDateTextView.text = item.completedDate
+            completedDateTextView.text = item.statusTitle
 
             viewMoreButton.text = viewMoreText
             viewMoreButton.setOnClickListener{onClick(item)}
@@ -39,8 +40,8 @@ class RegistrationsRecyclerAdapter (private val articles: List<RegistrationUI>, 
     }
 
     override fun onBindViewHolder(holder: RegistrationsViewHolder, position: Int) {
-        holder.bind(articles[position], onClick)
+        holder.bind(items[position], onClick)
     }
 
-    override fun getItemCount() = articles.size
+    override fun getItemCount() = items.size
 }

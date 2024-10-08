@@ -1,9 +1,12 @@
-package com.project.autoservicedata.slot
+package com.project.autoservicedata.registration
 
 import com.project.autoserviceapi.cart.models.SlotDTO
-import com.project.autoserviceapi.slot.SlotApi
+import com.project.autoserviceapi.registrations.RegistrationApi
+import com.project.autoserviceapi.registrations.models.RegistrationDTO
 import com.project.autoservicedata.cart.models.Slot
 import com.project.autoservicedata.cart.models.toSlot
+import com.project.autoservicedata.registration.models.Registration
+import com.project.autoservicedata.registration.models.toRegistration
 import com.project.common.api.RequestResultAPI
 import com.project.common.api.apiRequestFlow
 import com.project.common.data.RequestResult
@@ -12,21 +15,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class SlotRepository @Inject constructor(
-    private val api: SlotApi
+class RegistrationRepository @Inject constructor(
+    private val api: RegistrationApi
 ) {
-    suspend fun getSlotsByDateBreakdown(date: String, breakdownId: Int): Flow<RequestResult<List<Slot>>> {
+
+    suspend fun getRegistrations(): Flow<RequestResult<List<Registration>>> {
         return apiRequestFlow {
-            api.getSlotsByDateBreakdown(date, breakdownId)
-        }.map { it.toSlotList() }
+            api.getRegistrations()
+        }.map { it.toRegistrationList() }
     }
 
-
-    private fun RequestResultAPI<List<SlotDTO>>.toSlotList(): RequestResult<List<Slot>> =
+    private fun RequestResultAPI<List<RegistrationDTO>>.toRegistrationList(): RequestResult<List<Registration>> =
         when (this) {
             is RequestResultAPI.Success -> {
                 if (this.data.isEmpty().not()) {
-                    RequestResult.Success(this.data.map { it.toSlot() })
+                    RequestResult.Success(this.data.map { it.toRegistration() })
                 } else {
                     RequestResult.Error(
                         code = StatusCodeEnum.NO_CONTENT,

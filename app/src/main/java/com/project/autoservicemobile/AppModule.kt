@@ -4,6 +4,7 @@ import android.content.Context
 import com.project.autoserviceapi.breakdown.BreakdownApi
 import com.project.autoserviceapi.cart.CartApi
 import com.project.autoserviceapi.login.AccountApi
+import com.project.autoserviceapi.registrations.RegistrationApi
 import com.project.autoserviceapi.slot.SlotApi
 import com.project.autoservicedata.profile.UserContext
 import com.project.token.TokenManager
@@ -141,6 +142,21 @@ object AppModule {
     ): CartApi {
         return CartApi(
             baseUrl = BuildConfig.API_BASE_URL + BuildConfig.CART_API_BASE_URL,
+            okHttpClient = okHttpClient,
+            json = json,
+            tokenManager = tokenManager
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideRegistrationApi(
+        okHttpClient: OkHttpClient?,
+        json: Json?,
+        tokenManager: TokenManager?
+    ): RegistrationApi {
+        return RegistrationApi(
+            baseUrl = BuildConfig.API_BASE_URL + BuildConfig.REGISTRATIONS_API_BASE_URL,
             okHttpClient = okHttpClient,
             json = json,
             tokenManager = tokenManager
