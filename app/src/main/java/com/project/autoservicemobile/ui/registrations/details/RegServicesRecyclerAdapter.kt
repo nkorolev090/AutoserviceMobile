@@ -26,7 +26,7 @@ class RegServicesRecyclerAdapter (
         private val mechanicTextView: TextView = itemView.requireViewById(R.id.mechanicText)
         private val imageView: ImageView = itemView.requireViewById(R.id.serviceImage)
         private var favoritesBtn: ImageView = itemView.requireViewById(R.id.favourites_btn)
-        private var warrantyButton: Button = itemView.requireViewById(R.id.warrantyBtn)
+        private var warrantyButton: Button = itemView.requireViewById(R.id.cartBtn)
 
         private val toWarranty = "Гарантийное обращение"
         private val fromWarranty = "Обращение отправлено"

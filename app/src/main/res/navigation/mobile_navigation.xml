@@ -34,10 +34,10 @@
         tools:layout="@layout/fragment_loyalty" />
 
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.project.autoservicemobile.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        android:id="@+id/navigation_userdata"
+        android:name="com.project.autoservicemobile.ui.profile.userdata.UserDataFragment"
+        android:label="fragment_userdata"
+        tools:layout="@layout/fragment_user_data" />
     <fragment
         android:id="@+id/registrationsFragment"
         android:name="com.project.autoservicemobile.ui.registrations.RegistrationsFragment"

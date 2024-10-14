@@ -4,19 +4,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingHorizontal="20dp"
     android:background="?attr/colorOnPrimary">
 
     <TextView
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/be_vietnam_pro_bold"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textScaleX="1.11"
+        style="@style/textError"
+        app:layout_constraintBottom_toTopOf="@+id/setDateBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Последнее" />
+        tools:text="ОШИБКА" />
+
+    <TextView
+        android:id="@+id/text_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/textPrimary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_title"
+        tools:text="По вашему запросу ничего не найдено" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/setDateBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:backgroundTint="@color/blue_300"
+        android:fontFamily="@font/inter_medium"
+        android:textFontWeight="1000"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        tools:text="Поиск"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textSize="16sp"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

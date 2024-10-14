@@ -27,6 +27,6 @@ fun Cart.toCartUI(): CartUI =
         subtotal = (this.subtotal.toString() ?: "0") + rubleSimbol,
         promocodeId = this.promocodeId,
         promocodeTitle = this.promocodeTitle,
-        discountValue = (this.discountValue.toString() ?: "0") + rubleSimbol,
+        discountValue = ("-${this.discountValue}") + rubleSimbol,
         cartItems = this.cartItems.map { it.toCartItemUI() }
     )

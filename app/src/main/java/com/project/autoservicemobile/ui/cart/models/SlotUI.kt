@@ -27,13 +27,14 @@ data class SlotUI (
 fun Slot.toSlotUI(): SlotUI =
     SlotUI(
         id = this.id,
-        service = if (breakdownId == null) null
+        service = if (this.breakdownId == null) null
         else
             ServiceUI(
                 id = this.breakdownId!!,
                 title = this.breakdownName ?: "",
                 warrantyText = this.breakdownWarranty?.toWarrantyText() ?: "0",
                 priceText = (this.cost.toString() ?: "0") + rubleSimbol,
+                imageUrl = this.breakdownUrl
             ),
         mechanicId = this.mechanicId,
         mechanicNameText = this.mechanicName ?: "",
@@ -48,6 +49,7 @@ fun SlotUI.toSlot(): Slot =
         breakdownId = this.service?.id,
         breakdownName = this.service?.title,
         breakdownWarranty = null,
+        breakdownUrl = this.service?.imageUrl,
         cost = null,
         startDateTime = null,
         finishDateTime = null,

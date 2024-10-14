@@ -63,10 +63,6 @@ class CartFragment : Fragment(), AuthenticatedListener {
            saleText.text = _viewModel.saleText
            subTotalText.text = _viewModel.subTotalText
 
-           totalValueText.text = _viewModel.totalValueText
-           saleValueText.text = _viewModel.saleValueText
-           subTotalValueText.text = _viewModel.subTotalValueText
-
            promocodeInput.hint = _viewModel.promocodeHintText
 
            applyPromocodeBtn.text = _viewModel.applyBtnText
@@ -149,6 +145,10 @@ class CartFragment : Fragment(), AuthenticatedListener {
 //                       if(newsRecycler.childCount == 0){
 //                           startAnims()
 //                       }
+
+                       totalValueText.text = it.data.total
+                       saleValueText.text = it.data.discountValue
+                       subTotalValueText.text = it.data.subtotal
 
                        (cartRecycler.adapter as CartRecyclerAdapter).items = it.data.cartItems
                        cartRecycler.adapter?.notifyDataSetChanged()

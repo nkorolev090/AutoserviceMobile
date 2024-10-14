@@ -4,165 +4,265 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorOnPrimary"
+    android:background="?attr/colorOnContainer"
     tools:context=".ui.cart.CartFragment">
 
     <com.project.autoservicemobile.ui.customViews.AppBar
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:background="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:titleText="@string/cart_title" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/selectorContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/primary_bg_bottom_rounded"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/secondary_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/carSelectContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/carIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_car"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/carTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                style="@style/textPrimary"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/editBtn"
+                app:layout_constraintStart_toEndOf="@id/carIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="ВАЗ 21099" />
+
+            <TextView
+                android:id="@+id/carDescription"
+                style="@style/textSecondary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editBtn"
+                app:layout_constraintStart_toEndOf="@id/carIcon"
+                app:layout_constraintTop_toBottomOf="@+id/carTitle"
+                tools:text="А111АА 37" />
+
+            <ImageView
+                android:id="@+id/editBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_pencil"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/promocodeInput"
+        app:layout_constraintBottom_toTopOf="@+id/amountContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBar"
+        app:layout_constraintTop_toBottomOf="@id/selectorContainer"
         tools:listitem="@layout/li_cart_item" />
 
-    <EditText
-        android:id="@+id/promocodeInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/btn_secondary_bg"
-        android:drawableRight="@drawable/ic_pencil"
-        android:fontFamily="@font/be_vietnam_pro_regular"
-        tools:hint="Промокод"
-        android:inputType="text"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="7dp"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/subTotalText"
-        app:layout_constraintEnd_toStartOf="@id/applyPromocodeBtn"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/applyPromocodeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:fontFamily="@font/inter_medium"
-        android:textFontWeight="1000"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="5dp"
-        tools:text="Применить"
-        android:textAllCaps="false"
-        android:textColor="?attr/colorPrimaryVariant"
-        android:textSize="12sp"
-        app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/promocodeInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/promocodeInput" />
-
-    <TextView
-        android:id="@+id/subTotalText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/be_vietnam_pro_medium"
-        tools:text="Сумма"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/saleText"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/saleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/be_vietnam_pro_medium"
-        tools:text="Скидка"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/totalText"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/totalText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/be_vietnam_pro_medium"
-        tools:text="Итог"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/createRegBtn"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:id="@+id/subTotalValueText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/be_vietnam_pro_regular"
-        tools:text="50$"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/subTotalText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/subTotalText" />
-
-    <TextView
-        android:id="@+id/saleValueText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/be_vietnam_pro_regular"
-        tools:text="50$"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/saleText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/saleText" />
-
-    <TextView
-        android:id="@+id/totalValueText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/be_vietnam_pro_regular"
-        tools:text="50$"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/totalText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/totalText" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/createRegBtn"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/amountContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="70dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:fontFamily="@font/inter_medium"
-        android:textFontWeight="1000"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp"
-        tools:text="Записаться"
-        android:textAllCaps="false"
-        android:textColor="?attr/colorPrimaryVariant"
-        android:textSize="16sp"
-        app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="55dp"
+        android:background="@drawable/primary_bg_top_rounded"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <EditText
+            android:id="@+id/promocodeInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/btn_secondary_bg"
+            android:drawableRight="@drawable/ic_pencil"
+            android:fontFamily="@font/be_vietnam_pro_regular"
+            tools:hint="Промокод"
+            android:inputType="text"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="7dp"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/subTotalText"
+            app:layout_constraintEnd_toStartOf="@id/applyPromocodeBtn"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/applyPromocodeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:fontFamily="@font/inter_medium"
+            android:textFontWeight="1000"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="5dp"
+            tools:text="Применить"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="12sp"
+            app:cornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/promocodeInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/promocodeInput" />
+
+        <TextView
+            android:id="@+id/subTotalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/be_vietnam_pro_regular"
+            tools:text="Сумма"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/saleText"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/saleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/be_vietnam_pro_medium"
+            tools:text="Скидка"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/separator"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/secondary_bg"
+            app:layout_constraintBottom_toTopOf="@+id/totalText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/totalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/be_vietnam_pro_bold"
+            tools:text="Итог"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/createRegBtn"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/subTotalValueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/be_vietnam_pro_regular"
+            tools:text="50$"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/subTotalText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/subTotalText" />
+
+        <TextView
+            android:id="@+id/saleValueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/be_vietnam_pro_bold"
+            tools:text="-50$"
+            android:textColor="@color/red_300"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/saleText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/saleText" />
+
+        <TextView
+            android:id="@+id/totalValueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/be_vietnam_pro_bold"
+            tools:text="50$"
+            android:textColor="@color/green_300"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/totalText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/totalText" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createRegBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:fontFamily="@font/inter_medium"
+            android:textFontWeight="1000"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            tools:text="Записаться"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="16sp"
+            app:cornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

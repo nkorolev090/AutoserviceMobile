@@ -76,6 +76,7 @@ private fun Slot.toSlotDTO(): SlotDTO {
         breakdownId = this.breakdownId,
         breakdownName = this.breakdownName,
         breakdownWarranty = this.breakdownWarranty,
+        breakdownUrl = this.breakdownUrl,
         cost = this.cost,
         mechanicId = this.mechanicId,
         mechanicName = this.mechanicName,

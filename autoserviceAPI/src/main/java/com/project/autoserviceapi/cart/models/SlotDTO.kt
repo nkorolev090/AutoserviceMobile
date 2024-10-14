@@ -18,6 +18,9 @@ data class SlotDTO (
     @SerialName("breakdown_warranty")
     val breakdownWarranty: Int?,
 
+    @SerialName("breakdown_url")
+    val breakdownUrl: String?,
+
     @SerialName("cost")
     val cost: Double?,
 

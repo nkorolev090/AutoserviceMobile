@@ -37,9 +37,6 @@ class CartViewModel @Inject constructor(
     val subTotalText = "Сумма"
     val saleText = "Скидка"
     val totalText = "Итого"
-    val subTotalValueText = "777 $rubleSimbol"
-    val saleValueText = "-30 $rubleSimbol"
-    val totalValueText = "747 $rubleSimbol"
 
     val isAuth = MutableLiveData<RequestResult<Boolean>>().apply {
         value = RequestResult.Loading()

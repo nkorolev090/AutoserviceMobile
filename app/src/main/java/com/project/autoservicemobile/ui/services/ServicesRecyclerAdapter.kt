@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.autoservicemobile.MAIN
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.ToCartListener
-import com.project.autoservicemobile.ui.cart.models.SlotUI
 import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.squareup.picasso.Picasso
 
@@ -29,7 +28,7 @@ class ServicesRecyclerAdapter(
         private val priceTextView: TextView = itemView.requireViewById(R.id.priceText)
         private val imageView: ImageView = itemView.requireViewById(R.id.serviceImage)
         private var favoritesBtn: ImageView = itemView.requireViewById(R.id.favourites_btn)
-        private var toCartButton: Button = itemView.requireViewById(R.id.warrantyBtn)
+        private var toCartButton: Button = itemView.requireViewById(R.id.cartBtn)
 
         fun bind(
             item: ServiceUI,

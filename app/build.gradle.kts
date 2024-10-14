@@ -24,8 +24,8 @@ android {
         buildConfigField("String", "CART_API_BASE_URL", "\"api/Cart/\"")
         buildConfigField("String", "BREAKDOWNS_API_BASE_URL", "\"api/Breakdowns/\"")
         buildConfigField("String", "LOGIN_API_BASE_URL", "\"api/account/\"")
-//        buildConfigField("String", "API_BASE_URL", "\"https://192.168.0.16:7130/\"")
-        buildConfigField("String", "API_BASE_URL", "\"https://192.168.1.205:7130/\"")
+        buildConfigField("String", "API_BASE_URL", "\"https://192.168.0.16:7130/\"")
+//        buildConfigField("String", "API_BASE_URL", "\"https://192.168.1.205:7130/\"")
     }
 
     buildTypes {
