@@ -22,7 +22,7 @@
         android:title="@string/loyalty_nav_title" />
 
     <item
-        android:id="@+id/navigation_userdata"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_profile"
         android:title="@string/profile_title" />
 </menu>

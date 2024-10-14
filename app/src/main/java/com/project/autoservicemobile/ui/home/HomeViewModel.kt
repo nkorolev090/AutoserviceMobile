@@ -86,8 +86,4 @@ class HomeViewModel @Inject constructor(
         coroutinesErrorHandler,
         request = { _accountRepository.isAuthenticated() },
     )
-
-    fun onGoToRegistrationsClick(){
-        MAIN.navController.navigate(R.id.action_navigation_home_to_registrationsFragment)
-    }
 }

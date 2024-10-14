@@ -3,18 +3,17 @@ package com.project.autoservicemobile.ui.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.project.autoservicemobile.MainActivity
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentHomeBinding
@@ -87,7 +86,7 @@ class HomeFragment : Fragment() {
             regsTitle.text = _viewModel.regsTitle
             regsDescription.text = _viewModel.regsDescription
             registrationsContainer.setOnClickListener(View.OnClickListener {
-                _viewModel.onGoToRegistrationsClick()
+                navigateToRegistrations()
             })
 
             newsRecycler.layoutManager = LinearLayoutManager(context)
@@ -223,5 +222,9 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun navigateToRegistrations(){
+        (requireActivity() as MainActivity).navController.navigate(R.id.action_navigation_home_to_registrationsFragment)
     }
 }

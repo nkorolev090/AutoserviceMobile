@@ -37,7 +37,11 @@
         android:id="@+id/navigation_userdata"
         android:name="com.project.autoservicemobile.ui.profile.userdata.UserDataFragment"
         android:label="fragment_userdata"
-        tools:layout="@layout/fragment_user_data" />
+        tools:layout="@layout/fragment_user_data" >
+        <action
+            android:id="@+id/action_navigation_userdata_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registrationsFragment"
         android:name="com.project.autoservicemobile.ui.registrations.RegistrationsFragment"
@@ -46,6 +50,15 @@
         <action
             android:id="@+id/action_registrationsFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.project.autoservicemobile.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_navigation_userdata"
+            app:destination="@id/navigation_userdata" />
     </fragment>
 
 </navigation>
