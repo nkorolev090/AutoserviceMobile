@@ -5,6 +5,7 @@ import com.project.autoservicedata.login.AccountRepository
 import com.project.autoservicedata.profile.UserContext
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
+import com.project.autoservicemobile.ui.profile.models.ProfileDataUI
 import com.project.autoservicemobile.ui.profile.models.UserDataUI
 import com.project.autoservicemobile.ui.profile.models.toUserDataUI
 import com.project.common.data.RequestResult
@@ -17,8 +18,14 @@ class ProfileViewModel @Inject constructor(
     private val accountRepository: AccountRepository,
     private val userContext: UserContext
 ) : BaseViewModel() {
-    val userData = MutableLiveData<RequestResult<UserDataUI>>().apply {
-        value = RequestResult.Loading()
+
+    val profileData = MutableLiveData<RequestResult<ProfileDataUI>>().apply {
+        value = RequestResult.Success(
+            ProfileDataUI(
+                "9 услуг",
+                "1 автомобиль"
+            )
+        )
     }
 
     val isAuth = MutableLiveData<RequestResult<Boolean>>().apply {
@@ -30,11 +37,11 @@ class ProfileViewModel @Inject constructor(
         coroutinesErrorHandler,
         request = { accountRepository.isAuthenticated() },
     )
-
-    fun updateUserData(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
-        userData,
-        coroutinesErrorHandler,
-        request = { userContext.getUserData() },
-        mapper = { data -> data.map{it.toUserDataUI()}}
-    )
+//
+//    fun updateUserData(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
+//        userData,
+//        coroutinesErrorHandler,
+//        request = { userContext.getUserData() },
+//        mapper = { data -> data.map{it.toUserDataUI()}}
+//    )
 }

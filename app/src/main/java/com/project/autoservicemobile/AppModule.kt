@@ -2,6 +2,7 @@ package com.project.autoservicemobile
 
 import android.content.Context
 import com.project.autoserviceapi.breakdown.BreakdownApi
+import com.project.autoserviceapi.car.CarApi
 import com.project.autoserviceapi.cart.CartApi
 import com.project.autoserviceapi.login.AccountApi
 import com.project.autoserviceapi.registrations.RegistrationApi
@@ -142,6 +143,21 @@ object AppModule {
     ): CartApi {
         return CartApi(
             baseUrl = BuildConfig.API_BASE_URL + BuildConfig.CART_API_BASE_URL,
+            okHttpClient = okHttpClient,
+            json = json,
+            tokenManager = tokenManager
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideCarsApi(
+        okHttpClient: OkHttpClient?,
+        json: Json?,
+        tokenManager: TokenManager?
+    ): CarApi {
+        return CarApi(
+            baseUrl = BuildConfig.API_BASE_URL + BuildConfig.CARS_API_BASE_URL,
             okHttpClient = okHttpClient,
             json = json,
             tokenManager = tokenManager

@@ -13,6 +13,8 @@
     <string name="to_cart">В корзину</string>
     <string name="from_cart">Удалить</string>
     <string name="load_more_btn_text">Узнать больше</string>
+    <string name="cars_text">Ваши авто</string>
+    <string name="favorites_text">Избранное</string>
 
     <string name="no_connection_text">Нет соединения с интернетом</string>
     <string name="no_content_text">Ничего не найдено</string>

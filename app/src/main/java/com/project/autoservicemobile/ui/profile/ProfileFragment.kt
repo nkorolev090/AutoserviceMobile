@@ -41,6 +41,9 @@ class ProfileFragment : Fragment(), AuthenticatedListener {
 
     private fun setup() {
         with(binding) {
+            favoritesTitle.setText(R.string.favorites_text)
+            carsTitle.setText(R.string.cars_text)
+
             appBar.setRightOnClickListener{
                 navigateToUserData()
             }
@@ -50,20 +53,32 @@ class ProfileFragment : Fragment(), AuthenticatedListener {
                     openSignBottomSheet()
                 }
                 if(it is RequestResult.Success){
-                    _viewModel.updateUserData(object : CoroutinesErrorHandler {
-                        override fun onError(message: String) {
-                            Log.d("SignInBottomSheetDialog", "Error! $message")
-                        }
-                    })
+                    //_viewModel.updateUserData(object : CoroutinesErrorHandler {
+//                        override fun onError(message: String) {
+//                            Log.d("SignInBottomSheetDialog", "Error! $message")
+//                        }
+//                    })
                 }
             }
+
+            _viewModel.profileData.observe(viewLifecycleOwner){
+                if (it is RequestResult.Error) {
+
+                }
+                if(it is RequestResult.Success){
+                    favoritesDescription.text = it.data.favoritesText
+                    carsDescription.text = it.data.carsText
+                }
+            }
+
+
         }
     }
     override fun onResume() {
         super.onResume()
         _viewModel.isAuthenticated(object : CoroutinesErrorHandler {
             override fun onError(message: String) {
-                Log.d("SignInBottomSheetDialog", "Error! $message")
+                Log.d("ProfileFragment", "Error! $message")
             }
         })
     }
@@ -82,11 +97,11 @@ class ProfileFragment : Fragment(), AuthenticatedListener {
         _viewModel.isAuth.postValue(RequestResult.Loading())
     }
     override fun onAuthenticated() {
-        _viewModel.updateUserData(object : CoroutinesErrorHandler {
-            override fun onError(message: String) {
-                Log.d("SignInBottomSheetDialog", "Error! $message")
-            }
-        })
+//        _viewModel.updateUserData(object : CoroutinesErrorHandler {
+//            override fun onError(message: String) {
+//                Log.d("SignInBottomSheetDialog", "Error! $message")
+//            }
+//        })
     }
 
     private fun navigateToUserData(){

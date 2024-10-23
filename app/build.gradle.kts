@@ -22,6 +22,7 @@ android {
         buildConfigField("String", "REGISTRATIONS_API_BASE_URL", "\"api/Registrations/\"")
         buildConfigField("String", "SLOTS_API_BASE_URL", "\"api/Slots/\"")
         buildConfigField("String", "CART_API_BASE_URL", "\"api/Cart/\"")
+        buildConfigField("String", "CARS_API_BASE_URL", "\"api/Cars/\"")
         buildConfigField("String", "BREAKDOWNS_API_BASE_URL", "\"api/Breakdowns/\"")
         buildConfigField("String", "LOGIN_API_BASE_URL", "\"api/account/\"")
         buildConfigField("String", "API_BASE_URL", "\"https://192.168.0.16:7130/\"")

@@ -19,13 +19,13 @@
         app:titleText="Здравствуйте, Иван" />
 
     <LinearLayout
-        android:id="@+id/selectorContainer"
+        android:id="@+id/topContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="15dp"
-        android:orientation="horizontal"
         android:background="@drawable/primary_bg_bottom_rounded"
+        android:orientation="horizontal"
+        android:paddingHorizontal="15dp"
+        android:paddingBottom="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBar">
@@ -33,22 +33,143 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/favoritesContainer"
             android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/secondary_bg">
+            android:layout_weight="1"
+            android:background="@drawable/secondary_bg"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp">
+
+            <ImageView
+                android:id="@+id/favoritesIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_favourites"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/favoritesTitle"
+                style="@style/textPrimary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/favoritesIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Избранное" />
+
+            <TextView
+                android:id="@+id/favoritesDescription"
+                style="@style/textSecondary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/favoritesTitle"
+                tools:text="9 услуг" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/registrationsContainer"
+            android:id="@+id/carsContainer"
             android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:background="@drawable/secondary_bg">
+            android:layout_weight="1"
+            android:background="@drawable/secondary_bg"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp">
+
+            <ImageView
+                android:id="@+id/carsIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_car"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/carsTitle"
+                style="@style/textPrimary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/carsIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Ваши авто" />
+
+            <TextView
+                android:id="@+id/carsDescription"
+                style="@style/textSecondary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/carsTitle"
+                tools:text="2 авто" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/registrationsTitle"
+        style="@style/textPrimary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="5dp"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topContainer"
+        tools:text="Записи и заявки" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registrationsTitle" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/middleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/primary_bg_rounded"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="65dp"
+        android:background="@drawable/primary_bg_top_rounded"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/middleContainer">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
