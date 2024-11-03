@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleText="@string/profile_title" />
+        app:titleText="@string/user_data_title" />
 
     <TextView
         android:id="@+id/personal_infoText"

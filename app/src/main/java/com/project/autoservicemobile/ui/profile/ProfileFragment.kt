@@ -48,6 +48,10 @@ class ProfileFragment : Fragment(), AuthenticatedListener {
                 navigateToUserData()
             }
 
+            carsContainer.setOnClickListener{
+                navigateToCars()
+            }
+
             _viewModel.isAuth.observe(viewLifecycleOwner){
                 if (it is RequestResult.Error) {
                     openSignBottomSheet()
@@ -74,6 +78,7 @@ class ProfileFragment : Fragment(), AuthenticatedListener {
 
         }
     }
+
     override fun onResume() {
         super.onResume()
         _viewModel.isAuthenticated(object : CoroutinesErrorHandler {
@@ -104,7 +109,15 @@ class ProfileFragment : Fragment(), AuthenticatedListener {
 //        })
     }
 
+    override fun onNavigateToHomeFragment() {
+        (requireActivity() as MainActivity).navController.navigate(R.id.action_profileFragment_to_navigation_home)
+    }
+
     private fun navigateToUserData(){
         (requireActivity() as MainActivity).navController.navigate(R.id.action_profileFragment_to_navigation_userdata)
+    }
+
+    private fun navigateToCars(){
+        (requireActivity() as MainActivity).navController.navigate(R.id.action_profileFragment_to_carsFragment)
     }
 }

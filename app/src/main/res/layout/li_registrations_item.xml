@@ -1,84 +1,66 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="10dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@drawable/secondary_bg"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="15dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/titleText"
+        style="@style/textPrimary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toStartOf="@+id/statusText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Запись от 10.10.2024" />
+
+    <TextView
+        android:id="@+id/numberText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/textSecondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        tools:text="№10203" />
+
+    <TextView
+        android:id="@+id/statusText"
+        style="@style/textPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:textColor="@color/green_gray_300"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/titleText"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="в обработке" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/puller"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numberText" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/servicesRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="15dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/secondary_bg">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_margin="2dp"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/registrationImage"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/news_image" />
-
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:textAlignment="textStart"
-            android:fontFamily="@font/be_vietnam_pro_bold"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/card_image"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Заменатормозных колодок" />
-
-        <TextView
-            android:id="@+id/completeOnText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/be_vietnam_pro_regular"
-            android:textColor="?attr/colorOnSecondary"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/card_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleText"
-            tools:text="$79.99" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/viewMoreBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/to_cart"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:backgroundTint="?attr/colorOnSecondary"
-            android:textAllCaps="false"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="5dp"
-            app:cornerRadius="15dp"
-            android:textSize="14sp"
-            android:fontFamily="@font/inter_medium"
-            android:textFontWeight="1000"
-            android:layout_marginTop="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        tools:listitem="@layout/li_carousel_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

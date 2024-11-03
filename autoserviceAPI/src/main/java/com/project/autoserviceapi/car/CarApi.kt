@@ -16,6 +16,9 @@ import retrofit2.http.GET
 interface CarApi {
     @GET("GetCars")
     suspend fun getCars(): Response<List<CarDTO>>
+
+    @GET("GetDefaultCar")
+    suspend fun getDefaultCars(): Response<CarDTO?>
 }
 
 fun CarApi(

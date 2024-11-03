@@ -1,5 +1,7 @@
 package com.project.common.data
 
+import com.project.common.api.RequestResultAPI
+
 
 sealed class RequestResult<out E: Any>(open val data: E? = null){
     class Loading<E : Any>() : RequestResult<E>()
@@ -11,6 +13,26 @@ fun <I: Any, O:Any> RequestResult<I>.map(mapper: (I) -> O): RequestResult<O> {
         is RequestResult.Success -> RequestResult.Success(mapper(data))
         is RequestResult.Error -> RequestResult.Error(code = code, message = message)
         is RequestResult.Loading -> RequestResult.Loading()
+    }
+}
+
+fun <I : Any?, O : Any> RequestResultAPI<I>.toRequestResult(
+    successAction: (RequestResultAPI.Success<I>) -> RequestResult<O>,
+    errorAction: (RequestResultAPI.Error) -> RequestResult<O> = {
+        RequestResult.Error(message = it.message, code = it.code)
+    },
+    exceptionAction: (RequestResultAPI.Exception) -> RequestResult<O> = {
+        RequestResult.Error(error = it.throwable)
+    },
+    loadingAction: (RequestResultAPI.Loading) -> RequestResult<O> = {
+        RequestResult.Loading()
+    }
+): RequestResult<O> {
+    return when (this) {
+        is RequestResultAPI.Error -> errorAction(this)
+        is RequestResultAPI.Exception -> exceptionAction(this)
+        is RequestResultAPI.Loading -> loadingAction(this)
+        is RequestResultAPI.Success -> successAction(this)
     }
 }
 

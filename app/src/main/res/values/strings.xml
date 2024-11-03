@@ -1,14 +1,13 @@
 <resources>
     <string name="app_name">AutoserviceMobile</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="cart_title">Корзина</string>
     <string name="registrations_title">Записи и заявки</string>
     <string name="home_title">Главная</string>
     <string name="loyalty_title">Программа лояльности</string>
     <string name="loyalty_nav_title">Бонусы</string>
     <string name="profile_title">Профиль</string>
+    <string name="cars_title">Мои автомобили</string>
+    <string name="user_data_title">Мои данные</string>
     <string name="services_title">Услуги</string>
     <string name="to_cart">В корзину</string>
     <string name="from_cart">Удалить</string>

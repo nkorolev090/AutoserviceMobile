@@ -1,8 +1,8 @@
 package com.project.autoservicemobile
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -45,5 +45,17 @@ class MainActivity : AppCompatActivity() {
     private fun Context.hideKeyboard(view: View) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun goPreviousFragment(){
+        if(supportFragmentManager.backStackEntryCount > 0){
+            supportFragmentManager.popBackStack()
+        }
+        else{
+            Log.w(TAG, "backStack is empty")
+        }
+    }
+    companion object{
+        private const val TAG = "MAIN_ACTIVITY"
     }
 }

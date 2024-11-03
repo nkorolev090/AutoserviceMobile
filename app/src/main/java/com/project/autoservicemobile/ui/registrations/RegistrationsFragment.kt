@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.project.autoservicemobile.MainActivity
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
@@ -64,6 +66,10 @@ class RegistrationsFragment : Fragment() {
             })
 
             registrationsRecycler.layoutManager = LinearLayoutManager(context)
+            val dividerItemDecoration =
+                DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
+            dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.recycler_divider))
+            registrationsRecycler.addItemDecoration(dividerItemDecoration)
             registrationsRecycler.adapter = RegistrationsRecyclerAdapter{
                 openRegistrationDetails(it)
             }

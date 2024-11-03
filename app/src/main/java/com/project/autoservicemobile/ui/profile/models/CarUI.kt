@@ -3,6 +3,7 @@ package com.project.autoservicemobile.ui.profile.models
 import com.project.autoservicedata.car.models.Car
 
 data class CarUI (
+    val id: Int,
     val model: String,
     val color: String,
     val brand: String,
@@ -13,6 +14,7 @@ data class CarUI (
 
 fun Car.toCarUI():CarUI =
     CarUI(
+        id = id,
         model = model,
         color = color,
         brand = brand,

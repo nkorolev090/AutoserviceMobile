@@ -17,7 +17,12 @@ import javax.inject.Inject
 class CarsViewModel @Inject constructor(
     private val carRepository: CarRepository
 ): BaseViewModel() {
+
     val cars = MutableLiveData<RequestResult<List<CarUI>>>().apply {
+        value = RequestResult.Loading()
+    }
+
+    val defaultCar = MutableLiveData<RequestResult<CarUI>>().apply {
         value = RequestResult.Loading()
     }
 
@@ -27,4 +32,8 @@ class CarsViewModel @Inject constructor(
         request = { carRepository.getCars() },
         mapper = { result -> result.map { it.map { car -> car.toCarUI() } }}
     )
+
+    fun setDefaultCar(selectedCar: CarUI, coroutinesErrorHandler: CoroutinesErrorHandler){
+
+    }
 }

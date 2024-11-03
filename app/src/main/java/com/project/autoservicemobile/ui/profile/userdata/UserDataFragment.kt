@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.project.autoservicemobile.MainActivity
+import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentUserDataBinding
@@ -58,6 +60,11 @@ class UserDataFragment : Fragment(), AuthenticatedListener {
             }
         })
     }
+
+    override fun onNavigateToHomeFragment() {
+        (requireActivity() as MainActivity).navController.navigate(R.id.action_navigation_userdata_to_navigation_home)
+    }
+
     private fun setup() {
         with(binding){
             personalInfoText.text = _viewModel.personal_infoText

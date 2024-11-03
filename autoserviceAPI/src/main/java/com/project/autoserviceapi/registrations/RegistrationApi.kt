@@ -11,12 +11,18 @@ import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.create
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 interface RegistrationApi {
     @GET("getRegistrations")
     suspend fun getRegistrations(): Response<List<RegistrationDTO>>
 
+    @POST("PostRegistration")
+    suspend fun createRegistration(
+        @Body registration: RegistrationDTO
+    ): Response<RegistrationDTO>
 }
 
 fun RegistrationApi(
@@ -24,7 +30,7 @@ fun RegistrationApi(
     okHttpClient: OkHttpClient? = null,
     json: Json? = null,
     tokenManager: TokenManager?
-): RegistrationApi{
+): RegistrationApi {
     return retrofit(baseUrl, okHttpClient, json, tokenManager).create()
 }
 

@@ -1,21 +1,17 @@
 package com.project.autoservicedata.registration.models
 
 import com.project.autoserviceapi.registrations.models.RegistrationDTO
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.project.autoservicedata.cart.models.Slot
+import com.project.autoservicedata.cart.models.toSlot
 
 data class Registration(
-    val id: Int,
-    val carId: Int,
-    val carName: String?,
-    val reg_date: String?,
-    val info: String?,
-    val status: RegStatusEnum,
-    val clientId: Int?,
-    val regPrice: Double?,
+    val registration: RegistrationData,
+    val slots: List<Slot>,
 )
 
 
-fun RegistrationDTO.toRegistration() : Registration{
-    TODO("Not yet implemented")
-}
+fun RegistrationDTO.toRegistration(): Registration
+= Registration(
+    registration = this.registration.toRegistrationData(),
+    slots = this.slots.map { it.toSlot() }
+)

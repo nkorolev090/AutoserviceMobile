@@ -66,6 +66,9 @@ class SignInOrUpBottomSheetDialog(private val authenticatedListener: Authenticat
             }
 
             goHomeBtn.text = _viewModel.goHomeBtn
+            goHomeBtn.setOnClickListener {
+                authenticatedListener.onNavigateToHomeFragment()
+            }
 
             descriptionSignInText.text = _viewModel.signInDescription
             descriptionSignUpText.text = _viewModel.signUpDescription

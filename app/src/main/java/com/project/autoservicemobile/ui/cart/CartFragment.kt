@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.autoservicemobile.MainActivity
+import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.AuthenticatedListener
+import com.project.autoservicemobile.common.BaseFragment
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentCartBinding
 import com.project.autoservicemobile.ui.home.NewsRecyclerAdapter
@@ -18,7 +21,7 @@ import com.project.common.data.StatusCodeEnum
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CartFragment : Fragment(), AuthenticatedListener {
+class CartFragment : BaseFragment(), AuthenticatedListener {
 
     private var _binding: FragmentCartBinding? = null
 
@@ -41,11 +44,7 @@ class CartFragment : Fragment(), AuthenticatedListener {
 
     override fun onResume() {
         super.onResume()
-        _viewModel.isAuthenticated(object : CoroutinesErrorHandler {
-            override fun onError(message: String) {
-                Log.d("SignInBottomSheetDialog", "Error! $message")
-            }
-        })
+        _viewModel.isAuthenticated(coroutinesErrorHandler)
     }
 
     override fun onPause() {
@@ -54,7 +53,11 @@ class CartFragment : Fragment(), AuthenticatedListener {
     }
 
     override fun onAuthenticated() {
-        //getCartData
+        loadCart()
+    }
+
+    override fun onNavigateToHomeFragment() {
+        (requireActivity() as MainActivity).navController.navigate(R.id.action_navigation_cart_to_navigation_home)
     }
 
     private fun setup(){
@@ -70,54 +73,22 @@ class CartFragment : Fragment(), AuthenticatedListener {
                _viewModel.onApplyPromocodeClick()
            }
 
+           carSelectContainer.setOnClickListener{
+               navigateToCars()
+           }
+
            createRegBtn.text = _viewModel.createRegBtnText
            createRegBtn.setOnClickListener{_ ->
-               _viewModel.onCreateRegistrationClick()
+               _viewModel.createRegistration(coroutinesErrorHandler)
            }
 
            cartRecycler.layoutManager = LinearLayoutManager(context)
            cartRecycler.adapter = CartRecyclerAdapter{
                _viewModel.removeBreakdownFromCart(
                    it.slot.service!!.id,
-                   object : CoroutinesErrorHandler {
-                       override fun onError(message: String) {
-                           Log.d("SignInBottomSheetDialog", "Error! $message")
-                       }
-                   })
+                   coroutinesErrorHandler)
            }
 
-//           _viewModel.cartItems.observe(viewLifecycleOwner){
-//               when (it) {
-//                   is RequestResult.Error -> {
-//                       //trobber.visibility = View.GONE
-//
-////                       if(_errorPage == null) {
-////                           showErrorPage(StatusCodeEnum.CONNECTION_TIMED_OUT)
-////                       }
-//                   }
-//
-//                   is RequestResult.Loading -> {
-////                       if(_errorPage != null){
-////                           removeErrorPage()
-////                       }
-////                       trobber.visibility = View.VISIBLE
-//                   }
-//
-//                   is RequestResult.Success -> {
-////                       if(_errorPage != null){
-////                           removeErrorPage()
-////                       }
-////                       trobber.visibility = View.GONE
-////
-////                       if(newsRecycler.childCount == 0){
-////                           startAnims()
-////                       }
-//
-//                       (cartRecycler.adapter as CartRecyclerAdapter).items = it.data
-//                       cartRecycler.adapter?.notifyDataSetChanged()
-//                   }
-//               }
-//           }
 
            _viewModel.cart.observe(viewLifecycleOwner){
                when (it) {
@@ -155,6 +126,47 @@ class CartFragment : Fragment(), AuthenticatedListener {
                    }
                }
            }
+
+           _viewModel.defaultCar.observe(viewLifecycleOwner){
+               when (it) {
+                   is RequestResult.Error -> {
+                       //trobber.visibility = View.GONE
+
+//                       if(_errorPage == null) {
+//                           showErrorPage(StatusCodeEnum.CONNECTION_TIMED_OUT)
+//                       }
+                   }
+
+                   is RequestResult.Loading -> {
+//                       if(_errorPage != null){
+//                           removeErrorPage()
+//                       }
+//                       trobber.visibility = View.VISIBLE
+                   }
+
+                   is RequestResult.Success -> {
+//                       if(_errorPage != null){
+//                           removeErrorPage()
+//                       }
+//                       trobber.visibility = View.GONE
+//
+//                       if(newsRecycler.childCount == 0){
+//                           startAnims()
+//                       }
+                       carTitle.text = it.data.br_mod
+                       carDescription.text = it.data.number
+                   }
+               }
+           }
+
+           _viewModel.createdRegistration.observe(viewLifecycleOwner){
+               when{
+                   it is RequestResult.Success ->{
+                       _viewModel.updateCart(coroutinesErrorHandler)
+                       _viewModel.createdRegistration.postValue(RequestResult.Loading())
+                   }
+               }
+           }
        }
 
         _viewModel.isAuth.observe(viewLifecycleOwner){
@@ -162,13 +174,15 @@ class CartFragment : Fragment(), AuthenticatedListener {
                 openSignBottomSheet()
             }
             if(it is RequestResult.Success){
-                _viewModel.updateCart(object : CoroutinesErrorHandler {
-                    override fun onError(message: String) {
-                        Log.d("SignInBottomSheetDialog", "Error! $message")
-                    }
-                })
+                loadCart()
             }
         }
+    }
+
+    private fun loadCart(){
+        _viewModel.updateCart(coroutinesErrorHandler)
+
+        _viewModel.updateDefaultCar(coroutinesErrorHandler)
     }
 
     private fun openSignBottomSheet() {
@@ -178,6 +192,10 @@ class CartFragment : Fragment(), AuthenticatedListener {
             requireActivity().supportFragmentManager,
             SignInOrUpBottomSheetDialog.TAG
         )
+    }
+
+    private fun navigateToCars(){
+        (requireActivity() as MainActivity).navController.navigate(R.id.action_navigation_cart_to_carsFragment)
     }
 
     override fun onDestroyView() {
