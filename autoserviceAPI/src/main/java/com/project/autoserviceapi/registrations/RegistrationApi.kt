@@ -2,6 +2,7 @@ package com.project.autoserviceapi.registrations
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.project.autoserviceapi.registrations.models.RegistrationDTO
+import com.project.autoserviceapi.registrations.models.RegistrationDataDTO
 import com.project.autoserviceapi.utils.AutoserviceApiKeyInterceptor
 import com.project.token.TokenManager
 import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
@@ -14,6 +15,8 @@ import retrofit2.create
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Query
 
 interface RegistrationApi {
     @GET("getRegistrations")
@@ -22,7 +25,12 @@ interface RegistrationApi {
     @POST("PostRegistration")
     suspend fun createRegistration(
         @Body registration: RegistrationDTO
-    ): Response<RegistrationDTO>
+    ): Response<RegistrationDataDTO>
+
+    @PUT("CloseRegistration")
+    suspend fun closeRegistration(
+        @Query("id") registrationId: Int
+    ): Response<Int>
 }
 
 fun RegistrationApi(

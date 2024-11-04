@@ -137,10 +137,13 @@
         tools:text="Записи и заявки" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/registrationsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registrationsTitle" />
@@ -154,7 +157,7 @@
         android:background="@drawable/primary_bg_rounded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView">
+        app:layout_constraintTop_toBottomOf="@+id/registrationsRecyclerView">
 
         <ImageView
             android:id="@+id/locationIcon"
@@ -188,7 +191,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/locationTitle"
-            tools:text="Просмотрите сервисы поблизости" />
+            tools:text="Найти сервис поблизости" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

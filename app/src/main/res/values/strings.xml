@@ -6,6 +6,8 @@
     <string name="loyalty_title">Программа лояльности</string>
     <string name="loyalty_nav_title">Бонусы</string>
     <string name="profile_title">Профиль</string>
+    <string name="location_title">Автосервисы рядом</string>
+    <string name="location_description">Найти сервис поблизости</string>
     <string name="cars_title">Мои автомобили</string>
     <string name="user_data_title">Мои данные</string>
     <string name="services_title">Услуги</string>
@@ -20,4 +22,6 @@
     <string name="no_slots_text">Для выбранной даты нет доступного времени для записи</string>
     <string name="slots_set_date_text">Выбрать другую дату</string>
     <string name="error_text">Ошибка</string>
+
+    <string name="close_registration_text">Отменить запись</string>
 </resources>

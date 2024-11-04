@@ -13,7 +13,6 @@ data class ServiceUI(
     var inFavourites: Boolean = false,
     var inCart: Boolean = false,
     var inWarranty: Boolean = false,
-    val mechanicName: String? = null,
 )
 
 fun Breakdown.toServiceUI(): ServiceUI {

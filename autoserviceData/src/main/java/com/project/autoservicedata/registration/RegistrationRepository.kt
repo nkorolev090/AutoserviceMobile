@@ -27,7 +27,7 @@ class RegistrationRepository @Inject constructor(
             it.toRequestResult(
                 { result ->
                     if (result.data.isEmpty().not()) {
-                        RequestResult.Success(result.data.map { dto -> dto.toRegistration() })
+                        RequestResult.Success(result.data.map { dto -> dto.toRegistration() }.reversed())
                     } else {
                         RequestResult.Error(
                             code = StatusCodeEnum.NO_CONTENT,
@@ -65,6 +65,18 @@ class RegistrationRepository @Inject constructor(
             it.toRequestResult(
                 {
                     RequestResult.Success(true)
+                }
+            )
+        }
+    }
+
+    suspend fun closeRegistration(registrationId: Int): Flow<RequestResult<Boolean>> {
+        return apiRequestFlow {
+            api.closeRegistration(registrationId)
+        }.map {
+            it.toRequestResult(
+                {
+                    RequestResult.Success(true) //mapping statusCode!!!
                 }
             )
         }

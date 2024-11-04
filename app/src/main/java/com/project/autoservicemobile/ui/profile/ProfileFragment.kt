@@ -7,17 +7,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.project.autoservicemobile.MainActivity
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.AuthenticatedListener
+import com.project.autoservicemobile.common.BaseFragment
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
+import com.project.autoservicemobile.common.DismissListener
 import com.project.autoservicemobile.databinding.FragmentProfileBinding
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
+import com.project.autoservicemobile.ui.registrations.RegistrationsRecyclerAdapter
+import com.project.autoservicemobile.ui.registrations.details.RegistrationDetailsBottomSheetDialog
+import com.project.autoservicemobile.ui.registrations.models.RegistrationUI
 import com.project.common.data.RequestResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment(), AuthenticatedListener {
+class ProfileFragment : BaseFragment(), AuthenticatedListener, DismissListener {
 
     private var _binding: FragmentProfileBinding? = null
 
@@ -43,6 +51,19 @@ class ProfileFragment : Fragment(), AuthenticatedListener {
         with(binding) {
             favoritesTitle.setText(R.string.favorites_text)
             carsTitle.setText(R.string.cars_text)
+            registrationsTitle.setText(R.string.registrations_title)
+            locationTitle.setText(R.string.location_title)
+            locationDescription.setText((R.string.location_description))
+
+            registrationsRecyclerView.layoutManager = LinearLayoutManager(context)
+            (registrationsRecyclerView.layoutManager as LinearLayoutManager).orientation = LinearLayoutManager.HORIZONTAL
+            val dividerItemDecoration =
+                DividerItemDecoration(requireContext(), RecyclerView.HORIZONTAL)
+            dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.recycler_divider))
+            registrationsRecyclerView.addItemDecoration(dividerItemDecoration)
+            registrationsRecyclerView.adapter = RegistrationsRecyclerAdapter {
+                openRegistrationDetails(it)
+            }
 
             appBar.setRightOnClickListener{
                 navigateToUserData()
@@ -75,17 +96,21 @@ class ProfileFragment : Fragment(), AuthenticatedListener {
                 }
             }
 
-
+            _viewModel.registrations.observe(viewLifecycleOwner){
+                when{
+                    it is RequestResult.Success -> {
+                        (registrationsRecyclerView.adapter as RegistrationsRecyclerAdapter).items = it.data
+                        registrationsRecyclerView.adapter!!.notifyDataSetChanged()
+                    }
+                }
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        _viewModel.isAuthenticated(object : CoroutinesErrorHandler {
-            override fun onError(message: String) {
-                Log.d("ProfileFragment", "Error! $message")
-            }
-        })
+        _viewModel.isAuthenticated(coroutinesErrorHandler)
+        _viewModel.updateRegistrations(coroutinesErrorHandler)
     }
 
     private fun openSignBottomSheet() {
@@ -107,6 +132,14 @@ class ProfileFragment : Fragment(), AuthenticatedListener {
 //                Log.d("SignInBottomSheetDialog", "Error! $message")
 //            }
 //        })
+    }
+    private fun openRegistrationDetails(registration: RegistrationUI){
+        val modalBottomSheet = RegistrationDetailsBottomSheetDialog(registration, this)
+        modalBottomSheet.show(requireActivity().supportFragmentManager, RegistrationDetailsBottomSheetDialog.TAG)
+    }
+
+    override fun onChildDismiss() {
+        _viewModel.updateRegistrations(coroutinesErrorHandler)
     }
 
     override fun onNavigateToHomeFragment() {

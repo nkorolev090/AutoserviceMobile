@@ -11,6 +11,7 @@ import com.project.autoservicedata.registration.models.RegStatusEnum
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.CarouselRecyclerAdapter
 import com.project.autoservicemobile.ui.registrations.models.RegistrationUI
+import com.project.autoservicemobile.ui.registrations.models.toStatusColor
 
 class RegistrationsRecyclerAdapter (private val onClick: (RegistrationUI) -> Unit) : RecyclerView
 .Adapter<RegistrationsRecyclerAdapter.RegistrationsViewHolder>() {
@@ -53,12 +54,3 @@ class RegistrationsRecyclerAdapter (private val onClick: (RegistrationUI) -> Uni
 
     override fun getItemCount() = items.size
 }
-
-private fun RegStatusEnum.toStatusColor(context : Context): Int =
-    when (this) {
-        RegStatusEnum.PROCESSING -> context.getColor(R.color.yellow_gray_300)
-        RegStatusEnum.APPROVED -> context.getColor(R.color.green_gray_300)
-        RegStatusEnum.ABORTED -> context.getColor(R.color.red_gray_300)
-        RegStatusEnum.COMPLETED -> context.getColor(R.color.teal_gray_200)
-        RegStatusEnum.WARRANTY_WORK -> context.getColor(R.color.orange_gray_300)
-    }

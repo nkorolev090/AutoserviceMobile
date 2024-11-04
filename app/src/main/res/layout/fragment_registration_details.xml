@@ -39,48 +39,61 @@
             app:layout_constraintTop_toBottomOf="@id/puller" />
 
         <TextView
-            android:id="@+id/completeOnText"
+            android:id="@+id/statusText"
+            style="@style/textPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="textEnd"
+            android:textColor="@color/green_gray_300"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/numberText"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="в обработке" />
+
+        <TextView
+            android:id="@+id/numberText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/be_vietnam_pro_regular"
-            tools:text="Запись от 10 августа"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_title" />
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            tools:text="Запись от 10 августа" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/regServicesRecycler"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginHorizontal="20dp"
+            android:layout_height="370dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/totalText"
-            tools:listitem="@layout/li_cart_item" />
+            app:layout_constraintTop_toBottomOf="@id/regStartOrFinishDate"
+            tools:listitem="@layout/li_registration_services_item" />
 
         <TextView
             android:id="@+id/totalText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/be_vietnam_pro_medium"
-            tools:text="Итог"
+            tools:text="Стоимость"
             android:textColor="?attr/colorSecondaryVariant"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/completeOnText"
+            app:layout_constraintTop_toBottomOf="@+id/numberText"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
             android:id="@+id/totalValueText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:fontFamily="@font/be_vietnam_pro_regular"
             tools:text="50$"
             android:textColor="?attr/colorOnSecondary"
@@ -88,6 +101,65 @@
             app:layout_constraintBottom_toBottomOf="@+id/totalText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/totalText" />
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:background = "@drawable/secondary_bg"
+            app:layout_constraintTop_toBottomOf="@id/totalText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/regStartOrFinishDate"
+            style="@style/textPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            tools:text="Ждем вас 10.10.2024 в 10:00" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/closeBtnContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/secondary_bg_top_rounded"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/regServicesRecycler">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/closeRegistrationBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="20dp"
+                android:backgroundTint="?attr/colorOnPrimary"
+                android:fontFamily="@font/inter_medium"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textFontWeight="1000"
+                android:textSize="16sp"
+                app:cornerRadius="15dp"
+                app:strokeColor="?attr/colorOnSecondary"
+                app:strokeWidth="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Отменить запись" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

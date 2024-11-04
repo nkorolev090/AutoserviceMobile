@@ -21,50 +21,7 @@ import javax.inject.Inject
 class RegistrationsViewModel  @Inject constructor(
     private val _registrationRepository: RegistrationRepository
 ) : BaseViewModel() {
-//    private var _registrations: List<RegistrationUI> = listOf(
-//        RegistrationUI(
-//            "Замена масла",
-//            "Завершена 30 августа",
-//            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-//            "3000$rubleSimbol"
-//        ),
-//        RegistrationUI(
-//            "Замена масла",
-//            "Завершена 30 августа",
-//            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-//            "3000$rubleSimbol"
-//        ),
-//        RegistrationUI(
-//            "Замена масла",
-//            "Завершена 30 августа",
-//            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-//            "3000$rubleSimbol"
-//        ),
-//        RegistrationUI(
-//            "Замена масла",
-//            "Завершена 30 августа",
-//            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-//            "3000$rubleSimbol"
-//        ),
-//        RegistrationUI(
-//            "Замена масла",
-//            "Завершена 30 августа",
-//            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-//            "3000$rubleSimbol"
-//        ),
-//        RegistrationUI(
-//            "Замена масла",
-//            "Завершена 30 августа",
-//            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-//            "3000$rubleSimbol"
-//        ),
-//        RegistrationUI(
-//            "Замена масла",
-//            "Завершена 30 августа",
-//            "https://part4usa.ru/upload/iblock/593/3logakj6ro9o2w3r08uvhr1gqvpg4kxv.jpg",
-//            "3000$rubleSimbol"
-//        )
-//        )
+
     val registrations = MutableLiveData<RequestResult<List<RegistrationUI>>>().apply {
         value = RequestResult.Loading()
     }

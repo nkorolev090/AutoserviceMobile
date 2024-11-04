@@ -10,13 +10,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.project.autoservicemobile.MAIN
 import com.project.autoservicemobile.R
-import com.project.autoservicemobile.ui.services.models.ServiceUI
+import com.project.autoservicemobile.ui.cart.models.SlotUI
 import com.squareup.picasso.Picasso
 
 class RegServicesRecyclerAdapter (
-    private val items: List<ServiceUI>,
-    private val onWarrantyClick: (ServiceUI) -> Unit,
-    private val onFavoritesClick: (ServiceUI) -> Unit) : RecyclerView
+    private val items: List<SlotUI>,
+    private val onWarrantyClick: (SlotUI) -> Unit,
+    private val onFavoritesClick: (SlotUI) -> Unit) : RecyclerView
 .Adapter<RegServicesRecyclerAdapter.RegServicesViewHolder>() {
 
     class RegServicesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,49 +25,29 @@ class RegServicesRecyclerAdapter (
         private val priceTextView: TextView = itemView.requireViewById(R.id.priceText)
         private val mechanicTextView: TextView = itemView.requireViewById(R.id.mechanicText)
         private val imageView: ImageView = itemView.requireViewById(R.id.serviceImage)
-        private var favoritesBtn: ImageView = itemView.requireViewById(R.id.favourites_btn)
-        private var warrantyButton: Button = itemView.requireViewById(R.id.cartBtn)
+        //private var favoritesBtn: ImageView = itemView.requireViewById(R.id.favourites_btn)
+        private var warrantyButton: Button = itemView.requireViewById(R.id.warrantyBtn)
 
-        private val toWarranty = "Гарантийное обращение"
-        private val fromWarranty = "Обращение отправлено"
+        private val toWarranty = "Узнать больше"
 
-        fun bind(item: ServiceUI, onToWarrantyClick: (ServiceUI) -> Unit, onFavoritesClick: (ServiceUI) -> Unit){
-            titleTextView.text = item.title
-            priceTextView.text = item.priceText
-            mechanicTextView.text = item.mechanicName
-
-            if(item.inWarranty){
-                warrantyButton.text = fromWarranty
-            }else{
-                warrantyButton.text = toWarranty
-            }
+        fun bind(item: SlotUI, onToWarrantyClick: (SlotUI) -> Unit, onFavoritesClick: (SlotUI) -> Unit){
+            titleTextView.text = item.service?.title
+            priceTextView.text = item.service?.priceText
+            mechanicTextView.text = item.mechanicNameText
+            warrantyButton.text = toWarranty
 
             warrantyButton.setOnClickListener{
-                onWarrantyBtnClick(item)
                 onToWarrantyClick(item)
             }
 
-            favoritesBtn.setOnClickListener{onFavoritesClick(item)}
+            //favoritesBtn.setOnClickListener{onFavoritesClick(item)}
 
-            Picasso.get().load(item.imageUrl).into(imageView)
-        }
-
-        private fun onWarrantyBtnClick(service: ServiceUI){
-            //val resId: TypedValue = TypedValue()
-
-            if(service.inWarranty){
-                warrantyButton.text = toWarranty
-                //MAIN.applicationContext.theme.resolveAttribute(
-                // com.google.android.material.R.attr.colorOnSecondary,  resId, true )
-                warrantyButton.backgroundTintList = ContextCompat.getColorStateList(MAIN.applicationContext, R.color.blue_300)
+            if(item.service?.imageUrl != null) {
+                Picasso.get().load(item.service?.imageUrl).into(imageView)
             }
             else{
-                warrantyButton.text = fromWarranty
-                //MAIN.applicationContext.theme.resolveAttribute(
-                //com.google.android.material.R.attr.colorPrimary,  resId, true )
-                warrantyButton.backgroundTintList = ContextCompat.getColorStateList(MAIN.applicationContext, R.color.gray_400)
+                imageView.setImageResource(R.drawable.ic_trobber)
             }
-
         }
     }
 

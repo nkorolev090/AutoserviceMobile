@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.autoservicemobile.MainActivity
 import com.project.autoservicemobile.R
+import com.project.autoservicemobile.common.BaseFragment
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
+import com.project.autoservicemobile.common.DismissListener
 import com.project.autoservicemobile.databinding.FragmentRegistrationsBinding
 import com.project.autoservicemobile.ui.customViews.ErrorPage
 import com.project.autoservicemobile.ui.registrations.details.RegistrationDetailsBottomSheetDialog
@@ -25,7 +27,7 @@ import com.project.common.data.StatusCodeEnum
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegistrationsFragment : Fragment() {
+class RegistrationsFragment : BaseFragment(), DismissListener {
 
     private var _binding: FragmentRegistrationsBinding? = null
 
@@ -50,13 +52,7 @@ class RegistrationsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        _viewModel.updateRegistrations(
-            object : CoroutinesErrorHandler {
-                override fun onError(message: String) {
-                    Log.d(SlotsBottomSheetDialog.TAG, "Error! $message")
-                }
-            }
-        )
+        _viewModel.updateRegistrations(coroutinesErrorHandler)
     }
 
     private fun setup(){
@@ -73,6 +69,7 @@ class RegistrationsFragment : Fragment() {
             registrationsRecycler.adapter = RegistrationsRecyclerAdapter{
                 openRegistrationDetails(it)
             }
+
             _viewModel.registrations.observe(viewLifecycleOwner){
                 when (it) {
                     is RequestResult.Error -> {
@@ -140,6 +137,10 @@ class RegistrationsFragment : Fragment() {
         }
     }
 
+    override fun onChildDismiss() {
+        _viewModel.updateRegistrations(coroutinesErrorHandler)
+    }
+
     private fun removeErrorPage(){
         binding.contentContainer.removeView(_errorPage)
         _errorPage = null
@@ -150,7 +151,7 @@ class RegistrationsFragment : Fragment() {
     }
 
     private fun openRegistrationDetails(registration: RegistrationUI){
-        val modalBottomSheet = RegistrationDetailsBottomSheetDialog()
+        val modalBottomSheet = RegistrationDetailsBottomSheetDialog(registration, this)
         modalBottomSheet.show(requireActivity().supportFragmentManager, RegistrationDetailsBottomSheetDialog.TAG)
     }
 
