@@ -4,7 +4,9 @@
     <string name="registrations_title">Записи и заявки</string>
     <string name="home_title">Главная</string>
     <string name="loyalty_title">Программа лояльности</string>
+
     <string name="loyalty_nav_title">Бонусы</string>
+
     <string name="profile_title">Профиль</string>
     <string name="location_title">Автосервисы рядом</string>
     <string name="location_description">Найти сервис поблизости</string>
@@ -16,6 +18,9 @@
     <string name="load_more_btn_text">Узнать больше</string>
     <string name="cars_text">Ваши авто</string>
     <string name="favorites_text">Избранное</string>
+    <string name="faq">Часто задаваемые запросы</string>
+    <string name="call">Позвонить</string>
+    <string name="email">Написать</string>
 
     <string name="no_connection_text">Нет соединения с интернетом</string>
     <string name="no_content_text">Ничего не найдено</string>

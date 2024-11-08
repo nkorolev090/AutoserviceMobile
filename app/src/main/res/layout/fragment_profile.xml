@@ -136,33 +136,48 @@
         app:layout_constraintTop_toBottomOf="@+id/topContainer"
         tools:text="Записи и заявки" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/registrationsRecyclerView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recyclerContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:background="?attr/colorOnPrimary"
+        android:background="@drawable/primary_bg_left_rounded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registrationsTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/registrationsTitle">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/registrationsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:paddingStart="10dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:background="@drawable/primary_bg_left_rounded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/middleContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
         android:padding="15dp"
         android:background="@drawable/primary_bg_rounded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registrationsRecyclerView">
+        app:layout_constraintTop_toBottomOf="@+id/recyclerContainer">
 
         <ImageView
             android:id="@+id/locationIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_location"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -195,28 +210,14 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bottomContainer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="65dp"
-        android:background="@drawable/primary_bg_top_rounded"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/middleContainer">
-
-        <com.project.autoservicemobile.ui.customViews.ProfileNavigationView
+        <com.project.autoservicemobile.ui.profile.views.NavigationList
             android:id="@+id/navigationView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:textTitle="ComposeView"
+            android:layout_height="0dp"
+            android:layout_marginBottom="55dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/middleContainer"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

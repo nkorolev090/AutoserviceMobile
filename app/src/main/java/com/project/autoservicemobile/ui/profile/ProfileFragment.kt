@@ -15,6 +15,7 @@ import com.project.autoservicemobile.common.BaseFragment
 import com.project.autoservicemobile.common.DismissListener
 import com.project.autoservicemobile.databinding.FragmentProfileBinding
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
+import com.project.autoservicemobile.ui.profile.models.NavigationItemEnum
 import com.project.autoservicemobile.ui.registrations.RegistrationsRecyclerAdapter
 import com.project.autoservicemobile.ui.registrations.details.RegistrationDetailsBottomSheetDialog
 import com.project.autoservicemobile.ui.registrations.models.RegistrationUI
@@ -51,7 +52,11 @@ class ProfileFragment : BaseFragment(), AuthenticatedListener, DismissListener {
             registrationsTitle.setText(R.string.registrations_title)
             locationTitle.setText(R.string.location_title)
             locationDescription.setText((R.string.location_description))
-            navigationView.navigationData.value = "NavigationView"
+            navigationView.navigationMutableList.value = listOf(
+                NavigationItemEnum.FAQ,
+                NavigationItemEnum.CALL,
+                NavigationItemEnum.EMAIL
+            )
 
             registrationsRecyclerView.layoutManager = LinearLayoutManager(context)
             (registrationsRecyclerView.layoutManager as LinearLayoutManager).orientation = LinearLayoutManager.HORIZONTAL
