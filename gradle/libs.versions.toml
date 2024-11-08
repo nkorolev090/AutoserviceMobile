@@ -31,6 +31,7 @@ logging-interceptor = "4.12.0"
 picasso = "2.71828"
 uiAndroid = "1.7.5"
 material3Android = "1.2.0-rc01"
+facebookShimmer = "0.5.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -68,6 +69,7 @@ androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiAndroid" }
+facebook-shimmer = {group = "com.facebook.shimmer", name = "shimmer", version.ref = "facebookShimmer"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -78,4 +80,3 @@ dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "da
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-

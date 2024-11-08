@@ -85,6 +85,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.picasso)
+    implementation(libs.facebook.shimmer)
 
     implementation(project(":autoserviceAPI"))
     implementation(project(":newsAPI"))

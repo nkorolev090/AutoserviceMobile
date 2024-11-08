@@ -16,11 +16,13 @@
     <string name="to_cart">В корзину</string>
     <string name="from_cart">Удалить</string>
     <string name="load_more_btn_text">Узнать больше</string>
-    <string name="cars_text">Ваши авто</string>
     <string name="favorites_text">Избранное</string>
     <string name="faq">Часто задаваемые запросы</string>
     <string name="call">Позвонить</string>
     <string name="email">Написать</string>
+
+    <string name="default_car_title">Выбранное авто</string>
+    <string name="your_cars_text">Ваши авто</string>
 
     <string name="no_connection_text">Нет соединения с интернетом</string>
     <string name="no_content_text">Ничего не найдено</string>

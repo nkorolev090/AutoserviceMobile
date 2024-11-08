@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.autoservicemobile.MainActivity
+import com.project.autoservicemobile.common.BaseFragment
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentServicesBinding
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
@@ -19,7 +20,7 @@ import com.project.common.data.RequestResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ServicesFragment : Fragment() {
+class ServicesFragment : BaseFragment() {
 
     private var _binding: FragmentServicesBinding? = null
 
@@ -44,65 +45,61 @@ class ServicesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        _viewModel.updateServices(object : CoroutinesErrorHandler {
-            override fun onError(message: String) {
-                Log.d("HomeFragment", "Error! $message")
-            }
-        })
+        _viewModel.updateServices(coroutinesErrorHandler)
     }
 
     private fun setup() {
-        _viewModel.titleText.observe(viewLifecycleOwner) {
-            binding.textTitle.text = it
-        }
+        with(binding){
+            _viewModel.titleText.observe(viewLifecycleOwner) {
+                textTitle.text = it
+            }
 
-        binding.searchLayout.hint = _viewModel.searchInputHint
-        binding.searchInput.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                (requireActivity() as MainActivity).hideKeyboard()
+            searchLayout.hint = _viewModel.searchInputHint
+            searchInput.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                    (requireActivity() as MainActivity).hideKeyboard()
 
-                val query = binding.searchInput.text.toString()
+                    val query = searchInput.text.toString()
 
-                if (query == "") {
-                    _viewModel.updateServices(object : CoroutinesErrorHandler {
-                        override fun onError(message: String) {
-                            Log.d("HomeFragment", "Error! $message")
-                        }
-                    })
-                } else {
-                    _viewModel.getServicesByQuery(query, object : CoroutinesErrorHandler {
-                        override fun onError(message: String) {
-                            Log.d("HomeFragment", "Error! $message")
-                        }
-                    })
+                    if (query == "") {
+                        _viewModel.updateServices(coroutinesErrorHandler)
+                    } else {
+                        _viewModel.getServicesByQuery(query, coroutinesErrorHandler)
+                    }
+
                 }
+                false
+            })
 
-            }
-            false
-        })
+            servicesRecycler.layoutManager = LinearLayoutManager(context)
+            servicesRecycler.adapter = ServicesRecyclerAdapter({ item ->
+                if (item.inCart) { // remove from cart
+                    Log.d(TAG, "${item?.title}", )
+                    (servicesRecycler.adapter as ServicesRecyclerAdapter).onAddOrRemoveToCart(item)
+                } else { //open dialog to set slot
+                    openSlotsBottomSheetDialog(item)
+                }
+            }, { item ->
+                _viewModel.onFavoritesBtnClick(item)
+            })
 
-        binding.servicesRecycler.layoutManager = LinearLayoutManager(context)
-        binding.servicesRecycler.adapter = ServicesRecyclerAdapter({ item ->
-            if (item.inCart) { // remove from cart
-                Log.d(TAG, "${item?.title}", )
-                (binding.servicesRecycler.adapter as ServicesRecyclerAdapter).onAddOrRemoveToCart(item)
-            } else { //open dialog to set slot
-                openSlotsBottomSheetDialog(item)
-            }
-        }, { item ->
-            _viewModel.onFavoritesBtnClick(item)
-        })
-        _viewModel.services.observe(viewLifecycleOwner) {
-            when (it) {
-                is RequestResult.Error -> {}
-                is RequestResult.Loading -> {}
-                is RequestResult.Success -> {
-                    (binding.servicesRecycler.adapter as ServicesRecyclerAdapter).items = it.data
-                    binding.servicesRecycler.adapter?.notifyDataSetChanged()
+            _viewModel.services.observe(viewLifecycleOwner) {
+                when (it) {
+                    is RequestResult.Error -> {}
+                    is RequestResult.Loading -> {
+                        shimmerContainer.visibility = View.VISIBLE
+                        contentContainer.visibility = View.GONE
+                    }
+                    is RequestResult.Success -> {
+                        contentContainer.visibility = View.VISIBLE
+                        shimmerContainer.visibility = View.GONE
+
+                        (servicesRecycler.adapter as ServicesRecyclerAdapter).items = it.data
+                        servicesRecycler.adapter?.notifyDataSetChanged()
+                    }
                 }
             }
         }
-
     }
 
     private fun openSlotsBottomSheetDialog(service: ServiceUI) {

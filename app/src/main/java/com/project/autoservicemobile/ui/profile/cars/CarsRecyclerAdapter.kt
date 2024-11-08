@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.autoservicemobile.R
-import com.project.autoservicemobile.ui.cart.models.SlotUI
 import com.project.autoservicemobile.ui.profile.models.CarUI
 
 class CarsRecyclerAdapter(
@@ -20,8 +19,8 @@ class CarsRecyclerAdapter(
     // onDestroyView.
     class ServicesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val brandTextView: TextView = itemView.requireViewById(R.id.brandText)
-        private val modelTextView: TextView = itemView.requireViewById(R.id.modelText)
+        private val brandTextView: TextView = itemView.requireViewById(R.id.defaultCarBrandText)
+        private val modelTextView: TextView = itemView.requireViewById(R.id.defaultCarModelText)
         private val numberTextView: TextView = itemView.requireViewById(R.id.numberText)
 
         fun bind(

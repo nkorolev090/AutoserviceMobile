@@ -33,6 +33,13 @@ class CarsViewModel @Inject constructor(
         mapper = { result -> result.map { it.map { car -> car.toCarUI() } }}
     )
 
+    fun updateDefaultCar(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(
+        defaultCar,
+        coroutinesErrorHandler,
+        request = { carRepository.getDefaultCar() },
+        mapper = {data -> data.map { it.toCarUI() }}
+    )
+
     fun setDefaultCar(selectedCar: CarUI, coroutinesErrorHandler: CoroutinesErrorHandler){
 
     }

@@ -56,7 +56,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
-                android:id="@+id/brandText"
+                android:id="@+id/defaultCarBrandText"
                 style="@style/textPrimary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -74,11 +74,11 @@
                 android:layout_marginStart="6dp"
                 android:background="?attr/colorOnSecondary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/brandText"
+                app:layout_constraintStart_toEndOf="@id/defaultCarBrandText"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/modelText"
+                android:id="@+id/defaultCarModelText"
                 style="@style/textPrimary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/modelText"
+                app:layout_constraintStart_toEndOf="@id/defaultCarModelText"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="A111AA37" />
 
@@ -113,8 +113,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="65dp"
-        android:layout_marginHorizontal="5dp"
+        android:layout_marginBottom="55dp"
         android:paddingHorizontal="10dp"
         android:paddingTop="10dp"
         android:background="@drawable/primary_bg_top_rounded"
@@ -128,6 +127,7 @@
             style="@style/textPrimary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:textAlignment="textStart"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"

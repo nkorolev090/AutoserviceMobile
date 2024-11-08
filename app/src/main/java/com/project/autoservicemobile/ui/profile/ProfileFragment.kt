@@ -48,7 +48,7 @@ class ProfileFragment : BaseFragment(), AuthenticatedListener, DismissListener {
     private fun setup() {
         with(binding) {
             favoritesTitle.setText(R.string.favorites_text)
-            carsTitle.setText(R.string.cars_text)
+            carsTitle.setText(R.string.your_cars_text)
             registrationsTitle.setText(R.string.registrations_title)
             locationTitle.setText(R.string.location_title)
             locationDescription.setText((R.string.location_description))
