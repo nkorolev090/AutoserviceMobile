@@ -2,8 +2,6 @@ package com.project.autoservicemobile.ui.profile
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +12,6 @@ import com.project.autoservicemobile.MainActivity
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.BaseFragment
-import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.common.DismissListener
 import com.project.autoservicemobile.databinding.FragmentProfileBinding
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
@@ -54,6 +51,7 @@ class ProfileFragment : BaseFragment(), AuthenticatedListener, DismissListener {
             registrationsTitle.setText(R.string.registrations_title)
             locationTitle.setText(R.string.location_title)
             locationDescription.setText((R.string.location_description))
+            navigationView.navigationData.value = "NavigationView"
 
             registrationsRecyclerView.layoutManager = LinearLayoutManager(context)
             (registrationsRecyclerView.layoutManager as LinearLayoutManager).orientation = LinearLayoutManager.HORIZONTAL

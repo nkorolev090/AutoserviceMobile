@@ -1,3 +1,6 @@
+import com.android.builder.model.v2.models.Versions
+import com.android.ide.common.gradle.Version
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -8,6 +11,12 @@ plugins {
 android {
     namespace = "com.project.autoservicemobile"
     compileSdk = 34
+
+    buildFeatures.compose = true
+
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.0"
+    }
 
     defaultConfig {
         applicationId = "com.project.autoservicemobile"
@@ -25,9 +34,9 @@ android {
         buildConfigField("String", "CARS_API_BASE_URL", "\"api/Cars/\"")
         buildConfigField("String", "BREAKDOWNS_API_BASE_URL", "\"api/Breakdowns/\"")
         buildConfigField("String", "LOGIN_API_BASE_URL", "\"api/account/\"")
-        buildConfigField("String", "API_BASE_URL", "\"https://192.168.0.16:7130/\"")
+        //buildConfigField("String", "API_BASE_URL", "\"https://192.168.0.16:7130/\"")
         //buildConfigField("String", "API_BASE_URL", "\"https://192.168.1.205:7130/\"")
-        //buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8000/\"")
+        buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8000/\"")
     }
 
     buildTypes {
@@ -66,6 +75,10 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.dagger.hilt.android)
     implementation(project(":common"))
+    implementation(libs.androidx.runtime.android)
+    implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.ui.tooling.preview.android)
 
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.logging.interceptor)
