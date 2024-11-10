@@ -36,8 +36,6 @@ class RegistrationsFragment : BaseFragment(), DismissListener {
     private val binding get() = _binding!!
 
     private val _viewModel: RegistrationsViewModel by viewModels()
-
-    private var _errorPage: ErrorPage? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,8 +53,8 @@ class RegistrationsFragment : BaseFragment(), DismissListener {
         _viewModel.updateRegistrations(coroutinesErrorHandler)
     }
 
-    private fun setup(){
-        with(binding){
+    private fun setup() {
+        with(binding) {
             appBar.setLeftOnClickListener(View.OnClickListener {
                 onGoToHomeClick()
             })
@@ -66,73 +64,30 @@ class RegistrationsFragment : BaseFragment(), DismissListener {
                 DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
             dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.recycler_divider))
             registrationsRecycler.addItemDecoration(dividerItemDecoration)
-            registrationsRecycler.adapter = RegistrationsRecyclerAdapter{
+            registrationsRecycler.adapter = RegistrationsRecyclerAdapter {
                 openRegistrationDetails(it)
             }
 
-            _viewModel.registrations.observe(viewLifecycleOwner){
+            _viewModel.registrations.observe(viewLifecycleOwner) {
                 when (it) {
                     is RequestResult.Error -> {
                         Log.d(SlotsBottomSheetDialog.TAG, it.message.toString())
-                        if(_errorPage == null && it.code is StatusCodeEnum) {
-                            showErrorPage(it.code as StatusCodeEnum)
-                        }
-                        (registrationsRecycler.adapter as RegistrationsRecyclerAdapter).items = listOf()
+                        showErrorPage(it.code as? StatusCodeEnum, binding.contentContainer)
+
+                        (registrationsRecycler.adapter as RegistrationsRecyclerAdapter).items =
+                            listOf()
                         registrationsRecycler.adapter?.notifyDataSetChanged()
                     }
 
                     is RequestResult.Loading -> Log.d(TAG, "Loading")
                     is RequestResult.Success -> {
-                        if(_errorPage != null){
-                            removeErrorPage()
-                        }
-                        (registrationsRecycler.adapter as RegistrationsRecyclerAdapter).items = it.data
+                        removeErrorPage(binding.contentContainer)
+
+                        (registrationsRecycler.adapter as RegistrationsRecyclerAdapter).items =
+                            it.data
                         registrationsRecycler.adapter?.notifyDataSetChanged()
                     }
                 }
-            }
-        }
-
-    }
-
-    private fun showErrorPage(statusCode: StatusCodeEnum) {
-        when(statusCode){
-            StatusCodeEnum.CONNECTION_TIMED_OUT ->{
-                _errorPage = ErrorPage.NoConnection(requireContext())
-                val errorPage = _errorPage as ErrorPage.NoConnection
-                errorPage.id = View.generateViewId()
-
-                val layout = binding.contentContainer
-                val layoutParams = ConstraintLayout.LayoutParams(
-                    ConstraintLayout.LayoutParams.MATCH_PARENT,
-                    ConstraintLayout.LayoutParams.MATCH_PARENT)
-                layoutParams.topToTop = layout.id
-                layoutParams.startToStart = layout.id
-                layoutParams.endToEnd = layout.id
-                layoutParams.bottomToBottom = layout.id
-
-                errorPage.layoutParams = layoutParams
-                layout.addView(errorPage);
-            }
-            StatusCodeEnum.NO_CONTENT ->{
-                _errorPage = ErrorPage.NoContent(requireContext())
-                val errorPage = _errorPage as ErrorPage.NoContent
-                errorPage.id = View.generateViewId()
-
-                val layout = binding.contentContainer
-                val layoutParams = ConstraintLayout.LayoutParams(
-                    ConstraintLayout.LayoutParams.MATCH_PARENT,
-                    ConstraintLayout.LayoutParams.MATCH_PARENT)
-                layoutParams.topToTop = layout.id
-                layoutParams.startToStart = layout.id
-                layoutParams.endToEnd = layout.id
-                layoutParams.bottomToBottom = layout.id
-
-                errorPage.layoutParams = layoutParams
-                layout.addView(errorPage);
-            }
-            else -> {
-
             }
         }
     }
@@ -141,21 +96,19 @@ class RegistrationsFragment : BaseFragment(), DismissListener {
         _viewModel.updateRegistrations(coroutinesErrorHandler)
     }
 
-    private fun removeErrorPage(){
-        binding.contentContainer.removeView(_errorPage)
-        _errorPage = null
-    }
-
-    private fun onGoToHomeClick(){
+    private fun onGoToHomeClick() {
         (requireActivity() as MainActivity).navController.navigate(R.id.action_registrationsFragment_to_navigation_home)
     }
 
-    private fun openRegistrationDetails(registration: RegistrationUI){
+    private fun openRegistrationDetails(registration: RegistrationUI) {
         val modalBottomSheet = RegistrationDetailsBottomSheetDialog(registration, this)
-        modalBottomSheet.show(requireActivity().supportFragmentManager, RegistrationDetailsBottomSheetDialog.TAG)
+        modalBottomSheet.show(
+            requireActivity().supportFragmentManager,
+            RegistrationDetailsBottomSheetDialog.TAG
+        )
     }
 
-    companion object{
+    companion object {
         const val TAG = "RegistrationsFragment"
     }
 }

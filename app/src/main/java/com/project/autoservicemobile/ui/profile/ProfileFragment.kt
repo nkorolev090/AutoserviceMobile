@@ -77,31 +77,54 @@ class ProfileFragment : BaseFragment(), AuthenticatedListener, DismissListener {
             }
 
             _viewModel.isAuth.observe(viewLifecycleOwner){
-                if (it is RequestResult.Error) {
-                    openSignBottomSheet()
-                }
-                if(it is RequestResult.Success){
-                    //_viewModel.updateUserData(object : CoroutinesErrorHandler {
-//                        override fun onError(message: String) {
-//                            Log.d("SignInBottomSheetDialog", "Error! $message")
-//                        }
-//                    })
+                when(it){
+                    is RequestResult.Error -> openSignBottomSheet()
+                    is RequestResult.Loading -> {}
+                    is RequestResult.Success -> {}
                 }
             }
 
             _viewModel.profileData.observe(viewLifecycleOwner){
-                if (it is RequestResult.Error) {
+                when(it){
+                    is RequestResult.Error -> TODO()
+                    is RequestResult.Loading -> {
+                        favoritesShimmer.visibility = View.VISIBLE
+                        carsShimmer.visibility = View.VISIBLE
+                        favoritesDescription.visibility = View.GONE
+                        carsDescription.visibility = View.GONE
+                    }
+                    is RequestResult.Success -> {
+                        favoritesDescription.visibility = View.VISIBLE
+                        carsDescription.visibility = View.VISIBLE
+                        favoritesShimmer.visibility = View.GONE
+                        carsShimmer.visibility = View.GONE
 
-                }
-                if(it is RequestResult.Success){
-                    favoritesDescription.text = it.data.favoritesText
-                    carsDescription.text = it.data.carsText
+                        favoritesDescription.text = it.data.favoritesText
+                        carsDescription.text = it.data.carsText
+                    }
                 }
             }
 
             _viewModel.registrations.observe(viewLifecycleOwner){
-                when{
-                    it is RequestResult.Success -> {
+                when(it){
+                    is RequestResult.Error -> {
+                        registrationsTitle.visibility = View.GONE
+                        recyclerContainer.visibility = View.GONE
+                    }
+                    is RequestResult.Loading -> {
+                        registrationsTitle.visibility = View.VISIBLE
+                        recyclerContainer.visibility = View.VISIBLE
+
+                        registrationShimmer.visibility = View.VISIBLE
+                        registrationsRecyclerView.visibility = View.GONE
+                    }
+                    is RequestResult.Success -> {
+                        registrationsTitle.visibility = View.VISIBLE
+                        recyclerContainer.visibility = View.VISIBLE
+
+                        registrationsRecyclerView.visibility = View.VISIBLE
+                        registrationShimmer.visibility = View.GONE
+
                         (registrationsRecyclerView.adapter as RegistrationsRecyclerAdapter).items = it.data
                         registrationsRecyclerView.adapter!!.notifyDataSetChanged()
                     }
@@ -130,11 +153,7 @@ class ProfileFragment : BaseFragment(), AuthenticatedListener, DismissListener {
         _viewModel.isAuth.postValue(RequestResult.Loading())
     }
     override fun onAuthenticated() {
-//        _viewModel.updateUserData(object : CoroutinesErrorHandler {
-//            override fun onError(message: String) {
-//                Log.d("SignInBottomSheetDialog", "Error! $message")
-//            }
-//        })
+        _viewModel.updateRegistrations(coroutinesErrorHandler)
     }
     private fun openRegistrationDetails(registration: RegistrationUI){
         val modalBottomSheet = RegistrationDetailsBottomSheetDialog(registration, this)

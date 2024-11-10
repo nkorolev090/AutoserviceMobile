@@ -24,12 +24,13 @@ class ProfileViewModel @Inject constructor(
     }
 
     val profileData = MutableLiveData<RequestResult<ProfileDataUI>>().apply {
-        value = RequestResult.Success(
-            ProfileDataUI(
-                "9 услуг",
-                "1 автомобиль"
-            )
-        )
+//        value = RequestResult.Success(
+//            ProfileDataUI(
+//                "9 услуг",
+//                "1 автомобиль"
+//            )
+//        )
+        value = RequestResult.Loading()
     }
 
     fun updateRegistrations(coroutinesErrorHandler: CoroutinesErrorHandler) = baseRequest(

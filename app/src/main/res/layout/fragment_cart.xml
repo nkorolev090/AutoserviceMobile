@@ -31,35 +31,35 @@
             android:layout_height="2dp"
             android:layout_marginHorizontal="15dp"
             android:background="@drawable/secondary_bg"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/carSelectContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/carIcon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_car"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/carTitle"
+                style="@style/textPrimary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                style="@style/textPrimary"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/editBtn"
                 app:layout_constraintStart_toEndOf="@id/carIcon"
@@ -85,183 +85,283 @@
                 android:layout_height="40dp"
                 android:padding="5dp"
                 android:src="@drawable/ic_pencil"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cartRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/amountContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectorContainer"
-        tools:listitem="@layout/li_cart_item" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/amountContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="55dp"
-        android:background="@drawable/primary_bg_top_rounded"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <EditText
-            android:id="@+id/promocodeInput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="15dp"
-            android:background="@drawable/btn_secondary_bg"
-            android:drawableRight="@drawable/ic_pencil"
-            android:fontFamily="@font/be_vietnam_pro_regular"
-            tools:hint="Промокод"
-            android:inputType="text"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/subTotalText"
-            app:layout_constraintEnd_toStartOf="@id/applyPromocodeBtn"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/applyPromocodeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:backgroundTint="?attr/colorPrimary"
-            android:fontFamily="@font/inter_medium"
-            android:textFontWeight="1000"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="5dp"
-            tools:text="Применить"
-            android:textAllCaps="false"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="12sp"
-            app:cornerRadius="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/promocodeInput"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/promocodeInput" />
-
-        <TextView
-            android:id="@+id/subTotalText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="15dp"
-            android:fontFamily="@font/be_vietnam_pro_regular"
-            tools:text="Сумма"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/saleText"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/saleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="7.5dp"
-            android:fontFamily="@font/be_vietnam_pro_medium"
-            tools:text="Скидка"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <View
-            android:id="@+id/separator"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginBottom="7.5dp"
-            android:background="@drawable/secondary_bg"
-            app:layout_constraintBottom_toTopOf="@+id/totalText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <TextView
-            android:id="@+id/totalText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="15dp"
-            android:fontFamily="@font/be_vietnam_pro_bold"
-            tools:text="Итог"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/createRegBtn"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <TextView
-            android:id="@+id/subTotalValueText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:fontFamily="@font/be_vietnam_pro_regular"
-            tools:text="50$"
-            android:textColor="?attr/colorOnSecondary"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/subTotalText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/subTotalText" />
-
-        <TextView
-            android:id="@+id/saleValueText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:fontFamily="@font/be_vietnam_pro_bold"
-            tools:text="-50$"
-            android:textColor="@color/red_300"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/saleText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/saleText" />
-
-        <TextView
-            android:id="@+id/totalValueText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:fontFamily="@font/be_vietnam_pro_bold"
-            tools:text="50$"
-            android:textColor="@color/green_300"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/totalText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/totalText" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/createRegBtn"
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/selectorShimmer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginBottom="15dp"
-            android:backgroundTint="?attr/colorPrimary"
-            android:fontFamily="@font/inter_medium"
-            android:textFontWeight="1000"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp"
-            tools:text="Записаться"
-            android:textAllCaps="false"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="16sp"
-            app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/sh_car"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/secondary_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/sh_title"
+                    android:layout_width="110dp"
+                    android:layout_height="20dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:background="@drawable/secondary_bg"
+                    app:layout_constraintStart_toEndOf="@id/sh_car"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <View
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/secondary_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/sh_car"
+                    app:layout_constraintTop_toBottomOf="@+id/sh_title" />
+
+                <View
+                    android:id="@+id/sh_edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/secondary_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/fragment_bottom_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selectorContainer">
+
+        <LinearLayout
+            android:id="@+id/linearContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cartRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                tools:itemCount="1"
+                tools:listitem="@layout/li_cart_item" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/amountContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/primary_bg_top_rounded">
+
+                <EditText
+                    android:id="@+id/promocodeInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="15dp"
+                    android:background="@drawable/btn_secondary_bg"
+                    android:drawableRight="@drawable/ic_pencil"
+                    android:fontFamily="@font/be_vietnam_pro_regular"
+                    android:inputType="text"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="7dp"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/subTotalText"
+                    app:layout_constraintEnd_toStartOf="@id/applyPromocodeBtn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:hint="Промокод" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/applyPromocodeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:fontFamily="@font/inter_medium"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="5dp"
+                    android:textAllCaps="false"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textFontWeight="1000"
+                    android:textSize="12sp"
+                    app:cornerRadius="15dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/promocodeInput"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/promocodeInput"
+                    tools:text="Применить" />
+
+                <TextView
+                    android:id="@+id/subTotalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/be_vietnam_pro_regular"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/saleText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Сумма" />
+
+                <TextView
+                    android:id="@+id/saleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="7.5dp"
+                    android:fontFamily="@font/be_vietnam_pro_medium"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/separator"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Скидка" />
+
+                <View
+                    android:id="@+id/separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="7.5dp"
+                    android:background="@drawable/secondary_bg"
+                    app:layout_constraintBottom_toTopOf="@+id/totalText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/totalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/be_vietnam_pro_bold"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/createRegBtn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Итог" />
+
+                <TextView
+                    android:id="@+id/subTotalValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/be_vietnam_pro_regular"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/subTotalText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/subTotalText"
+                    tools:text="50$" />
+
+                <TextView
+                    android:id="@+id/saleValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/be_vietnam_pro_bold"
+                    android:textColor="@color/red_300"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/saleText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/saleText"
+                    tools:text="-50$" />
+
+                <TextView
+                    android:id="@+id/totalValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/be_vietnam_pro_bold"
+                    android:textColor="@color/green_300"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/totalText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/totalText"
+                    tools:text="50$" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/createRegBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:fontFamily="@font/inter_medium"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp"
+                    android:textAllCaps="false"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textFontWeight="1000"
+                    android:textSize="16sp"
+                    app:cornerRadius="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Записаться" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/fragment_bottom_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selectorContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="vertical">
+
+            <include layout="@layout/li_shimmer_cart_item"/>
+
+            <include layout="@layout/li_shimmer_cart_item"/>
+
+            <include layout="@layout/li_shimmer_cart_item"/>
+
+            <include layout="@layout/li_shimmer_cart_item"/>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

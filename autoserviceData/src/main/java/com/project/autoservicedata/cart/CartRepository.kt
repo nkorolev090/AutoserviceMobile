@@ -42,7 +42,7 @@ class CartRepository @Inject constructor(
     private fun RequestResultAPI<CartDTO>.toCart(): RequestResult<Cart> =
         when (this) {
             is RequestResultAPI.Success -> {
-                if (this.data != null) {
+                if (this.data.cartItems.isNotEmpty()) {
                     RequestResult.Success(this.data.toCart())
                 } else {
                     RequestResult.Error(

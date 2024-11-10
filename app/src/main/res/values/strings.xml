@@ -26,9 +26,15 @@
 
     <string name="no_connection_text">Нет соединения с интернетом</string>
     <string name="no_content_text">Ничего не найдено</string>
+    <string name="no_content_services_text">По вашему запросу ничего не найдено</string>
+    <string name="no_content_reqistrations_text">Похоже, что вы еще не пользовались нашим сервисом</string>
+    <string name="no_content_cart_text">Ваша корзина пуста</string>
     <string name="no_slots_text">Для выбранной даты нет доступного времени для записи</string>
     <string name="slots_set_date_text">Выбрать другую дату</string>
     <string name="error_text">Ошибка</string>
+    <string name="error_cart_text">Упс...</string>
+    <string name="error_services_text">Печалька</string>
+    <string name="error_registrations_text">Увы</string>
 
     <string name="close_registration_text">Отменить запись</string>
 </resources>

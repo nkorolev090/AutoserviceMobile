@@ -17,6 +17,7 @@ import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.project.autoservicemobile.ui.services.slots.SlotsBottomSheetDialog
 import com.project.common.data.RequestResult
+import com.project.common.data.StatusCodeEnum
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,7 +46,8 @@ class ServicesFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        _viewModel.updateServices(coroutinesErrorHandler)
+        val query = binding.searchInput.text.toString()
+        _viewModel.getServices(query, coroutinesErrorHandler)
     }
 
     private fun setup() {
@@ -60,13 +62,7 @@ class ServicesFragment : BaseFragment() {
                     (requireActivity() as MainActivity).hideKeyboard()
 
                     val query = searchInput.text.toString()
-
-                    if (query == "") {
-                        _viewModel.updateServices(coroutinesErrorHandler)
-                    } else {
-                        _viewModel.getServicesByQuery(query, coroutinesErrorHandler)
-                    }
-
+                    _viewModel.getServices(query, coroutinesErrorHandler)
                 }
                 false
             })
@@ -85,12 +81,20 @@ class ServicesFragment : BaseFragment() {
 
             _viewModel.services.observe(viewLifecycleOwner) {
                 when (it) {
-                    is RequestResult.Error -> {}
+                    is RequestResult.Error -> {
+                        showErrorPage(it.code as? StatusCodeEnum, binding.contentContainer)
+                        contentContainer.visibility = View.VISIBLE
+                        shimmerContainer.visibility = View.GONE
+                    }
                     is RequestResult.Loading -> {
+                        removeErrorPage(binding.contentContainer)
+
                         shimmerContainer.visibility = View.VISIBLE
                         contentContainer.visibility = View.GONE
                     }
                     is RequestResult.Success -> {
+                        removeErrorPage(binding.contentContainer)
+
                         contentContainer.visibility = View.VISIBLE
                         shimmerContainer.visibility = View.GONE
 

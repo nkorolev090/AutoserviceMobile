@@ -5,40 +5,25 @@
     android:paddingVertical="20dp"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.cardview.widget.CardView
+    <View
         android:id="@+id/card_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="2dp"
-        android:layout_marginBottom="2dp"
-        app:cardCornerRadius="20dp"
+        android:background="@drawable/primary_bg_rounded"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/separator">
+    </View>
 
-        <ImageView
-            android:id="@+id/serviceImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/news_image" />
-
-    </androidx.cardview.widget.CardView>
-
-    <TextView
+    <View
         android:id="@+id/titleText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/be_vietnam_pro_bold"
-        android:textAlignment="textStart"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/favourites_btn"
+        android:layout_width="300dp"
+        android:layout_height="25dp"
+        android:background="@drawable/primary_bg_rounded"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Заменатормозных колодок" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/separator"
@@ -48,26 +33,21 @@
         android:background="@drawable/primary_bg_rounded"
         app:layout_constraintTop_toBottomOf="@id/titleText"/>
 
-    <TextView
+    <View
         android:id="@+id/priceText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
         android:layout_marginEnd="20dp"
-        android:fontFamily="@font/be_vietnam_pro_regular"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="16sp"
+        android:background="@drawable/primary_bg_rounded"
         app:layout_constraintBottom_toBottomOf="@+id/deleteBtn"
         app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
-        app:layout_constraintTop_toTopOf="@+id/deleteBtn"
-        tools:text="$79.99" />
+        app:layout_constraintTop_toTopOf="@+id/deleteBtn"/>
 
-    <TextView
+    <View
         android:id="@+id/mechanicText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/be_vietnam_pro_regular"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="16sp"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:background="@drawable/primary_bg_rounded"
         app:layout_constraintBottom_toTopOf="@+id/deleteBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/separator"
@@ -83,40 +63,31 @@
         app:layout_constraintEnd_toStartOf="@+id/mechanicText"
         app:layout_constraintTop_toTopOf="@+id/mechanicText" />
 
-    <TextView
+    <View
         android:id="@+id/timeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
         android:layout_marginEnd="5dp"
-        android:fontFamily="@font/be_vietnam_pro_regular"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="16sp"
+        android:background="@drawable/primary_bg_rounded"
         app:layout_constraintTop_toTopOf="@+id/mechanicText"
         app:layout_constraintBottom_toBottomOf="@+id/mechanicText"
-        app:layout_constraintEnd_toStartOf="@+id/mechanicSeparator"
-        tools:text="10.10.2024 10:00" />
+        app:layout_constraintEnd_toStartOf="@+id/mechanicSeparator"/>
 
-    <com.google.android.material.button.MaterialButton
+    <View
         android:id="@+id/deleteBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/from_cart"
-        style="@style/buttonSecondary"
-        android:textAllCaps="false"
-        app:cornerRadius="15dp"
-        android:textSize="14sp"
-        android:fontFamily="@font/inter_medium"
-        android:textFontWeight="1000"
+        android:layout_width="90dp"
+        android:layout_height="35dp"
+        android:background="@drawable/primary_bg_rounded"
         android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageView
+    <View
         android:id="@+id/favourites_btn"
         android:layout_width="26dp"
         android:layout_height="26dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_favourites"/>
+        android:background="@drawable/primary_bg_rounded"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

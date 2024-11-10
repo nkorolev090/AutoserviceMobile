@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorOnContainer"
     tools:context=".ui.profile.ProfileFragment">
 
@@ -11,11 +11,11 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rightIcon="@drawable/ic_pencil"
         android:background="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:rightIcon="@drawable/ic_pencil"
         app:titleText="Здравствуйте, Иван" />
 
     <LinearLayout
@@ -73,6 +73,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/favoritesTitle"
                 tools:text="9 услуг" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/favoritesShimmer"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginHorizontal="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/favoritesTitle">
+
+                <View
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/primary_bg_rounded" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -118,6 +135,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/carsTitle"
                 tools:text="2 авто" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/carsShimmer"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginHorizontal="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/carsTitle">
+
+                <View
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/primary_bg_rounded" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
@@ -151,14 +185,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="15dp"
-            android:paddingStart="10dp"
+            android:background="@drawable/primary_bg_left_rounded"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:background="@drawable/primary_bg_left_rounded"
+            android:paddingStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/registrationShimmer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:layout_marginVertical="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include layout="@layout/li_shimmer_registrations_item" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -168,8 +216,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
-        android:padding="15dp"
         android:background="@drawable/primary_bg_rounded"
+        android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerContainer">
@@ -210,14 +258,14 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.project.autoservicemobile.ui.profile.views.NavigationList
-            android:id="@+id/navigationView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="55dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/middleContainer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+    <com.project.autoservicemobile.ui.profile.views.NavigationList
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/fragment_bottom_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/middleContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

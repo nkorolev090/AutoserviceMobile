@@ -2,9 +2,12 @@ package com.project.autoservicemobile.ui.cart
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,126 +63,117 @@ class CartFragment : BaseFragment(), AuthenticatedListener {
         (requireActivity() as MainActivity).navController.navigate(R.id.action_navigation_cart_to_navigation_home)
     }
 
-    private fun setup(){
-       with(binding){
-           totalText.text = _viewModel.totalText
-           saleText.text = _viewModel.saleText
-           subTotalText.text = _viewModel.subTotalText
+    private fun setup() {
+        with(binding) {
+            totalText.text = _viewModel.totalText
+            saleText.text = _viewModel.saleText
+            subTotalText.text = _viewModel.subTotalText
 
-           promocodeInput.hint = _viewModel.promocodeHintText
+            promocodeInput.hint = _viewModel.promocodeHintText
 
-           applyPromocodeBtn.text = _viewModel.applyBtnText
-           applyPromocodeBtn.setOnClickListener{_ ->
-               _viewModel.onApplyPromocodeClick()
-           }
+            applyPromocodeBtn.text = _viewModel.applyBtnText
+            applyPromocodeBtn.setOnClickListener { _ ->
+                _viewModel.onApplyPromocodeClick()
+            }
 
-           carSelectContainer.setOnClickListener{
-               navigateToCars()
-           }
+            carSelectContainer.setOnClickListener {
+                navigateToCars()
+            }
 
-           createRegBtn.text = _viewModel.createRegBtnText
-           createRegBtn.setOnClickListener{_ ->
-               _viewModel.createRegistration(coroutinesErrorHandler)
-           }
+            createRegBtn.text = _viewModel.createRegBtnText
+            createRegBtn.setOnClickListener { _ ->
+                _viewModel.createRegistration(coroutinesErrorHandler)
+            }
 
-           cartRecycler.layoutManager = LinearLayoutManager(context)
-           cartRecycler.adapter = CartRecyclerAdapter{
-               _viewModel.removeBreakdownFromCart(
-                   it.slot.service!!.id,
-                   coroutinesErrorHandler)
-           }
+            cartRecycler.layoutManager = LinearLayoutManager(context)
+            cartRecycler.adapter = CartRecyclerAdapter {
+                _viewModel.removeBreakdownFromCart(
+                    it.slot.service!!.id,
+                    coroutinesErrorHandler
+                )
+            }
 
 
-           _viewModel.cart.observe(viewLifecycleOwner){
-               when (it) {
-                   is RequestResult.Error -> {
-                       //trobber.visibility = View.GONE
+            _viewModel.cart.observe(viewLifecycleOwner) {
+                when (it) {
+                    is RequestResult.Error -> {
+                        shimmerContainer.visibility = View.GONE
+                        showErrorPage(it.code as? StatusCodeEnum, binding.root)
+                    }
 
-//                       if(_errorPage == null) {
-//                           showErrorPage(StatusCodeEnum.CONNECTION_TIMED_OUT)
-//                       }
-                   }
+                    is RequestResult.Loading -> {
+                        shimmerContainer.visibility = View.VISIBLE
+                        linearContainer.visibility = View.GONE
+                    }
+                    is RequestResult.Success -> {
+                        linearContainer.visibility = View.VISIBLE
+                        shimmerContainer.visibility = View.GONE
 
-                   is RequestResult.Loading -> {
-//                       if(_errorPage != null){
-//                           removeErrorPage()
-//                       }
-//                       trobber.visibility = View.VISIBLE
-                   }
+                        totalValueText.text = it.data.total
+                        saleValueText.text = it.data.discountValue
+                        subTotalValueText.text = it.data.subtotal
 
-                   is RequestResult.Success -> {
-//                       if(_errorPage != null){
-//                           removeErrorPage()
-//                       }
-//                       trobber.visibility = View.GONE
-//
-//                       if(newsRecycler.childCount == 0){
-//                           startAnims()
-//                       }
+                        val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                        if (it.data.cartItems.size == 1) {
+                            params.gravity = Gravity.BOTTOM
+                            linearContainer.layoutParams = params
+                        } else {
+                            params.gravity = Gravity.TOP
+                            linearContainer.layoutParams = params
+                        }
 
-                       totalValueText.text = it.data.total
-                       saleValueText.text = it.data.discountValue
-                       subTotalValueText.text = it.data.subtotal
+                        (cartRecycler.adapter as CartRecyclerAdapter).items = it.data.cartItems
+                        cartRecycler.adapter?.notifyDataSetChanged()
+                    }
+                }
+            }
 
-                       (cartRecycler.adapter as CartRecyclerAdapter).items = it.data.cartItems
-                       cartRecycler.adapter?.notifyDataSetChanged()
-                   }
-               }
-           }
-
-           _viewModel.defaultCar.observe(viewLifecycleOwner){
-               when (it) {
-                   is RequestResult.Error -> {
-                       //trobber.visibility = View.GONE
+            _viewModel.defaultCar.observe(viewLifecycleOwner) {
+                when (it) {
+                    is RequestResult.Error -> {
+                        //trobber.visibility = View.GONE
 
 //                       if(_errorPage == null) {
 //                           showErrorPage(StatusCodeEnum.CONNECTION_TIMED_OUT)
 //                       }
-                   }
+                    }
 
-                   is RequestResult.Loading -> {
-//                       if(_errorPage != null){
-//                           removeErrorPage()
-//                       }
-//                       trobber.visibility = View.VISIBLE
-                   }
+                    is RequestResult.Loading -> {
+                        selectorShimmer.visibility = View.VISIBLE
+                        carSelectContainer.visibility = View.GONE
+                    }
 
-                   is RequestResult.Success -> {
-//                       if(_errorPage != null){
-//                           removeErrorPage()
-//                       }
-//                       trobber.visibility = View.GONE
-//
-//                       if(newsRecycler.childCount == 0){
-//                           startAnims()
-//                       }
-                       carTitle.text = it.data.br_mod
-                       carDescription.text = it.data.number
-                   }
-               }
-           }
+                    is RequestResult.Success -> {
+                        carSelectContainer.visibility = View.VISIBLE
+                        selectorShimmer.visibility = View.GONE
 
-           _viewModel.createdRegistration.observe(viewLifecycleOwner){
-               when{
-                   it is RequestResult.Success ->{
-                       _viewModel.updateCart(coroutinesErrorHandler)
-                       _viewModel.createdRegistration.postValue(RequestResult.Loading())
-                   }
-               }
-           }
-       }
+                        carTitle.text = it.data.br_mod
+                        carDescription.text = it.data.number
+                    }
+                }
+            }
 
-        _viewModel.isAuth.observe(viewLifecycleOwner){
+            _viewModel.createdRegistration.observe(viewLifecycleOwner) {
+                when {
+                    it is RequestResult.Success -> {
+                        _viewModel.updateCart(coroutinesErrorHandler)
+                        _viewModel.createdRegistration.postValue(RequestResult.Loading())
+                    }
+                }
+            }
+        }
+
+        _viewModel.isAuth.observe(viewLifecycleOwner) {
             if (it is RequestResult.Error) {
                 openSignBottomSheet()
             }
-            if(it is RequestResult.Success){
+            if (it is RequestResult.Success) {
                 loadCart()
             }
         }
     }
 
-    private fun loadCart(){
+    private fun loadCart() {
         _viewModel.updateCart(coroutinesErrorHandler)
 
         _viewModel.updateDefaultCar(coroutinesErrorHandler)
@@ -194,7 +188,7 @@ class CartFragment : BaseFragment(), AuthenticatedListener {
         )
     }
 
-    private fun navigateToCars(){
+    private fun navigateToCars() {
         (requireActivity() as MainActivity).navController.navigate(R.id.action_navigation_cart_to_carsFragment)
     }
 

@@ -25,26 +25,26 @@ class ServicesViewModel @Inject constructor(
         value = RequestResult.Loading()
     }
 
-    fun updateServices(coroutinesErrorHandler: CoroutinesErrorHandler){
-        titleText.postValue("Рекомендации")
+    fun getServices(query: String, coroutinesErrorHandler: CoroutinesErrorHandler){
+        if (query == "") {
+            titleText.postValue("Рекомендации")
 
-        baseRequest(
-            services,
-            coroutinesErrorHandler,
-            request = { breakdownRepository.getAllBreakdowns() },
-            mapper = { data -> data.map { list -> list.map { it.toServiceUI() } } }
-        )
-    }
+            baseRequest(
+                services,
+                coroutinesErrorHandler,
+                request = { breakdownRepository.getAllBreakdowns() },
+                mapper = { data -> data.map { list -> list.map { it.toServiceUI() } } }
+            )
+        } else {
+            titleText.postValue("Результаты по запросу: \"$query\"")
 
-    fun getServicesByQuery(query: String, coroutinesErrorHandler: CoroutinesErrorHandler){
-        titleText.postValue("Результаты по запросу: \"$query\"")
-
-        baseRequest(
-            services,
-            coroutinesErrorHandler,
-            request = { breakdownRepository.getBreakdownsByQuery(query) },
-            mapper = { data -> data.map { list -> list.map { it.toServiceUI() } } }
-        )
+            baseRequest(
+                services,
+                coroutinesErrorHandler,
+                request = { breakdownRepository.getBreakdownsByQuery(query) },
+                mapper = { data -> data.map { list -> list.map { it.toServiceUI() } } }
+            )
+        }
     }
 
     fun onCartBtnClick(service: ServiceUI){

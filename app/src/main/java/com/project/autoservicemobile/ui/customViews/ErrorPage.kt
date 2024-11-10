@@ -39,8 +39,12 @@ sealed class ErrorPage
     class NoContent(
         context: Context,
     ) : ErrorPage(context, R.layout.no_content_layout){
+
+        val errorTextView = requireViewById<TextView>(R.id.text_description)
+        val errorTitleTextView = requireViewById<TextView>(R.id.text_title)
         init {
-            requireViewById<TextView>(R.id.text_title).setText(R.string.no_content_text)
+            errorTextView.setText(R.string.no_content_text)
+            errorTitleTextView.setText(R.string.error_text)
         }
     }
 

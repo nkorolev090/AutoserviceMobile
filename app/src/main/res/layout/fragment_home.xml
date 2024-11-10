@@ -21,60 +21,59 @@
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="@dimen/fragment_bottom_margin"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/contentContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBar"
-            >
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/registrationsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:visibility="gone"
-                tools:visibility="visible"
                 android:background="@drawable/secondary_bg"
-                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible">
 
                 <TextView
                     android:id="@+id/regsTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Записи"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/be_vietnam_pro_bold"
                     android:textColor="?attr/colorSecondaryVariant"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Записи" />
 
                 <TextView
                     android:id="@+id/regsDescription"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginBottom="15dp"
                     android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="15dp"
                     android:fontFamily="@font/be_vietnam_pro_regular"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/arrowImg"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/regsTitle"
                     tools:text="Вы можете просмотреть предыдущие записи" />
 
@@ -84,11 +83,63 @@
                     android:layout_height="30dp"
                     android:layout_marginEnd="20dp"
                     android:src="@drawable/ic_arrow_right"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/registrationShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/secondary_bg"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/shRegsTitle"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/primary_bg_rounded"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/shRegsDescription"
+                        android:layout_width="160dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/primary_bg_rounded"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/shRegsTitle" />
+
+                    <View
+                        android:id="@+id/shArrowImg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/primary_bg_rounded"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
                 android:id="@+id/text_title"
@@ -98,10 +149,10 @@
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/be_vietnam_pro_bold"
                 android:textColor="?attr/colorSecondaryVariant"
-                tools:text="Последнее"
                 android:textSize="22sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registrationsContainer" />
+                app:layout_constraintTop_toBottomOf="@id/registrationsContainer"
+                tools:text="Последнее" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/newsRecycler"
@@ -115,15 +166,38 @@
                 app:layout_constraintTop_toBottomOf="@id/text_title"
                 tools:listitem="@layout/li_news_item" />
 
-            <com.project.autoservicemobile.ui.customViews.Trobber
-                android:id="@+id/trobber"
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_title">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/li_shimmer_news_item"></include>
+
+                    <include layout="@layout/li_shimmer_news_item"></include>
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+<!--            <com.project.autoservicemobile.ui.customViews.Trobber-->
+<!--                android:id="@+id/trobber"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:visibility="gone"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
