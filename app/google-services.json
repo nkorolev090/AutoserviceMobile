@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "92288847473",
+    "project_id": "autoservicemobile-d10c4",
+    "storage_bucket": "autoservicemobile-d10c4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92288847473:android:2ab4919760f6da3ff495d0",
+        "android_client_info": {
+          "package_name": "com.project.autoservicemobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx2kpm3at0Rl2-gsIL7IL35hqiehPlfCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

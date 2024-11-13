@@ -2,12 +2,14 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
 
+    alias(libs.plugins.google.services)
+
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kapt)
 }
 
 android {
-    namespace = "com.project.autoservicedata"
+    namespace = "com.project.firebaseapi"
     compileSdk = 34
 
     defaultConfig {
@@ -40,16 +42,12 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.google.firebase.analitics)
+    implementation(libs.firebase.firestore.ktx)
+
+    implementation(libs.kotlinx.coroutines.core)
+
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.compiler)
-
-    implementation(libs.retrofit)
-
-    implementation (libs.datastore.preferences)
-
-    implementation(project(":autoserviceAPI"))
-    implementation(project(":autoserviceDatabase"))
-    implementation(project(":firebaseAPI"))
-    implementation(project(":common"))
-    implementation(project(":token"))
 }

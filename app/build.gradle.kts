@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kapt)
+
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -86,6 +88,10 @@ dependencies {
 
     implementation(libs.picasso)
     implementation(libs.facebook.shimmer)
+
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.google.firebase.analitics)
+    implementation(libs.firebase.firestore.ktx)
 
     implementation(project(":autoserviceAPI"))
     implementation(project(":newsAPI"))

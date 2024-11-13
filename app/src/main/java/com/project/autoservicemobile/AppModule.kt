@@ -1,6 +1,9 @@
 package com.project.autoservicemobile
 
 import android.content.Context
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.project.autoserviceapi.breakdown.BreakdownApi
 import com.project.autoserviceapi.car.CarApi
 import com.project.autoserviceapi.cart.CartApi
@@ -217,7 +220,12 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideWeatherDatabase(@ApplicationContext context: Context): AutoserviceDatabase {
+    fun provideAutoserviceDatabase(@ApplicationContext context: Context): AutoserviceDatabase {
         return AutoserviceDatabase(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore =
+        Firebase.firestore
 }
