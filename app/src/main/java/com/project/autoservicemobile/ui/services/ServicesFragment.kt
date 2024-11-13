@@ -14,6 +14,7 @@ import com.project.autoservicemobile.common.BaseFragment
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentServicesBinding
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
+import com.project.autoservicemobile.ui.services.models.SearchItemEnum
 import com.project.autoservicemobile.ui.services.models.ServiceUI
 import com.project.autoservicemobile.ui.services.slots.SlotsBottomSheetDialog
 import com.project.common.data.RequestResult
@@ -66,6 +67,13 @@ class ServicesFragment : BaseFragment() {
                 }
                 false
             })
+
+            searchSlider.mutableSearchList.value = listOf(
+                SearchItemEnum.SERVICES,
+                SearchItemEnum.PRODUCTS
+            )
+
+            searchSlider.selected.value = SearchItemEnum.SERVICES
 
             servicesRecycler.layoutManager = LinearLayoutManager(context)
             servicesRecycler.adapter = ServicesRecyclerAdapter({ item ->
