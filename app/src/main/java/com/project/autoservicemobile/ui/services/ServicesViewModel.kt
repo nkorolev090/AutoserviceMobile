@@ -6,7 +6,9 @@ import com.project.autoservicedata.breakdown.BreakdownRepository
 import com.project.autoservicedata.products.ProductsRepository
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
+import com.project.autoservicemobile.ui.services.models.ProductUI
 import com.project.autoservicemobile.ui.services.models.ServiceUI
+import com.project.autoservicemobile.ui.services.models.toProductUI
 import com.project.autoservicemobile.ui.services.models.toServiceUI
 import com.project.common.data.RequestResult
 import com.project.common.data.map
@@ -23,7 +25,7 @@ class ServicesViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val titleText = MutableLiveData<String>().apply {
-        value = "Рекомендации"
+        value = "Услуги для вас"
     }
     val searchInputHint = "Начните вводить название услуги"
 
@@ -31,16 +33,13 @@ class ServicesViewModel @Inject constructor(
         value = RequestResult.Loading()
     }
 
+    val products = MutableLiveData<RequestResult<List<ProductUI>>>().apply{
+        value = RequestResult.Loading()
+    }
+
     fun getServices(query: String, coroutinesErrorHandler: CoroutinesErrorHandler){
-
-        viewModelScope.launch{
-            withContext(Dispatchers.IO){
-                productsRepository.getProducts()
-            }
-        }
-
         if (query == "") {
-            titleText.postValue("Рекомендации")
+            titleText.postValue("Услуги для вас")
 
             baseRequest(
                 services,
@@ -58,6 +57,17 @@ class ServicesViewModel @Inject constructor(
                 mapper = { data -> data.map { list -> list.map { it.toServiceUI() } } }
             )
         }
+    }
+
+    fun getProducts(coroutinesErrorHandler: CoroutinesErrorHandler) {
+        titleText.postValue("Товары для вас")
+
+        baseRequest(
+            products,
+            coroutinesErrorHandler,
+            request = {productsRepository.getProducts()},
+            mapper = { data -> data.map { list -> list.map { it.toProductUI() } } }
+        )
     }
 
     fun onCartBtnClick(service: ServiceUI){

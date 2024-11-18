@@ -88,6 +88,7 @@ dependencies {
 
     implementation(libs.picasso)
     implementation(libs.facebook.shimmer)
+    implementation(libs.coil.compose)
 
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.analitics)

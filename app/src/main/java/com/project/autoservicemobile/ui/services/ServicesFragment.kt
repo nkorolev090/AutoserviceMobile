@@ -1,15 +1,18 @@
 package com.project.autoservicemobile.ui.services
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.autoservicemobile.MainActivity
+import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.BaseFragment
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentServicesBinding
@@ -49,6 +52,7 @@ class ServicesFragment : BaseFragment() {
 
         val query = binding.searchInput.text.toString()
         _viewModel.getServices(query, coroutinesErrorHandler)
+        _viewModel.getProducts(coroutinesErrorHandler)
     }
 
     private fun setup() {
@@ -73,7 +77,23 @@ class ServicesFragment : BaseFragment() {
                 SearchItemEnum.PRODUCTS
             )
 
-            searchSlider.selected.value = SearchItemEnum.SERVICES
+            searchSlider.mutableSelected.observe(viewLifecycleOwner){
+                when(it){
+                    SearchItemEnum.SERVICES -> {
+                        val query = binding.searchInput.text.toString()
+                        _viewModel.getServices(query, coroutinesErrorHandler)
+
+                        productsContainer?.visibility = View.GONE
+                        servicesContainer?.visibility = View.VISIBLE
+                    }
+                    SearchItemEnum.PRODUCTS -> {
+                        _viewModel.getProducts(coroutinesErrorHandler)
+
+                        servicesContainer?.visibility = View.GONE
+                        productsContainer?.visibility = View.VISIBLE
+                    }
+                }
+            }
 
             servicesRecycler.layoutManager = LinearLayoutManager(context)
             servicesRecycler.adapter = ServicesRecyclerAdapter({ item ->
@@ -90,24 +110,57 @@ class ServicesFragment : BaseFragment() {
             _viewModel.services.observe(viewLifecycleOwner) {
                 when (it) {
                     is RequestResult.Error -> {
-                        showErrorPage(it.code as? StatusCodeEnum, binding.contentContainer)
-                        contentContainer.visibility = View.VISIBLE
-                        shimmerContainer.visibility = View.GONE
+                        if (servicesContainer != null && servicesContainer.visibility != View.GONE) {
+                            showErrorPage(it.code as? StatusCodeEnum, servicesContainer)
+                        }
+                        servicesRecycler.visibility = View.GONE
+                        shimmerServicesContainer?.visibility = View.GONE
                     }
+
                     is RequestResult.Loading -> {
-                        removeErrorPage(binding.contentContainer)
+                        if (servicesContainer != null) {
+                            removeErrorPage(servicesContainer)
+                        }
 
-                        shimmerContainer.visibility = View.VISIBLE
-                        contentContainer.visibility = View.GONE
+                        shimmerServicesContainer?.visibility = View.VISIBLE
+                        servicesRecycler.visibility = View.GONE
                     }
-                    is RequestResult.Success -> {
-                        removeErrorPage(binding.contentContainer)
 
-                        contentContainer.visibility = View.VISIBLE
-                        shimmerContainer.visibility = View.GONE
+                    is RequestResult.Success -> {
+                        if (servicesContainer != null) {
+                            removeErrorPage(servicesContainer)
+                        }
+
+                        servicesRecycler.visibility = View.VISIBLE
+                        shimmerServicesContainer?.visibility = View.GONE
 
                         (servicesRecycler.adapter as ServicesRecyclerAdapter).items = it.data
                         servicesRecycler.adapter?.notifyDataSetChanged()
+                    }
+                }
+            }
+
+            _viewModel.products.observe(viewLifecycleOwner){
+                when(it){
+                    is RequestResult.Error -> {
+                        if (productsContainer != null) {
+                            showErrorPage(it.code as? StatusCodeEnum, productsContainer)
+                        }
+                    }
+
+                    is RequestResult.Loading -> {
+
+                    }
+
+                    is RequestResult.Success -> {
+                        if (productsContainer != null && productsContainer.visibility != View.GONE) {
+                            removeErrorPage(productsContainer)
+                        }
+
+//                        productsContainer?.visibility = View.VISIBLE
+//                        shimmerContainer.visibility = View.GONE
+
+                        productsRecycler?.productsList?.value = it.data
                     }
                 }
             }

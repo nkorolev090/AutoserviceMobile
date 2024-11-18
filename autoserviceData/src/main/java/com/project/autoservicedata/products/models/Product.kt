@@ -4,6 +4,7 @@ import com.project.firebaseapi.goods.models.ProductDTO
 
 data class Product(
     var article: String,
+    var brand: String,
     var forAuto: String,
     var imageUrl: String,
     var price: Double,
@@ -15,6 +16,7 @@ fun ProductDTO?.toProduct(): Product? =
     try{
         Product(
             this!!.article!!,
+            this.brand!!,
             this.forAuto!!,
             this.imageUrl!!,
             this.price!!,
@@ -25,3 +27,4 @@ fun ProductDTO?.toProduct(): Product? =
     catch (ex: NullPointerException){
         null
     }
+

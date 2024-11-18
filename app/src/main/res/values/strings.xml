@@ -12,8 +12,12 @@
     <string name="location_description">Найти сервис поблизости</string>
     <string name="cars_title">Мои автомобили</string>
     <string name="user_data_title">Мои данные</string>
+
     <string name="services_title">Услуги</string>
     <string name="products_title">Товары</string>
+    <string name="services_recom">Услуги для вас</string>
+    <string name="products_recom">Товары для вас</string>
+
     <string name="to_cart">В корзину</string>
     <string name="from_cart">Удалить</string>
     <string name="load_more_btn_text">Узнать больше</string>

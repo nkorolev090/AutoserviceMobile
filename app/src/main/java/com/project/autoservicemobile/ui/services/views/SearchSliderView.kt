@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
 import com.project.autoservicemobile.ui.AppTheme
 import com.project.autoservicemobile.ui.services.models.SearchItemEnum
 import com.project.autoservicemobile.ui.services.models.toTitleResource
@@ -47,10 +48,14 @@ class SearchSliderView @JvmOverloads constructor(
             listOf()
         )
 
-    val selected: MutableState<SearchItemEnum>  =
+    private val selected: MutableState<SearchItemEnum>  =
         mutableStateOf(
             SearchItemEnum.PRODUCTS
         )
+
+    val mutableSelected = MutableLiveData<SearchItemEnum>().apply {
+        value = SearchItemEnum.PRODUCTS
+    }
 
     @Composable
     override fun Content() {
@@ -68,6 +73,7 @@ class SearchSliderView @JvmOverloads constructor(
             SearchItemEnum.SERVICES -> SearchItemEnum.PRODUCTS
         }
 
+        mutableSelected.postValue(selected.value)
     }
 }
 

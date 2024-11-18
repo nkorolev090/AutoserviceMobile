@@ -39,7 +39,9 @@ private val DarkColorScheme = darkColorScheme(
     onSecondaryContainer = gray_500,
 
     error = red_300,
-    onError = light_gray_300
+    onError = light_gray_300,
+
+    surface = green_300
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -54,6 +56,7 @@ private val LightColorScheme = lightColorScheme(
     onSecondaryContainer = gray_200,
 
     error = red_400,
-    onError = light_gray_400
+    onError = light_gray_400,
 
+    surface = green_300
 )

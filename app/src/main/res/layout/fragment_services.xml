@@ -21,7 +21,7 @@
         android:id="@+id/searchLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
@@ -55,28 +55,29 @@
         app:layout_constraintTop_toBottomOf="@id/searchLayout"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/be_vietnam_pro_bold"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchSlider"
+        tools:text="Рекомендованные" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/contentContainer"
+        android:id="@+id/servicesContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/fragment_bottom_margin"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchSlider">
-
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/be_vietnam_pro_bold"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Рекомендованные" />
+        app:layout_constraintTop_toBottomOf="@id/text_title">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/servicesRecycler"
@@ -86,43 +87,56 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/li_services_item" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerServicesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/li_services_shimmer" />
+
+                <include layout="@layout/li_services_shimmer" />
+
+                <include layout="@layout/li_services_shimmer" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerContainer"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/productsContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/fragment_bottom_margin"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchSlider">
+        app:layout_constraintTop_toBottomOf="@id/text_title">
 
-        <LinearLayout
+        <com.project.autoservicemobile.ui.services.views.ProductsList
+            android:id="@+id/productsRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <View
-                android:layout_width="200dp"
-                android:layout_height="25dp"
-                android:layout_gravity="start"
-                android:layout_marginTop="13dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/secondary_bg" />
-
-            <include layout="@layout/li_services_shimmer" />
-
-            <include layout="@layout/li_services_shimmer" />
-
-            <include layout="@layout/li_services_shimmer" />
-
-            <include layout="@layout/li_services_shimmer" />
-
-        </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

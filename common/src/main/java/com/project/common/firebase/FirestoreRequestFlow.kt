@@ -15,9 +15,9 @@ fun <T : Any?> firetoreRequestFlow(call: suspend () -> T): Flow<RequestResultAPI
         try {
             val response = call()
             if (response != null) {
-                RequestResultAPI.Success(response)
+                emit(RequestResultAPI.Success(response))
             } else {
-                RequestResultAPI.Error(code = StatusCodeEnum.NO_CONTENT)
+                emit(RequestResultAPI.Error(code = StatusCodeEnum.NO_CONTENT))
             }
         } catch (e: Exception) {
             emit(RequestResultAPI.Exception(e))
