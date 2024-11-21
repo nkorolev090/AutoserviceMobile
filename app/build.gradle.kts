@@ -1,6 +1,3 @@
-import com.android.builder.model.v2.models.Versions
-import com.android.ide.common.gradle.Version
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -26,6 +23,8 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "NEWS_API_KEY", "\"c4bf3d2d4c9a4b278aec23a1c09203c0\"")
         buildConfigField("String", "NEWS_API_URL", "\"https://newsapi.org/v2/\"")
@@ -93,6 +92,11 @@ dependencies {
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.analitics)
     implementation(libs.firebase.firestore.ktx)
+
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.junit.android)
 
     implementation(project(":autoserviceAPI"))
     implementation(project(":newsAPI"))

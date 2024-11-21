@@ -13,6 +13,8 @@ android {
     defaultConfig {
         minSdk = 28
 
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -44,4 +46,11 @@ dependencies {
     kapt(libs.dagger.hilt.compiler)
 
     implementation (libs.datastore.preferences)
+
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.junit.android)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.mockito.android)
+    testImplementation(libs.mockito.core)
+
 }
