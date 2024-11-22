@@ -13,19 +13,19 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="profileNavTest()">
+      <SelectionState runConfigName="UserDBTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="profileToCarsClickTest()">
+      <SelectionState runConfigName="insertAndGet()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="ProfileTest">
+      <SelectionState runConfigName="TokenManagerTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="sliderClickTest()">
+      <SelectionState runConfigName="Tests in 'com.project.autoservicemobile'">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="SearchSliderTest">
+      <SelectionState runConfigName="homeOnStart()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

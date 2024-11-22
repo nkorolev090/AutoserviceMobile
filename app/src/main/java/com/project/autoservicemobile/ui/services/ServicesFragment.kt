@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.FOCUSABLE
 import android.view.ViewGroup
 import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
@@ -52,7 +53,7 @@ class ServicesFragment : BaseFragment() {
 
         val query = binding.searchInput.text.toString()
         _viewModel.getServices(query, coroutinesErrorHandler)
-        _viewModel.getProducts(coroutinesErrorHandler)
+        _viewModel.getProducts(query, coroutinesErrorHandler)
     }
 
     private fun setup() {
@@ -63,13 +64,18 @@ class ServicesFragment : BaseFragment() {
 
             searchLayout.hint = _viewModel.searchInputHint
             searchInput.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
                     (requireActivity() as MainActivity).hideKeyboard()
 
                     val query = searchInput.text.toString()
-                    _viewModel.getServices(query, coroutinesErrorHandler)
+                    if(searchSlider.mutableSelected.value == SearchItemEnum.SERVICES){
+                        _viewModel.getServices(query, coroutinesErrorHandler)
+                    }
+                    else{
+                        _viewModel.getProducts(query, coroutinesErrorHandler)
+                    }
                 }
-                false
+                true
             })
 
             searchSlider.mutableSearchList.value = listOf(
@@ -87,7 +93,8 @@ class ServicesFragment : BaseFragment() {
                         servicesContainer?.visibility = View.VISIBLE
                     }
                     SearchItemEnum.PRODUCTS -> {
-                        _viewModel.getProducts(coroutinesErrorHandler)
+                        val query = binding.searchInput.text.toString()
+                        _viewModel.getProducts(query, coroutinesErrorHandler)
 
                         servicesContainer?.visibility = View.GONE
                         productsContainer?.visibility = View.VISIBLE
@@ -110,26 +117,26 @@ class ServicesFragment : BaseFragment() {
             _viewModel.services.observe(viewLifecycleOwner) {
                 when (it) {
                     is RequestResult.Error -> {
-                        if (servicesContainer != null && servicesContainer.visibility != View.GONE) {
-                            showErrorPage(it.code as? StatusCodeEnum, servicesContainer)
-                        }
+//                        if (servicesContainer != null && servicesContainer.visibility != View.GONE) {
+//                            showErrorPage(it.code as? StatusCodeEnum, servicesContainer)
+//                        }
                         servicesRecycler.visibility = View.GONE
                         shimmerServicesContainer?.visibility = View.GONE
                     }
 
                     is RequestResult.Loading -> {
-                        if (servicesContainer != null) {
-                            removeErrorPage(servicesContainer)
-                        }
+//                        if (servicesContainer != null) {
+//                            removeErrorPage(servicesContainer)
+//                        }
 
                         shimmerServicesContainer?.visibility = View.VISIBLE
                         servicesRecycler.visibility = View.GONE
                     }
 
                     is RequestResult.Success -> {
-                        if (servicesContainer != null) {
-                            removeErrorPage(servicesContainer)
-                        }
+//                        if (servicesContainer != null) {
+//                            removeErrorPage(servicesContainer)
+//                        }
 
                         servicesRecycler.visibility = View.VISIBLE
                         shimmerServicesContainer?.visibility = View.GONE
@@ -143,22 +150,29 @@ class ServicesFragment : BaseFragment() {
             _viewModel.products.observe(viewLifecycleOwner){
                 when(it){
                     is RequestResult.Error -> {
-                        if (productsContainer != null) {
-                            showErrorPage(it.code as? StatusCodeEnum, productsContainer)
-                        }
+//                        if (productsContainer != null) {
+//                            showErrorPage(it.code as? StatusCodeEnum, productsContainer)
+//                        }
+                        shimmerProductsContainer?.visibility = View.GONE
+                        productsRecycler?.visibility = View.GONE
                     }
 
                     is RequestResult.Loading -> {
+//                        if (productsContainer != null) {
+//                            removeErrorPage(productsContainer)
+//                        }
 
+                        shimmerProductsContainer?.visibility = View.VISIBLE
+                        productsRecycler?.visibility = View.GONE
                     }
 
                     is RequestResult.Success -> {
-                        if (productsContainer != null && productsContainer.visibility != View.GONE) {
-                            removeErrorPage(productsContainer)
-                        }
+//                        if (productsContainer != null && productsContainer.visibility != View.GONE) {
+//                            removeErrorPage(productsContainer)
+//                        }
 
-//                        productsContainer?.visibility = View.VISIBLE
-//                        shimmerContainer.visibility = View.GONE
+                        productsRecycler?.visibility = View.VISIBLE
+                        shimmerProductsContainer?.visibility = View.GONE
 
                         productsRecycler?.productsList?.value = it.data
                     }

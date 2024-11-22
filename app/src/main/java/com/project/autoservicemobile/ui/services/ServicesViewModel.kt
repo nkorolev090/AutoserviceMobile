@@ -59,15 +59,26 @@ class ServicesViewModel @Inject constructor(
         }
     }
 
-    fun getProducts(coroutinesErrorHandler: CoroutinesErrorHandler) {
-        titleText.postValue("Товары для вас")
+    fun getProducts(query: String, coroutinesErrorHandler: CoroutinesErrorHandler) {
+        if (query == "") {
+            titleText.postValue("Товары для вас")
 
-        baseRequest(
+            baseRequest(
             products,
             coroutinesErrorHandler,
             request = {productsRepository.getProducts()},
             mapper = { data -> data.map { list -> list.map { it.toProductUI() } } }
-        )
+        )}
+        else{
+            titleText.postValue("Результаты по запросу: \"$query\"")
+
+            baseRequest(
+                products,
+                coroutinesErrorHandler,
+                request = {productsRepository.getProductsFromQuery(query)},
+                mapper = { data -> data.map { list -> list.map { it.toProductUI() } } }
+            )
+        }
     }
 
     fun onCartBtnClick(service: ServiceUI){

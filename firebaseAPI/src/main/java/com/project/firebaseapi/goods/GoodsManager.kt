@@ -13,6 +13,16 @@ class GoodsManager @Inject constructor(private val db: FirebaseFirestore) {
         .collection(COLLECTION_PATH)
         .get()
         .await()
+            .documents
+            .map { it.toObject<ProductDTO>() }
+
+    suspend fun getGoodsFromQuery(query: String) = db
+        .collection(COLLECTION_PATH)
+        .orderBy("title")
+        .startAt(query)
+        .endAt("$query~")//mb
+        .get()
+        .await()
         .documents
         .map { it.toObject<ProductDTO>() }
 

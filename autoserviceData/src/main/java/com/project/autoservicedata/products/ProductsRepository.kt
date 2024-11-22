@@ -20,6 +20,12 @@ class ProductsRepository @Inject constructor(private val goodsManager: GoodsMana
         }.map { it.toProductList() }
     }
 
+    suspend fun getProductsFromQuery(query: String): Flow<RequestResult<List<Product>>> {
+        return firetoreRequestFlow {
+            goodsManager.getGoodsFromQuery(query)
+        }.map { it.toProductList() }
+    }
+
     private fun RequestResultAPI<List<ProductDTO?>>.toProductList(): RequestResult<List<Product>> =
         when (this) {
             is RequestResultAPI.Success -> {
