@@ -52,12 +52,12 @@ class ServicesFragment : BaseFragment() {
         super.onResume()
 
         val query = binding.searchInput.text.toString()
-        _viewModel.getServices(query, coroutinesErrorHandler)
-        _viewModel.getProducts(query, coroutinesErrorHandler)
+//        _viewModel.getServices(query, coroutinesErrorHandler)
+//        _viewModel.getProducts(query, coroutinesErrorHandler)
     }
 
     private fun setup() {
-        with(binding){
+        with(binding) {
             _viewModel.titleText.observe(viewLifecycleOwner) {
                 textTitle.text = it
             }
@@ -68,10 +68,9 @@ class ServicesFragment : BaseFragment() {
                     (requireActivity() as MainActivity).hideKeyboard()
 
                     val query = searchInput.text.toString()
-                    if(searchSlider.mutableSelected.value == SearchItemEnum.SERVICES){
+                    if (searchSlider.mutableSelected.value == SearchItemEnum.SERVICES) {
                         _viewModel.getServices(query, coroutinesErrorHandler)
-                    }
-                    else{
+                    } else {
                         _viewModel.getProducts(query, coroutinesErrorHandler)
                     }
                 }
@@ -83,21 +82,28 @@ class ServicesFragment : BaseFragment() {
                 SearchItemEnum.PRODUCTS
             )
 
-            searchSlider.mutableSelected.observe(viewLifecycleOwner){
-                when(it){
+            searchSlider.mutableSelected.observe(viewLifecycleOwner) {
+                when (it) {
                     SearchItemEnum.SERVICES -> {
                         val query = binding.searchInput.text.toString()
                         _viewModel.getServices(query, coroutinesErrorHandler)
 
-                        productsContainer?.visibility = View.GONE
-                        servicesContainer?.visibility = View.VISIBLE
+                        removeErrorPage(errorContainer)
+                        errorContainer.visibility = View.GONE
+
+                        productsContainer.visibility = View.GONE
+                        servicesContainer.visibility = View.VISIBLE
                     }
+
                     SearchItemEnum.PRODUCTS -> {
                         val query = binding.searchInput.text.toString()
                         _viewModel.getProducts(query, coroutinesErrorHandler)
 
-                        servicesContainer?.visibility = View.GONE
-                        productsContainer?.visibility = View.VISIBLE
+                        removeErrorPage(errorContainer)
+                        errorContainer.visibility = View.GONE
+
+                        servicesContainer.visibility = View.GONE
+                        productsContainer.visibility = View.VISIBLE
                     }
                 }
             }
@@ -105,7 +111,7 @@ class ServicesFragment : BaseFragment() {
             servicesRecycler.layoutManager = LinearLayoutManager(context)
             servicesRecycler.adapter = ServicesRecyclerAdapter({ item ->
                 if (item.inCart) { // remove from cart
-                    Log.d(TAG, "${item?.title}", )
+                    Log.d(TAG, item.title)
                     (servicesRecycler.adapter as ServicesRecyclerAdapter).onAddOrRemoveToCart(item)
                 } else { //open dialog to set slot
                     openSlotsBottomSheetDialog(item)
@@ -117,29 +123,33 @@ class ServicesFragment : BaseFragment() {
             _viewModel.services.observe(viewLifecycleOwner) {
                 when (it) {
                     is RequestResult.Error -> {
-//                        if (servicesContainer != null && servicesContainer.visibility != View.GONE) {
-//                            showErrorPage(it.code as? StatusCodeEnum, servicesContainer)
-//                        }
+                        if (searchSlider.mutableSelected.value == SearchItemEnum.SERVICES) {
+                            showErrorPage(it.code as? StatusCodeEnum, errorContainer)
+                            errorContainer.visibility = View.VISIBLE
+                        }
+
                         servicesRecycler.visibility = View.GONE
-                        shimmerServicesContainer?.visibility = View.GONE
+                        shimmerServicesContainer.visibility = View.GONE
                     }
 
                     is RequestResult.Loading -> {
-//                        if (servicesContainer != null) {
-//                            removeErrorPage(servicesContainer)
-//                        }
+                        if (searchSlider.mutableSelected.value == SearchItemEnum.SERVICES) {
+                            removeErrorPage(errorContainer)
+                            errorContainer.visibility = View.GONE
+                        }
 
-                        shimmerServicesContainer?.visibility = View.VISIBLE
+                        shimmerServicesContainer.visibility = View.VISIBLE
                         servicesRecycler.visibility = View.GONE
                     }
 
                     is RequestResult.Success -> {
-//                        if (servicesContainer != null) {
-//                            removeErrorPage(servicesContainer)
-//                        }
+                        if (searchSlider.mutableSelected.value == SearchItemEnum.SERVICES) {
+                            removeErrorPage(errorContainer)
+                            errorContainer.visibility = View.GONE
+                        }
 
                         servicesRecycler.visibility = View.VISIBLE
-                        shimmerServicesContainer?.visibility = View.GONE
+                        shimmerServicesContainer.visibility = View.GONE
 
                         (servicesRecycler.adapter as ServicesRecyclerAdapter).items = it.data
                         servicesRecycler.adapter?.notifyDataSetChanged()
@@ -147,34 +157,38 @@ class ServicesFragment : BaseFragment() {
                 }
             }
 
-            _viewModel.products.observe(viewLifecycleOwner){
-                when(it){
+            _viewModel.products.observe(viewLifecycleOwner) {
+                when (it) {
                     is RequestResult.Error -> {
-//                        if (productsContainer != null) {
-//                            showErrorPage(it.code as? StatusCodeEnum, productsContainer)
-//                        }
-                        shimmerProductsContainer?.visibility = View.GONE
-                        productsRecycler?.visibility = View.GONE
+                        if (searchSlider.mutableSelected.value == SearchItemEnum.PRODUCTS) {
+                            showErrorPage(it.code as? StatusCodeEnum, errorContainer)
+                            errorContainer.visibility = View.VISIBLE
+                        }
+                        
+                        shimmerProductsContainer.visibility = View.GONE
+                        productsRecycler.visibility = View.GONE
                     }
 
                     is RequestResult.Loading -> {
-//                        if (productsContainer != null) {
-//                            removeErrorPage(productsContainer)
-//                        }
+                        if (searchSlider.mutableSelected.value == SearchItemEnum.PRODUCTS) {
+                            removeErrorPage(errorContainer)
+                            errorContainer.visibility = View.GONE
+                        }
 
-                        shimmerProductsContainer?.visibility = View.VISIBLE
-                        productsRecycler?.visibility = View.GONE
+                        shimmerProductsContainer.visibility = View.VISIBLE
+                        productsRecycler.visibility = View.GONE
                     }
 
                     is RequestResult.Success -> {
-//                        if (productsContainer != null && productsContainer.visibility != View.GONE) {
-//                            removeErrorPage(productsContainer)
-//                        }
+                        if (searchSlider.mutableSelected.value == SearchItemEnum.PRODUCTS) {
+                            removeErrorPage(errorContainer)
+                            errorContainer.visibility = View.GONE
+                        }
 
-                        productsRecycler?.visibility = View.VISIBLE
-                        shimmerProductsContainer?.visibility = View.GONE
+                        productsRecycler.visibility = View.VISIBLE
+                        shimmerProductsContainer.visibility = View.GONE
 
-                        productsRecycler?.productsList?.value = it.data
+                        productsRecycler.productsList.value = it.data
                     }
                 }
             }
