@@ -14,13 +14,13 @@ import javax.inject.Inject
 
 class ProductsRepository @Inject constructor(private val goodsManager: GoodsManager) {
 
-    suspend fun getProducts(): Flow<RequestResult<List<Product>>> {
+    fun getProducts(): Flow<RequestResult<List<Product>>> {
         return firetoreRequestFlow {
             goodsManager.getGoods()
         }.map { it.toProductList() }
     }
 
-    suspend fun getProductsFromQuery(query: String): Flow<RequestResult<List<Product>>> {
+    fun getProductsFromQuery(query: String): Flow<RequestResult<List<Product>>> {
         return firetoreRequestFlow {
             goodsManager.getGoodsFromQuery(query)
         }.map { it.toProductList() }

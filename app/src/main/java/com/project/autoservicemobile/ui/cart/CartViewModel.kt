@@ -95,7 +95,7 @@ class CartViewModel @Inject constructor(
         baseRequest(
             createdRegistration,
             coroutinesErrorHandler,
-            request = { registrationRepository.createRegistration(carId!!, slots!!) },
+            request = { registrationRepository.createRegistration(carId, slots) },
         )
     }
     fun onApplyPromocodeClick(){

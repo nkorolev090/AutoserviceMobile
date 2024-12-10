@@ -14,7 +14,7 @@ import javax.inject.Inject
 class CarRepository @Inject constructor(
     private val api: CarApi
 ) {
-    suspend fun getCars(): Flow<RequestResult<List<Car>>> {
+    fun getCars(): Flow<RequestResult<List<Car>>> {
         return apiRequestFlow {
             api.getCars()
         }.map {
@@ -35,7 +35,7 @@ class CarRepository @Inject constructor(
         }
     }
 
-    suspend fun getDefaultCar(): Flow<RequestResult<Car>> {
+    fun getDefaultCar(): Flow<RequestResult<Car>> {
         return apiRequestFlow {
             api.getDefaultCars()
         }.map {
@@ -53,36 +53,4 @@ class CarRepository @Inject constructor(
             )
         }
     }
-
-//    private fun RequestResultAPI<List<CarDTO>>.toCars(): RequestResult<List<Car>> =
-//        when (this) {
-//            is RequestResultAPI.Success -> {
-//                if (this.data != null) {
-//                    RequestResult.Success(this.data.map {
-//                        it.toCar()
-//                    })
-//                } else {
-//                    RequestResult.Error(
-//                        code = StatusCodeEnum.NO_CONTENT,
-//                        message = "result is empty"
-//                    )
-//                }
-//            }
-//
-//            is RequestResultAPI.Error -> {
-//                RequestResult.Error(message = this.message, code = this.code)
-//                //getFromDatabase(city)
-//                //RequestResult.Error(code = response.code, message = response.message)
-//            }
-//
-//            is RequestResultAPI.Exception -> {
-//                RequestResult.Error(error = this.throwable)
-//                //getFromDatabase(city)
-////                    RequestResult.Error(error = response.throwable)
-//            }
-//
-//            is RequestResultAPI.Loading -> {
-//                RequestResult.Loading()
-//            }
-//        }
 }

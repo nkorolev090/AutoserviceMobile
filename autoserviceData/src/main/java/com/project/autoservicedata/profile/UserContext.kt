@@ -29,7 +29,7 @@ class UserContext @Inject constructor(
 //            }
     }
 
-    suspend fun getUserData(): Flow<RequestResult<UserData>> = flow {
+    fun getUserData(): Flow<RequestResult<UserData>> = flow {
         emit(RequestResult.Loading())
 
   //      if (_isAuthorize) {

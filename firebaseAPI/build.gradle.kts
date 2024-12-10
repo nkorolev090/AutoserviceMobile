@@ -44,6 +44,7 @@ dependencies {
 
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.analitics)
+    implementation(libs.google.firebase.messaging)
     implementation(libs.firebase.firestore.ktx)
 
     implementation(libs.kotlinx.coroutines.core)

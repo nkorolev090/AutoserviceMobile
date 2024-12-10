@@ -14,7 +14,7 @@ class NewsRepository @Inject constructor(
     private val api: NewsApi
 ) {
 
-    suspend fun getNews(query: String = QUERY, page: Int = 1, pageSize: Int = PAGE_SIZE, language: String = LANGUAGE): Flow<RequestResult<List<Article>>> {
+    fun getNews(query: String = QUERY, page: Int = 1, pageSize: Int = PAGE_SIZE, language: String = LANGUAGE): Flow<RequestResult<List<Article>>> {
         return apiRequestFlow {
             api.everything(query,  language, page, pageSize)
         }.map { response ->

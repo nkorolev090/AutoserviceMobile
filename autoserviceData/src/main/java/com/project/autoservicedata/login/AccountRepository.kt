@@ -1,6 +1,7 @@
 package com.project.autoservicedata.login
 
 import android.annotation.SuppressLint
+import com.project.autoserviceapi.deviceToken.DeviceTokenApi
 import com.project.autoserviceapi.login.AccountApi
 import com.project.autoserviceapi.login.models.AuthorizationResponseDTO
 import com.project.autoserviceapi.login.models.SignInRequestData
@@ -13,7 +14,9 @@ import com.project.autoservicedata.login.models.UserData
 import com.project.autoservicedata.profile.UserContext
 import com.project.token.TokenManager
 import com.project.common.api.RequestResultAPI
+import com.project.common.api.apiRequestFlow
 import com.project.common.data.StatusCodeEnum
+import com.project.deviceToken.DeviceTokenManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -22,16 +25,18 @@ import javax.inject.Inject
 class AccountRepository @Inject constructor(
     private val api: AccountApi,
     private val tokenManager: TokenManager,
+    private val deviceTokenManager: DeviceTokenManager,
+    private val tokenApi: DeviceTokenApi,
     private val userContext: UserContext
 ) {
     suspend fun logIn(data: SignInData): Flow<RequestResult<Boolean>> {
-        return com.project.common.api.apiRequestFlow {
+        return apiRequestFlow {
             api.loginResponse(data.toSignInRequestData())
         }.map { it.toAuthorizationRequestResult() }
     }
 
     suspend fun logUp(data: SignUpData): Flow<RequestResult<Boolean>> {
-        return com.project.common.api.apiRequestFlow {
+        return apiRequestFlow {
             api.logupResponse(data.toSignUpRequestData())
         }.map { it.toAuthorizationRequestResult() }
     }
@@ -39,9 +44,8 @@ class AccountRepository @Inject constructor(
     @SuppressLint("SuspiciousIndentation")
     suspend fun isAuthenticated(): Flow<RequestResult<Boolean>> {
         val token = tokenManager.getToken()
-            ?: return flowOf(RequestResult.Error(message = "token is null"))
 
-        return com.project.common.api.apiRequestFlow {
+        return apiRequestFlow {
             api.isAuthenticatedResponse(token)
         }.map { response ->
             when (response) {
@@ -87,6 +91,11 @@ class AccountRepository @Inject constructor(
                 if (this.data.token != null && this.data.user != null) {
                     tokenManager.saveToken(this.data.token!!)
                     userContext.setUserData(this.data.user!!.toUserData())
+
+                    val deviceToken = deviceTokenManager.getToken()
+                    if(deviceToken != null){
+                        tokenApi.saveDeviceToken(deviceToken)
+                    }
 
                     RequestResult.Success(true)
                 } else {

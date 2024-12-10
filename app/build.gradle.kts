@@ -29,6 +29,7 @@ android {
         buildConfigField("String", "NEWS_API_KEY", "\"c4bf3d2d4c9a4b278aec23a1c09203c0\"")
         buildConfigField("String", "NEWS_API_URL", "\"https://newsapi.org/v2/\"")
 
+        buildConfigField("String", "DEVICE_TOKEN_API_BASE_URL", "\"api/DeviceToken/\"")
         buildConfigField("String", "REGISTRATIONS_API_BASE_URL", "\"api/Registrations/\"")
         buildConfigField("String", "SLOTS_API_BASE_URL", "\"api/Slots/\"")
         buildConfigField("String", "CART_API_BASE_URL", "\"api/Cart/\"")
@@ -91,6 +92,7 @@ dependencies {
 
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.analitics)
+    implementation(libs.google.firebase.messaging)
     implementation(libs.firebase.firestore.ktx)
 
     androidTestImplementation(libs.androidx.espresso.core)
@@ -103,5 +105,6 @@ dependencies {
     implementation(project(":newsData"))
     implementation(project(":autoserviceData"))
     implementation(project(":autoserviceDatabase"))
+    implementation(project(":firebaseAPI"))
     implementation(project(":token"))
 }

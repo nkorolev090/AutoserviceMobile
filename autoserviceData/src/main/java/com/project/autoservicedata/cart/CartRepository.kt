@@ -21,19 +21,19 @@ import javax.inject.Inject
 class CartRepository @Inject constructor(
     private val api: CartApi
 ) {
-    suspend fun getCart(): Flow<RequestResult<Cart>> {
+    fun getCart(): Flow<RequestResult<Cart>> {
         return apiRequestFlow {
             api.getCart()
         }.map { it.toCart() }
     }
 
-    suspend fun addSlotToCart(slotId: Int, breakdownId: Int): Flow<RequestResult<Cart>> {
+    fun addSlotToCart(slotId: Int, breakdownId: Int): Flow<RequestResult<Cart>> {
         return apiRequestFlow {
             api.addCartItem(slotId, breakdownId)
         }.map { it.toCart() }
     }
 
-    suspend fun removeBreakdownFromCart(breakdownId: Int): Flow<RequestResult<Cart>> {
+    fun removeBreakdownFromCart(breakdownId: Int): Flow<RequestResult<Cart>> {
         return apiRequestFlow {
             api.removeCartItem(breakdownId)
         }.map { it.toCart() }

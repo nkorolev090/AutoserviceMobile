@@ -16,6 +16,8 @@ import com.project.autoservicemobile.MainActivity
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.BaseFragment
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
+import com.project.autoservicemobile.common.models.VibrateTypeEnum
+import com.project.autoservicemobile.common.vibrate
 import com.project.autoservicemobile.databinding.FragmentServicesBinding
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.autoservicemobile.ui.services.models.SearchItemEnum

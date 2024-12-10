@@ -10,7 +10,7 @@ class CartUseCase @Inject constructor(
     private val _cartRepository: CartRepository
 ) {
 
-    suspend fun addSlotToCart(slotId: Int, breakdownId: Int): Flow<RequestResult<Boolean>>
+    fun addSlotToCart(slotId: Int, breakdownId: Int): Flow<RequestResult<Boolean>>
         = _cartRepository.addSlotToCart(slotId, breakdownId).map {
             when(it){
                 is RequestResult.Success -> {

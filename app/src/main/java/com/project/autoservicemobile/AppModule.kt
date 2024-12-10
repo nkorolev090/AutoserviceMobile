@@ -7,12 +7,15 @@ import com.google.firebase.ktx.Firebase
 import com.project.autoserviceapi.breakdown.BreakdownApi
 import com.project.autoserviceapi.car.CarApi
 import com.project.autoserviceapi.cart.CartApi
+import com.project.autoserviceapi.deviceToken.DeviceTokenApi
 import com.project.autoserviceapi.login.AccountApi
 import com.project.autoserviceapi.registrations.RegistrationApi
 import com.project.autoserviceapi.slot.SlotApi
 import com.project.autoservicedata.profile.UserContext
 import com.project.token.TokenManager
 import com.project.autoservicedatabase.AutoserviceDatabase
+import com.project.autoservicemobile.common.notification.NotificationService
+import com.project.deviceToken.DeviceTokenManager
 import com.project.newsapi.news.NewsApi
 import dagger.Module
 import dagger.Provides
@@ -199,6 +202,21 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideDeviceTokenApi(
+        okHttpClient: OkHttpClient?,
+        json: Json?,
+        tokenManager: TokenManager?
+    ): DeviceTokenApi {
+        return DeviceTokenApi(
+            baseUrl = BuildConfig.API_BASE_URL + BuildConfig.DEVICE_TOKEN_API_BASE_URL,
+            okHttpClient = okHttpClient,
+            json = json,
+            tokenManager = tokenManager
+        )
+    }
+
+    @Provides
+    @Singleton
     fun provideNewsCarsApi(okHttpClient: OkHttpClient?, json: Json?): NewsApi {
         return NewsApi(
             baseUrl = BuildConfig.NEWS_API_URL,
@@ -212,6 +230,11 @@ object AppModule {
     @Singleton
     fun provideTokenManager(@ApplicationContext context: Context): TokenManager =
         TokenManager(context)
+
+    @Provides
+    @Singleton
+    fun provideDeviceTokenManager(@ApplicationContext context: Context): DeviceTokenManager =
+        DeviceTokenManager(context)
 
     @Provides
     @Singleton

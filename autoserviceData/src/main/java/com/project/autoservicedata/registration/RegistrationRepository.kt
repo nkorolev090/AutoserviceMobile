@@ -20,7 +20,7 @@ class RegistrationRepository @Inject constructor(
     private val api: RegistrationApi
 ) {
 
-    suspend fun getRegistrations(): Flow<RequestResult<List<Registration>>> {
+    fun getRegistrations(): Flow<RequestResult<List<Registration>>> {
         return apiRequestFlow {
             api.getRegistrations()
         }.map {
@@ -39,7 +39,7 @@ class RegistrationRepository @Inject constructor(
         }
     }
 
-    suspend fun createRegistration(carId: Int, slots: List<Slot>): Flow<RequestResult<Boolean>> {
+    fun createRegistration(carId: Int, slots: List<Slot>): Flow<RequestResult<Boolean>> {
         val registration = RegistrationDataDTO(
             0,
             carId,
@@ -70,7 +70,7 @@ class RegistrationRepository @Inject constructor(
         }
     }
 
-    suspend fun closeRegistration(registrationId: Int): Flow<RequestResult<Boolean>> {
+    fun closeRegistration(registrationId: Int): Flow<RequestResult<Boolean>> {
         return apiRequestFlow {
             api.closeRegistration(registrationId)
         }.map {
