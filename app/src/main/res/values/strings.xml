@@ -42,4 +42,6 @@
     <string name="error_registrations_text">Увы</string>
 
     <string name="close_registration_text">Отменить запись</string>
+    <string name="channel_name">main_channel</string>
+    <string name="channel_description">main channel with high priority</string>
 </resources>

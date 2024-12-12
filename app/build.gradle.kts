@@ -1,3 +1,8 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
+val mapKitKey: String = gradleLocalProperties(rootDir, providers).getProperty("MAPKIT_API_KEY")
+val newsKey: String = gradleLocalProperties(rootDir, providers).getProperty("NEWS_API_KEY")
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -26,7 +31,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "NEWS_API_KEY", "\"c4bf3d2d4c9a4b278aec23a1c09203c0\"")
+        buildConfigField("String", "MAPKIT_API_KEY", mapKitKey)
+        buildConfigField("String", "NEWS_API_KEY", newsKey)
         buildConfigField("String", "NEWS_API_URL", "\"https://newsapi.org/v2/\"")
 
         buildConfigField("String", "DEVICE_TOKEN_API_BASE_URL", "\"api/DeviceToken/\"")
@@ -36,7 +42,7 @@ android {
         buildConfigField("String", "CARS_API_BASE_URL", "\"api/Cars/\"")
         buildConfigField("String", "BREAKDOWNS_API_BASE_URL", "\"api/Breakdowns/\"")
         buildConfigField("String", "LOGIN_API_BASE_URL", "\"api/account/\"")
-        //buildConfigField("String", "API_BASE_URL", "\"https://192.168.0.16:7130/\"")
+        //buildConfigField("String", "API_BASE_URL", "\"https://192.168.0.19:7130/\"")
         buildConfigField("String", "API_BASE_URL", "\"https://192.168.1.205:7130/\"")
         //buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8000/\"")
     }
@@ -94,6 +100,8 @@ dependencies {
     implementation(libs.google.firebase.analitics)
     implementation(libs.google.firebase.messaging)
     implementation(libs.firebase.firestore.ktx)
+
+    implementation(libs.yandex.android.mapkit)
 
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.test.runner)

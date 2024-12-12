@@ -1,5 +1,7 @@
 package com.project.autoservicemobile
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
@@ -23,6 +25,8 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.project.autoservicemobile.common.models.VibrateTypeEnum
+import com.project.autoservicemobile.common.notification.NotificationService
+import com.project.autoservicemobile.common.notification.NotificationService.Companion.CHANNEL_ID
 import com.project.autoservicemobile.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,6 +51,17 @@ class MainActivity : AppCompatActivity() {
         //NavigationUI.setupWithNavController(navView, navController, false)
         navView.setupWithNavController(navController)
 
+        checkNotificationPermission()
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val existingChannel = notificationManager.getNotificationChannel(CHANNEL_ID)
+        if (existingChannel == null) {
+            createMainNotificationChannel()
+        }
+
+        //initTrafficAnalyzer()
+    }
+
+    private fun checkNotificationPermission() {
         if (SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") ==
                 PackageManager.PERMISSION_GRANTED
@@ -61,12 +76,9 @@ class MainActivity : AppCompatActivity() {
                 // Directly ask for the permission
                 requestPermissionLauncher.launch("android.permission.POST_NOTIFICATIONS")
             }
-        }
-        else{
+        } else {
             // Below Android 13 You don't need to ask for notification permission.
         }
-
-        initTrafficAnalyzer()
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -109,6 +121,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         connectivityManager.registerDefaultNetworkCallback(networkCallback)
+    }
+
+    private fun createMainNotificationChannel(){
+        val name = getString(R.string.channel_name)
+        val descriptionText = getString(R.string.channel_description)
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+        mChannel.description = descriptionText
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(mChannel)
     }
 
     fun updateTrafficInfo() {
