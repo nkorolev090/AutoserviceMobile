@@ -1,36 +1,32 @@
-package com.project.autoservicedata.products
+package com.project.autoservicedata.station
 
-import com.project.autoservicedata.products.models.Product
-import com.project.autoservicedata.products.models.toProduct
+import android.util.Log
+import com.project.autoservicedata.station.models.Station
+import com.project.autoservicedata.station.models.toStation
 import com.project.common.api.RequestResultAPI
 import com.project.common.data.RequestResult
 import com.project.common.data.StatusCodeEnum
 import com.project.common.firebase.firetoreRequestFlow
-import com.project.firebaseapi.goods.GoodsManager
-import com.project.firebaseapi.goods.models.ProductDTO
+import com.project.firebaseapi.station.StationManager
+import com.project.firebaseapi.station.models.StationDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class ProductsRepository @Inject constructor(private val goodsManager: GoodsManager) {
+class StationRepository @Inject constructor(private val stationManager: StationManager) {
 
-    fun getProducts(): Flow<RequestResult<List<Product>>> {
+    fun getStations(): Flow<RequestResult<List<Station>>> {
         return firetoreRequestFlow {
-            goodsManager.getGoods()
+            stationManager.getStations()
         }.map { it.toProductList() }
     }
 
-    fun getProductsFromQuery(query: String): Flow<RequestResult<List<Product>>> {
-        return firetoreRequestFlow {
-            goodsManager.getGoodsFromQuery(query)
-        }.map { it.toProductList() }
-    }
-
-    private fun RequestResultAPI<List<ProductDTO?>>.toProductList(): RequestResult<List<Product>> =
+    private fun RequestResultAPI<List<StationDTO?>>.toProductList(): RequestResult<List<Station>> =
         when (this) {
             is RequestResultAPI.Success -> {
                 if (this.data.isEmpty().not()) {
-                    RequestResult.Success(this.data.mapNotNull { it.toProduct() })
+                    Log.w("STATION_REPO", this.data.toString())
+                    RequestResult.Success(this.data.mapNotNull { it?.toStation() })
                 } else {
                     RequestResult.Error(
                         code = StatusCodeEnum.NO_CONTENT,
@@ -41,20 +37,15 @@ class ProductsRepository @Inject constructor(private val goodsManager: GoodsMana
 
             is RequestResultAPI.Error -> {
                 RequestResult.Error(message = this.message, code = this.code)
-                //getFromDatabase(city)
-                //RequestResult.Error(code = response.code, message = response.message)
             }
 
             is RequestResultAPI.Exception -> {
                 RequestResult.Error(error = this.throwable)
-                //getFromDatabase(city)
-//                    RequestResult.Error(error = response.throwable)
             }
 
             is RequestResultAPI.Loading -> {
                 RequestResult.Loading()
             }
         }
-
 }
 

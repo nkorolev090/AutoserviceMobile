@@ -12,6 +12,7 @@
     <string name="location_description">Найти сервис поблизости</string>
     <string name="cars_title">Мои автомобили</string>
     <string name="user_data_title">Мои данные</string>
+    <string name="map_title">Cервисы поблизости</string>
 
     <string name="services_title">Услуги</string>
     <string name="products_title">Товары</string>

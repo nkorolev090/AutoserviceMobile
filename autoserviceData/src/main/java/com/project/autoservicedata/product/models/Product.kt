@@ -1,6 +1,6 @@
-package com.project.autoservicedata.products.models
+package com.project.autoservicedata.product.models
 
-import com.project.firebaseapi.goods.models.ProductDTO
+import com.project.firebaseapi.good.models.ProductDTO
 
 data class Product(
     var article: String,

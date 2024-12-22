@@ -1,6 +1,6 @@
 package com.project.autoservicemobile.ui.services.models
 
-import com.project.autoservicedata.products.models.Product
+import com.project.autoservicedata.product.models.Product
 import com.project.autoservicemobile.rubleSimbol
 
 data class ProductUI(

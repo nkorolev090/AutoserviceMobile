@@ -47,6 +47,9 @@ dependencies {
 
     implementation (libs.datastore.preferences)
 
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.firebase.firestore.ktx)
+
     implementation(project(":autoserviceAPI"))
     implementation(project(":autoserviceDatabase"))
     implementation(project(":firebaseAPI"))

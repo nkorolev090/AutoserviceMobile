@@ -42,7 +42,6 @@ class HomeFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -57,6 +56,13 @@ class HomeFragment : BaseFragment() {
         loadData()
 
         _viewModel.newsPage = 2
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        (requireActivity() as MainActivity).showNavBar()
+        (requireActivity() as MainActivity).changeSystemNavBarColor(com.google.android.material.R.attr.colorSecondary)
     }
 
     private fun loadData() {
@@ -74,6 +80,9 @@ class HomeFragment : BaseFragment() {
 
 
     private fun setup() {
+        binding.appBar.setRightOnClickListener{
+            (requireActivity() as MainActivity).navController.navigate(R.id.action_navigation_home_to_mapFragment)
+        }
         with(binding) {
             textTitle.text = _viewModel.titleText
             regsTitle.text = _viewModel.regsTitle

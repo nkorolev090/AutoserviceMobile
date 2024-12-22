@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_registrationsFragment"
             app:destination="@id/registrationsFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
 
     <fragment
@@ -87,6 +90,14 @@
         <action
             android:id="@+id/action_carsFragment_to_navigation_cart"
             app:destination="@id/navigation_cart" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.project.autoservicemobile.ui.profile.map.MapFragment"
+        android:label="MapFragment" >
+        <action
+            android:id="@+id/action_mapFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
 </navigation>

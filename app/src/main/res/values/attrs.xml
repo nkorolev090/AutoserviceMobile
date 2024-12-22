@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="background" format="reference" />
     <declare-styleable name="AppBar">
         <attr name="titleText" format="string" />
         <attr name="leftIcon" format="reference" />
         <attr name="rightIcon" format="reference" />
         <attr name="leftBackground" format="reference" />
         <attr name="rightBackground" format="reference" />
-        <attr name="background" format="reference" />
+        <attr name="background"/>
     </declare-styleable>
     <declare-styleable name="ProfileNavigationView">
         <attr name="textTitle" format="string" />
     </declare-styleable>
+    <declare-styleable name="BottomSheetContainer">
+        <attr name="background"/>
+    </declare-styleable>
+    <attr name="colorOnPrimaryAttr" format="reference"/>
+    <attr name="colorSecondaryAttr" format="reference"/>
 </resources>

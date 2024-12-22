@@ -12,6 +12,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Vibrator
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
@@ -93,6 +94,20 @@ class MainActivity : AppCompatActivity() {
 
     fun hideKeyboard() {
         hideKeyboard(currentFocus ?: View(this))
+    }
+
+    fun changeSystemNavBarColor(resourceId: Int){
+        val typedValue = TypedValue()
+        theme.resolveAttribute(resourceId, typedValue, true)
+        window.navigationBarColor = ContextCompat.getColor(this, typedValue.resourceId)
+    }
+
+    fun hideNavBar(){
+        binding.navView.visibility = View.GONE
+    }
+
+    fun showNavBar(){
+        binding.navView.visibility = View.VISIBLE
     }
 
     private fun Context.hideKeyboard(view: View) {

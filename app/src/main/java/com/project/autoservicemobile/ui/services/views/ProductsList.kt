@@ -68,7 +68,7 @@ private fun ProductsRows(products: List<ProductUI>) {
         for (i in products.indices step 2) {
             item {
                 Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
                     modifier = Modifier
                         .padding(vertical = 5.dp)
                         .fillMaxWidth()

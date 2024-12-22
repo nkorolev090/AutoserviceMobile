@@ -1,4 +1,4 @@
-package com.project.firebaseapi.goods.models
+package com.project.firebaseapi.good.models
 
 class ProductDTO{
     var article: String? = null

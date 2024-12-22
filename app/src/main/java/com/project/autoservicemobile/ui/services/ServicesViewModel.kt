@@ -1,9 +1,8 @@
 package com.project.autoservicemobile.ui.services
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.project.autoservicedata.breakdown.BreakdownRepository
-import com.project.autoservicedata.products.ProductsRepository
+import com.project.autoservicedata.product.ProductsRepository
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.ui.services.models.ProductUI
@@ -13,9 +12,6 @@ import com.project.autoservicemobile.ui.services.models.toServiceUI
 import com.project.common.data.RequestResult
 import com.project.common.data.map
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
