@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleText" />
 
-    <TextView
+    <View
         android:id="@+id/statusText"
         style="@style/textPrimary"
         android:layout_width="100dp"

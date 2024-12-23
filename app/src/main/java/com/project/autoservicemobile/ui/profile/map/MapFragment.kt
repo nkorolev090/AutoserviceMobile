@@ -96,6 +96,9 @@ class MapFragment : BaseFragment() {
             stations.observe(viewLifecycleOwner) {
                 when {
                     it is RequestResult.Success -> {
+                        binding.bottomShimmerContainer.visibility = View.GONE
+                        binding.coordinatesContainer.visibility = View.VISIBLE
+
                         val view = View(requireContext()).apply {
                             background =
                                 AppCompatResources.getDrawable(requireContext(), R.drawable.ic_pin)
@@ -114,6 +117,10 @@ class MapFragment : BaseFragment() {
                                 setupBottomContainer(station)
                             }
                         }
+                    }
+                    it is RequestResult.Loading ->{
+                        binding.coordinatesContainer.visibility = View.INVISIBLE
+                        binding.bottomShimmerContainer.visibility = View.VISIBLE
                     }
                 }
             }
