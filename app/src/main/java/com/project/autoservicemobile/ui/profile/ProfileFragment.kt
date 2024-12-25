@@ -76,6 +76,10 @@ class ProfileFragment : BaseFragment(), AuthenticatedListener, DismissListener {
                 navigateToCars()
             }
 
+            middleContainer.setOnClickListener{
+                navigateToStations()
+            }
+
             _viewModel.isAuth.observe(viewLifecycleOwner){
                 when(it){
                     is RequestResult.Error -> openSignBottomSheet()
@@ -139,6 +143,13 @@ class ProfileFragment : BaseFragment(), AuthenticatedListener, DismissListener {
         _viewModel.updateRegistrations(coroutinesErrorHandler)
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        (requireActivity() as MainActivity).showNavBar()
+        (requireActivity() as MainActivity).changeSystemNavBarColor(com.google.android.material.R.attr.colorSecondary)
+    }
+
     private fun openSignBottomSheet() {
         val modalBottomSheet = SignInOrUpBottomSheetDialog(this)
         modalBottomSheet.setCancelable(false)
@@ -174,5 +185,9 @@ class ProfileFragment : BaseFragment(), AuthenticatedListener, DismissListener {
 
     private fun navigateToCars(){
         (requireActivity() as MainActivity).navController.navigate(R.id.action_profileFragment_to_carsFragment)
+    }
+
+    private fun navigateToStations(){
+        (requireActivity() as MainActivity).navController.navigate((R.id.action_profileFragment_to_mapFragment))
     }
 }

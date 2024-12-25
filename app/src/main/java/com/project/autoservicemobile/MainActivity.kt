@@ -156,12 +156,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goPreviousFragment(){
-        if(supportFragmentManager.backStackEntryCount > 0){
-            supportFragmentManager.popBackStack()
-        }
-        else{
+        if(!navController.popBackStack())
             Log.w(TAG, "backStack is empty")
-        }
     }
 
     companion object{

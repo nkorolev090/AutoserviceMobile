@@ -13,6 +13,7 @@ import com.project.autoservicemobile.common.OnSwipeTouchListener
 import com.project.autoservicemobile.databinding.FragmentMapBinding
 import com.project.autoservicemobile.ui.profile.map.models.StationUI
 import com.project.common.data.RequestResult
+import com.project.common.data.StatusCodeEnum
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
@@ -94,8 +95,9 @@ class MapFragment : BaseFragment() {
 
         with(viewModel) {
             stations.observe(viewLifecycleOwner) {
-                when {
-                    it is RequestResult.Success -> {
+                when (it) {
+                    is RequestResult.Success -> {
+                        binding.errorContainer.visibility = View.GONE
                         binding.bottomShimmerContainer.visibility = View.GONE
                         binding.coordinatesContainer.visibility = View.VISIBLE
 
@@ -118,9 +120,19 @@ class MapFragment : BaseFragment() {
                             }
                         }
                     }
-                    it is RequestResult.Loading ->{
+
+                    is RequestResult.Loading -> {
+                        binding.errorContainer.visibility = View.GONE
                         binding.coordinatesContainer.visibility = View.INVISIBLE
                         binding.bottomShimmerContainer.visibility = View.VISIBLE
+                    }
+
+                    is RequestResult.Error -> {
+                        showErrorPage(it.code as? StatusCodeEnum, binding.errorContainer)
+                        binding.errorContainer.visibility = View.VISIBLE
+                        binding.bottomSheetContainer.hide()
+                        binding.bottomShimmerContainer.visibility = View.GONE
+
                     }
                 }
             }
