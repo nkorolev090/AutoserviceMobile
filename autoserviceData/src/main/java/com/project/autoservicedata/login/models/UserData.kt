@@ -8,6 +8,7 @@ data class UserData (
     val email : String,
     val userName : String,
     val phoneNumber : String?,
+    val client: Client?,
 //    var isClient : Boolean,
 //
 //    var Client : ClientDTO?,

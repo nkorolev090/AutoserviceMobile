@@ -28,6 +28,9 @@ data class UserDataDTO (
 
     @SerialName("isClient")
     val isClient : Boolean?,
+
+    @SerialName("client")
+    val client: ClientDTO?
 //
 //    var Client : ClientDTO?,
 //    var Mechanic : MechanicDTO?

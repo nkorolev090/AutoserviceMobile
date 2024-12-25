@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import com.project.autoserviceapi.deviceToken.DeviceTokenApi
 import com.project.autoserviceapi.login.AccountApi
 import com.project.autoserviceapi.login.models.AuthorizationResponseDTO
+import com.project.autoserviceapi.login.models.ClientDTO
 import com.project.autoserviceapi.login.models.SignInRequestData
 import com.project.autoserviceapi.login.models.SignUpRequestData
 import com.project.autoserviceapi.login.models.UserDataDTO
+import com.project.autoservicedata.login.models.Client
 import com.project.common.data.RequestResult
 import com.project.autoservicedata.login.models.SignInData
 import com.project.autoservicedata.login.models.SignUpData
@@ -141,8 +143,18 @@ private fun UserDataDTO.toUserData(): UserData {
         email = this.email,
         userName = this.userName,
         phoneNumber = this.phoneNumber,
+        client = this.client?.toClient()
     )
 }
+
+private fun ClientDTO.toClient(): Client =
+    Client(
+        id = id,
+        discountName = discountName,
+        discountPoints = discountPoints,
+        defaultStationId = defaultStationId,
+        birthday = birthday
+    )
 
 private fun SignInData.toSignInRequestData(): SignInRequestData {
     return SignInRequestData(
