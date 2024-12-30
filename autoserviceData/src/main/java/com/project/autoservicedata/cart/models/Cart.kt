@@ -1,7 +1,6 @@
 package com.project.autoservicedata.cart.models
 
 import com.project.autoserviceapi.cart.models.CartDTO
-import com.project.autoserviceapi.cart.models.CartItemDTO
 
 data class Cart(
 
@@ -17,7 +16,9 @@ data class Cart(
 
     val discountValue: Double?,
 
-    val cartItems: List<CartItem>
+    val availableCartItems: List<CartItem>,
+
+    val unavailableCartItems: List<CartItem>
 )
 
 fun CartDTO.toCart(): Cart =
@@ -28,5 +29,6 @@ fun CartDTO.toCart(): Cart =
         promocodeId = this.promocodeId,
         promocodeTitle = this.promocodeTitle,
         discountValue = this.discountValue,
-        cartItems = this.cartItems.map { it.toCartItem() }
+        availableCartItems = this.availableCartItems.map { it.toCartItem() },
+        unavailableCartItems = this.unavailableCartItems.map { it.toCartItem() }
     )

@@ -25,20 +25,19 @@ class UserContext @Inject constructor(
             database.clientDao.insert(data.client.toClientDBO())
             database.userDataDao.insert(data.toUserDataDBO())
         }
+    }
 
-        //userData.postValue(data)
-        //_isAuthorize = true
-//        CoroutineScope(Dispatchers.Main)
-//            .launch{
-//                _userData.value = data
-//                _isAuthorize.value = true
-//            }
+    suspend fun setClient(client: Client){
+        database.clientDao.insert(client.toClientDBO())
+    }
+
+    suspend fun updateClient(stationId: Int?, id: Int){
+        database.clientDao.update(stationId, id)
     }
 
     fun getUserData(): Flow<RequestResult<UserData>> = flow {
         emit(RequestResult.Loading())
 
-  //      if (_isAuthorize) {
             val userData = database.userDataDao.getAll().firstOrNull()
             if (userData?.clientId == null) {
                 emit(RequestResult.Error(message = "cached user data empty"))
@@ -50,17 +49,15 @@ class UserContext @Inject constructor(
                 else{
                     emit(RequestResult.Success(userData.toUserData(clientDBO)))
                 }
-           // }
         }
     }
     suspend fun updateUserData() {
         val userDataDb = database.userDataDao.getAll().firstOrNull()
-        //userData.postValue(userDataDb?.toUserData())
     }
 
     suspend fun clearUserDataCache(){
         database.userDataDao.clean()
-        //userData.postValue(null)
+        database.clientDao.clean()
     }
 }
 

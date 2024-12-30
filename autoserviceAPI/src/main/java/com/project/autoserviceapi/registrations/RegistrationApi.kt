@@ -27,6 +27,11 @@ interface RegistrationApi {
         @Body registration: RegistrationDTO
     ): Response<RegistrationDataDTO>
 
+    @POST("CreateRegistration")
+    suspend fun createRegistration(
+        @Body carId: Int
+    ): Response<RegistrationDataDTO>
+
     @PUT("CloseRegistration")
     suspend fun closeRegistration(
         @Query("id") registrationId: Int

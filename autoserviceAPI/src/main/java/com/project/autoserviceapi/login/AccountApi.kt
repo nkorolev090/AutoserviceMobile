@@ -4,6 +4,7 @@ package com.project.autoserviceapi.login
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.project.autoserviceapi.login.models.AuthorizationResponseDTO
+import com.project.autoserviceapi.login.models.ClientDTO
 import com.project.autoserviceapi.login.models.SignInRequestData
 import com.project.autoserviceapi.login.models.SignUpRequestData
 import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
@@ -16,7 +17,9 @@ import retrofit2.create
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AccountApi {
     @POST("login")
@@ -33,6 +36,12 @@ interface AccountApi {
     suspend fun isAuthenticatedResponse(
         @Header("Authorization") token: String,
     ): Response<AuthorizationResponseDTO>
+
+    @PATCH("updateDefaultStation")
+    suspend fun updateDefaultStation(
+        @Header("Authorization") token: String,
+        @Query("id") id: Int
+    ): Response<ClientDTO>
 }
 
 fun AccountApi(

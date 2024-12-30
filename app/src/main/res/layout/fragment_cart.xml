@@ -172,7 +172,7 @@
                 android:id="@+id/cartRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:paddingHorizontal="15dp"
                 tools:itemCount="1"
                 tools:listitem="@layout/li_cart_item" />
 
@@ -317,7 +317,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginBottom="15dp"
-                    android:backgroundTint="?attr/colorPrimary"
                     android:fontFamily="@font/inter_medium"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
@@ -325,6 +324,8 @@
                     android:textColor="?attr/colorPrimaryVariant"
                     android:textFontWeight="1000"
                     android:textSize="16sp"
+                    android:enabled="true"
+                    style="@style/MaterialButtonWithStateStyle"
                     app:cornerRadius="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

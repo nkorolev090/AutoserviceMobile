@@ -16,15 +16,15 @@ fun <I: Any, O:Any> RequestResult<I>.map(mapper: (I) -> O): RequestResult<O> {
     }
 }
 
-fun <I : Any?, O : Any> RequestResultAPI<I>.toRequestResult(
-    successAction: (RequestResultAPI.Success<I>) -> RequestResult<O>,
-    errorAction: (RequestResultAPI.Error) -> RequestResult<O> = {
+suspend fun <I : Any?, O : Any> RequestResultAPI<I>.toRequestResult(
+    successAction: suspend (RequestResultAPI.Success<I>) -> RequestResult<O>,
+    errorAction: suspend (RequestResultAPI.Error) -> RequestResult<O> = {
         RequestResult.Error(message = it.message, code = it.code)
     },
-    exceptionAction: (RequestResultAPI.Exception) -> RequestResult<O> = {
+    exceptionAction: suspend (RequestResultAPI.Exception) -> RequestResult<O> = {
         RequestResult.Error(error = it.throwable)
     },
-    loadingAction: (RequestResultAPI.Loading) -> RequestResult<O> = {
+    loadingAction: suspend (RequestResultAPI.Loading) -> RequestResult<O> = {
         RequestResult.Loading()
     }
 ): RequestResult<O> {

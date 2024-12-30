@@ -24,6 +24,9 @@ data class CartDTO(
     @SerialName("discount_value")
     val discountValue: Double?,
 
-    @SerialName("cart_items")
-    val cartItems: List<CartItemDTO>
+    @SerialName("available_cart_items")
+    val availableCartItems: List<CartItemDTO>,
+
+    @SerialName("unavailable_cart_items")
+    val unavailableCartItems: List<CartItemDTO>
 )

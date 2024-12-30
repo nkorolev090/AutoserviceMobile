@@ -7,8 +7,6 @@ import com.project.autoservicedata.login.AccountRepository
 import com.project.autoservicedata.registration.RegistrationRepository
 import com.project.autoservicemobile.common.BaseViewModel
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
-import com.project.autoservicemobile.rubleSimbol
-import com.project.autoservicemobile.ui.cart.models.CartItemUI
 import com.project.autoservicemobile.ui.cart.models.CartUI
 import com.project.autoservicemobile.ui.cart.models.toCartUI
 import com.project.autoservicemobile.ui.cart.models.toSlot
@@ -86,16 +84,15 @@ class CartViewModel @Inject constructor(
 
     fun createRegistration(coroutinesErrorHandler: CoroutinesErrorHandler) {
         val carId = defaultCar.value?.data?.id
-        val slots = cart.value?.data?.cartItems?.map { it.slot.toSlot() }
 
-        if(carId == null || slots.isNullOrEmpty()){
+        if(carId == null){
             return
         }
 
         baseRequest(
             createdRegistration,
             coroutinesErrorHandler,
-            request = { registrationRepository.createRegistration(carId, slots) },
+            request = { registrationRepository.createRegistration(carId) },
         )
     }
     fun onApplyPromocodeClick(){

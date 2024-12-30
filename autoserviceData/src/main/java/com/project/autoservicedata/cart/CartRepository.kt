@@ -3,19 +3,15 @@ package com.project.autoservicedata.cart
 import com.project.autoserviceapi.cart.CartApi
 import com.project.autoserviceapi.cart.models.CartDTO
 import com.project.autoserviceapi.cart.models.SlotDTO
-import com.project.autoservicedata.breakdown.models.Breakdown
 import com.project.autoservicedata.cart.models.Cart
 import com.project.autoservicedata.cart.models.Slot
 import com.project.autoservicedata.cart.models.toCart
-import com.project.autoservicedata.cart.models.toSlot
 import com.project.common.api.RequestResultAPI
 import com.project.common.api.apiRequestFlow
 import com.project.common.data.RequestResult
 import com.project.common.data.StatusCodeEnum
-import com.project.common.data.asDateTimeFormatter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 class CartRepository @Inject constructor(
@@ -42,7 +38,7 @@ class CartRepository @Inject constructor(
     private fun RequestResultAPI<CartDTO>.toCart(): RequestResult<Cart> =
         when (this) {
             is RequestResultAPI.Success -> {
-                if (this.data.cartItems.isNotEmpty()) {
+                if (this.data.availableCartItems.isNotEmpty() || this.data.unavailableCartItems.isNotEmpty()) {
                     RequestResult.Success(this.data.toCart())
                 } else {
                     RequestResult.Error(

@@ -27,7 +27,8 @@ class RegistrationRepository @Inject constructor(
             it.toRequestResult(
                 { result ->
                     if (result.data.isEmpty().not()) {
-                        RequestResult.Success(result.data.map { dto -> dto.toRegistration() }.reversed())
+                        RequestResult.Success(result.data.map { dto -> dto.toRegistration() }
+                            .reversed())
                     } else {
                         RequestResult.Error(
                             code = StatusCodeEnum.NO_CONTENT,
@@ -39,28 +40,9 @@ class RegistrationRepository @Inject constructor(
         }
     }
 
-    fun createRegistration(carId: Int, slots: List<Slot>): Flow<RequestResult<Boolean>> {
-        val registration = RegistrationDataDTO(
-            0,
-            carId,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-        )
-
-        val slotsDto = slots.map { it.toSlotDTO() }
-
+    fun createRegistration(carId: Int): Flow<RequestResult<Boolean>> {
         return apiRequestFlow {
-            api.createRegistration(
-                RegistrationDTO(
-                    registration,
-                    slotsDto
-                )
-            )
+            api.createRegistration(carId)
         }.map {
             it.toRequestResult(
                 {

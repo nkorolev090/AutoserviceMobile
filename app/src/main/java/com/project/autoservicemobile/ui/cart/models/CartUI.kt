@@ -17,16 +17,26 @@ data class CartUI(
 
     val discountValue: String,
 
-    val cartItems: List<CartItemUI>
+    val isActive: Boolean,
+
+    val cartItems: List<CartRecycleItem>
 )
 
-fun Cart.toCartUI(): CartUI =
-    CartUI(
+fun Cart.toCartUI(): CartUI {
+    val cartItems: MutableList<CartRecycleItem> = availableCartItems.map { it.toCartItemUI(true) }.toMutableList()
+
+    if(unavailableCartItems.isNotEmpty()){
+        cartItems.add(CartRecycleItem.Title("unavailable"))
+        cartItems.addAll(unavailableCartItems.map { it.toCartItemUI(false) })
+    }
+    return CartUI(
         id = this.id,
         total = (this.total.toString() ?: "0") + rubleSimbol,
         subtotal = (this.subtotal.toString() ?: "0") + rubleSimbol,
         promocodeId = this.promocodeId,
         promocodeTitle = this.promocodeTitle,
         discountValue = ("-${this.discountValue}") + rubleSimbol,
-        cartItems = this.cartItems.map { it.toCartItemUI() }
+        isActive = availableCartItems.isNotEmpty(),
+        cartItems = cartItems
     )
+}

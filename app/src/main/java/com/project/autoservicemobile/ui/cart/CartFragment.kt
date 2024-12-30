@@ -17,6 +17,7 @@ import com.project.autoservicemobile.common.AuthenticatedListener
 import com.project.autoservicemobile.common.BaseFragment
 import com.project.autoservicemobile.common.CoroutinesErrorHandler
 import com.project.autoservicemobile.databinding.FragmentCartBinding
+import com.project.autoservicemobile.ui.cart.models.CartRecycleItem
 import com.project.autoservicemobile.ui.home.NewsRecyclerAdapter
 import com.project.autoservicemobile.ui.login.SignInOrUpBottomSheetDialog
 import com.project.common.data.RequestResult
@@ -114,13 +115,15 @@ class CartFragment : BaseFragment(), AuthenticatedListener {
                         subTotalValueText.text = it.data.subtotal
 
                         val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-                        if (it.data.cartItems.size == 1) {
+                        if (it.data.cartItems.count() < 3) {
                             params.gravity = Gravity.BOTTOM
                             linearContainer.layoutParams = params
                         } else {
                             params.gravity = Gravity.TOP
                             linearContainer.layoutParams = params
                         }
+
+                        createRegBtn.isEnabled = it.data.isActive
 
                         (cartRecycler.adapter as CartRecyclerAdapter).items = it.data.cartItems
                         cartRecycler.adapter?.notifyDataSetChanged()

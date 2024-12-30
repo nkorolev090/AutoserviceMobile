@@ -1,6 +1,5 @@
 package com.project.autoservicedata.cart
 
-import com.project.autoservicedata.cart.models.Slot
 import com.project.common.data.RequestResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -14,7 +13,7 @@ class CartUseCase @Inject constructor(
         = _cartRepository.addSlotToCart(slotId, breakdownId).map {
             when(it){
                 is RequestResult.Success -> {
-                    val result = it.data.cartItems.find { cartItem ->  cartItem.slot.id == slotId}
+                    val result = it.data.availableCartItems.find { cartItem ->  cartItem.slot.id == slotId}
                     if(result != null){
                         RequestResult.Success(true)
                     }

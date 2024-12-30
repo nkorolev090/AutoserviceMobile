@@ -31,4 +31,7 @@
         <item name="android:fontFamily">@font/be_vietnam_pro_bold</item>
         <item name="android:textSize">62sp</item>
     </style>
+    <style name="MaterialButtonWithStateStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="backgroundTint">@color/color_states_button</item>
+    </style>
 </resources>

@@ -14,4 +14,9 @@ interface ClientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(clientDBO: ClientDBO)
 
+    @Query("DELETE FROM client")
+    suspend fun clean()
+
+    @Query("UPDATE client SET defaultStationId = :stationId WHERE id = :id")
+    suspend fun update(stationId: Int?, id: Int)
 }

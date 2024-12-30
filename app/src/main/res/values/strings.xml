@@ -21,6 +21,7 @@
 
     <string name="to_cart">В корзину</string>
     <string name="from_cart">Удалить</string>
+    <string name="anavailable_title">Недоступны для оформления</string>
     <string name="load_more_btn_text">Узнать больше</string>
     <string name="favorites_text">Избранное</string>
     <string name="faq">Часто задаваемые запросы</string>
@@ -45,4 +46,7 @@
     <string name="close_registration_text">Отменить запись</string>
     <string name="channel_name">main_channel</string>
     <string name="channel_description">main channel with high priority</string>
+
+    <string name="select_station">Выбрать этот сервис</string>
+    <string name="station_is_selected">Сервис выбран</string>
 </resources>

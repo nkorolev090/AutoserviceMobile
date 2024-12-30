@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.lifecycle.MutableLiveData
 import com.project.autoservicemobile.MainActivity
 import com.project.autoservicemobile.R
 import com.project.autoservicemobile.common.BaseFragment
-import com.project.autoservicemobile.common.OnSwipeTouchListener
 import com.project.autoservicemobile.databinding.FragmentMapBinding
 import com.project.autoservicemobile.ui.profile.map.models.StationUI
 import com.project.common.data.RequestResult
@@ -33,6 +33,8 @@ class MapFragment : BaseFragment() {
     private val viewModel: MapViewModel by viewModels()
 
     private val placeMarkObjects: HashMap<MapObject, StationUI> = hashMapOf()
+
+    private var selectedStation: StationUI? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +70,8 @@ class MapFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.LoadStations(coroutinesErrorHandler)
+        viewModel.loadStations(coroutinesErrorHandler)
+        viewModel.loadUserData(coroutinesErrorHandler)
     }
 
     override fun onPause() {
@@ -91,6 +94,12 @@ class MapFragment : BaseFragment() {
                     /* tilt = */ 30.0f
                 )
             )
+
+            binding.selectStationButton.setOnClickListener{
+                if(selectedStation != null){
+                    viewModel.updateDefaultStation(selectedStation!!.id, coroutinesErrorHandler)
+                }
+            }
         }
 
         with(viewModel) {
@@ -116,12 +125,21 @@ class MapFragment : BaseFragment() {
 
                             placeMarkObjects[placeMark] = station
                             if(it.data.indexOf(station) == 0){
+                                selectedStation = station
                                 setupBottomContainer(station)
+
+                                val stationId = if(user.value is RequestResult.Success){
+                                    (user.value as RequestResult.Success).data.client?.defaultStationId
+                                }else{
+                                    null
+                                }
+                                setupSelectStationButton(stationId)
                             }
                         }
                     }
 
                     is RequestResult.Loading -> {
+                        setupSelectStationButton(null)
                         binding.errorContainer.visibility = View.GONE
                         binding.coordinatesContainer.visibility = View.INVISIBLE
                         binding.bottomShimmerContainer.visibility = View.VISIBLE
@@ -136,6 +154,48 @@ class MapFragment : BaseFragment() {
                     }
                 }
             }
+
+            user.observe(viewLifecycleOwner){
+                when (it) {
+                    is RequestResult.Error -> {
+                        binding.selectStationButton.visibility = View.GONE
+                        setupSelectStationButton(null)
+                    }
+
+                    is RequestResult.Success -> {
+                        setupSelectStationButton(it.data.client?.defaultStationId)
+                    }
+
+                    is RequestResult.Loading -> {
+                        binding.selectStationButton.visibility = View.GONE
+                        setupSelectStationButton(null)
+                    }
+                }
+            }
+
+            stationUpdated.observe(viewLifecycleOwner){
+                when{
+                    it is RequestResult.Success -> {
+                        loadUserData(coroutinesErrorHandler)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupSelectStationButton(defaultStationId: Int?){
+        if(selectedStation?.id == defaultStationId){
+            binding.selectStationButton.isEnabled = false
+            binding.selectStationButton.setText(R.string.station_is_selected)
+        }else{
+            binding.selectStationButton.isEnabled = true
+            binding.selectStationButton.setText(R.string.select_station)
+        }
+
+        if(defaultStationId != null && selectedStation != null){
+            binding.selectStationButton.visibility = View.VISIBLE
+        }else{
+            binding.selectStationButton.visibility = View.INVISIBLE
         }
     }
 
@@ -151,7 +211,15 @@ class MapFragment : BaseFragment() {
     private val placeMarkTapListener = MapObjectTapListener { mapObject, point ->
         val station = placeMarkObjects[mapObject]
         if (station != null) {
+            selectedStation = station
             setupBottomContainer(station)
+
+            val stationId = if(viewModel.user.value is RequestResult.Success){
+                (viewModel.user.value as RequestResult.Success).data.client?.defaultStationId
+            }else{
+                null
+            }
+            setupSelectStationButton(stationId)
 
             binding.bottomSheetContainer.show()
         }

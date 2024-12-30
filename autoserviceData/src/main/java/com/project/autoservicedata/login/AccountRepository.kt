@@ -18,9 +18,9 @@ import com.project.token.TokenManager
 import com.project.common.api.RequestResultAPI
 import com.project.common.api.apiRequestFlow
 import com.project.common.data.StatusCodeEnum
+import com.project.common.data.toRequestResult
 import com.project.deviceToken.DeviceTokenManager
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -58,7 +58,10 @@ class AccountRepository @Inject constructor(
 
                         RequestResult.Success(true)
                     } else {
-                        RequestResult.Error(code = StatusCodeEnum.NO_CONTENT, message = "userData is null")
+                        RequestResult.Error(
+                            code = StatusCodeEnum.NO_CONTENT,
+                            message = "userData is null"
+                        )
                     }
                 }
 
@@ -86,6 +89,22 @@ class AccountRepository @Inject constructor(
         userContext.clearUserDataCache()
     }
 
+    suspend fun updateDefaultStation(stationId: Int): Flow<RequestResult<Boolean>> {
+        val token = tokenManager.getToken()
+        return apiRequestFlow { api.updateDefaultStation(token, stationId) }
+            .map { result ->
+                result.toRequestResult(successAction = {
+                    if(it.data.defaultStationId == stationId){
+                        userContext.updateClient(it.data.defaultStationId, it.data.id)
+                        RequestResult.Success(true)
+                    }else{
+                        RequestResult.Error(code = StatusCodeEnum.NO_CONTENT)
+                    }
+                })
+        }
+    }
+
+
     private suspend fun RequestResultAPI<AuthorizationResponseDTO>.toAuthorizationRequestResult(): RequestResult<Boolean> {
         return when (this) {
             is RequestResultAPI.Success -> {
@@ -95,7 +114,7 @@ class AccountRepository @Inject constructor(
                     userContext.setUserData(this.data.user!!.toUserData())
 
                     val deviceToken = deviceTokenManager.getToken()
-                    if(deviceToken != null){
+                    if (deviceToken != null) {
                         tokenApi.saveDeviceToken(deviceToken)
                     }
 
