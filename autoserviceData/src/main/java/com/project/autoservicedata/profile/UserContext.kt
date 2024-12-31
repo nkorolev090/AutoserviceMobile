@@ -31,8 +31,12 @@ class UserContext @Inject constructor(
         database.clientDao.insert(client.toClientDBO())
     }
 
-    suspend fun updateClient(stationId: Int?, id: Int){
-        database.clientDao.update(stationId, id)
+    suspend fun updateClientStation(stationId: Int?, id: Int){
+        database.clientDao.updateStation(stationId, id)
+    }
+
+    suspend fun updateClientCar(carId: Int?, id: Int){
+        database.clientDao.updateCar(carId, id)
     }
 
     fun getUserData(): Flow<RequestResult<UserData>> = flow {
@@ -80,6 +84,7 @@ private fun ClientDBO.toClient(): Client =
         discountName = discountName,
         discountPoints = discountPoints,
         defaultStationId = defaultStationId,
+        defaultCarId = defaultCarId,
         birthday = birthday
     )
 
@@ -103,5 +108,6 @@ private fun Client.toClientDBO(): ClientDBO=
         discountName = discountName,
         discountPoints = discountPoints,
         defaultStationId = defaultStationId,
+        defaultCarId = defaultCarId,
         birthday = birthday
     )

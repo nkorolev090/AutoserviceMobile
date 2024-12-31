@@ -83,16 +83,10 @@ class CartViewModel @Inject constructor(
     )
 
     fun createRegistration(coroutinesErrorHandler: CoroutinesErrorHandler) {
-        val carId = defaultCar.value?.data?.id
-
-        if(carId == null){
-            return
-        }
-
         baseRequest(
             createdRegistration,
             coroutinesErrorHandler,
-            request = { registrationRepository.createRegistration(carId) },
+            request = { registrationRepository.createRegistration() },
         )
     }
     fun onApplyPromocodeClick(){

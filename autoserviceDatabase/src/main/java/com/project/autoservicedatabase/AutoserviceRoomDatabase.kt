@@ -17,7 +17,7 @@ class AutoserviceDatabase internal constructor(private val database: Autoservice
     val clientDao: ClientDao
         get() = database.clientDao()
 }
-@Database(entities = [UserDataDBO::class, ClientDBO::class], version = 2)
+@Database(entities = [UserDataDBO::class, ClientDBO::class], version = 3)
 @TypeConverters(LocalDateTimeConverter::class)
 internal abstract class AutoserviceRoomDatabase : RoomDatabase() {
 

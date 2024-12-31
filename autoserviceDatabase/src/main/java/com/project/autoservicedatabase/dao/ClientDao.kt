@@ -18,5 +18,8 @@ interface ClientDao {
     suspend fun clean()
 
     @Query("UPDATE client SET defaultStationId = :stationId WHERE id = :id")
-    suspend fun update(stationId: Int?, id: Int)
+    suspend fun updateStation(stationId: Int?, id: Int)
+
+    @Query("UPDATE client SET defaultCarId = :carId WHERE id = :id")
+    suspend fun updateCar(carId: Int?, id: Int)
 }

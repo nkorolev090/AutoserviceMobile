@@ -10,5 +10,6 @@ class ClientDBO (
     @ColumnInfo("discountName") val discountName: String,
     @ColumnInfo("discountPoints")val discountPoints: Int,
     @ColumnInfo("defaultStationId")val defaultStationId: Int?,
+    @ColumnInfo("defaultCarId")val defaultCarId: Int?,
     @ColumnInfo("birthday")val birthday: String
 )

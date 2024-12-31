@@ -17,6 +17,9 @@ data class ClientDTO (
     @SerialName("default_station_id")
     val defaultStationId: Int?,
 
+    @SerialName("default_car_id")
+    val defaultCarId: Int?,
+
     @SerialName("birth_short")
     val birthday: String
 )

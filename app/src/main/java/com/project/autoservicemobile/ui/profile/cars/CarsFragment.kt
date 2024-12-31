@@ -39,8 +39,8 @@ class CarsFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        _viewModel.updateCars(coroutinesErrorHandler)
-        _viewModel.updateDefaultCar(coroutinesErrorHandler)
+        _viewModel.getCars(coroutinesErrorHandler)
+        _viewModel.getDefaultCar(coroutinesErrorHandler)
     }
 
     private fun setup() {
@@ -119,6 +119,17 @@ class CarsFragment : BaseFragment() {
 //                       }
                             defaultCarBrandText.text = it.data.br_mod
                             defaultCarModelText.text = it.data.number
+                        }
+                    }
+                }
+
+                _viewModel.defaultCarUpdated.observe(viewLifecycleOwner){
+                    when(it){
+                        is RequestResult.Error -> {}
+                        is RequestResult.Loading -> {}
+                        is RequestResult.Success -> {
+                            _viewModel.getCars(coroutinesErrorHandler)
+                            _viewModel.getDefaultCar(coroutinesErrorHandler)
                         }
                     }
                 }

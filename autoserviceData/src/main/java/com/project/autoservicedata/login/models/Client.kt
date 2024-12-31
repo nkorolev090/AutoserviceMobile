@@ -5,5 +5,6 @@ data class Client(
     val discountName: String,
     val discountPoints: Int,
     val defaultStationId: Int?,
+    val defaultCarId: Int?,
     val birthday: String
 )

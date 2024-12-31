@@ -42,6 +42,12 @@ interface AccountApi {
         @Header("Authorization") token: String,
         @Query("id") id: Int
     ): Response<ClientDTO>
+
+    @PATCH("updateDefaultCar")
+    suspend fun updateDefaultCar(
+        @Header("Authorization") token: String,
+        @Query("id") id: Int
+    ): Response<ClientDTO>
 }
 
 fun AccountApi(

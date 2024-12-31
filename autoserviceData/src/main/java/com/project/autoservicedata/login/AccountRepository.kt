@@ -95,13 +95,28 @@ class AccountRepository @Inject constructor(
             .map { result ->
                 result.toRequestResult(successAction = {
                     if(it.data.defaultStationId == stationId){
-                        userContext.updateClient(it.data.defaultStationId, it.data.id)
+                        userContext.updateClientStation(it.data.defaultStationId, it.data.id)
                         RequestResult.Success(true)
                     }else{
                         RequestResult.Error(code = StatusCodeEnum.NO_CONTENT)
                     }
                 })
         }
+    }
+
+    suspend fun updateDefaultCar(carId: Int): Flow<RequestResult<Boolean>> {
+        val token = tokenManager.getToken()
+        return apiRequestFlow { api.updateDefaultCar(token, carId) }
+            .map { result ->
+                result.toRequestResult(successAction = {
+                    if(it.data.defaultCarId == carId){
+                        userContext.updateClientStation(it.data.defaultStationId, it.data.id)
+                        RequestResult.Success(true)
+                    }else{
+                        RequestResult.Error(code = StatusCodeEnum.NO_CONTENT)
+                    }
+                })
+            }
     }
 
 
@@ -172,6 +187,7 @@ private fun ClientDTO.toClient(): Client =
         discountName = discountName,
         discountPoints = discountPoints,
         defaultStationId = defaultStationId,
+        defaultCarId = defaultCarId,
         birthday = birthday
     )
 

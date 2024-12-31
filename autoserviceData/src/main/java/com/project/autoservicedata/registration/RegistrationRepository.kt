@@ -40,9 +40,9 @@ class RegistrationRepository @Inject constructor(
         }
     }
 
-    fun createRegistration(carId: Int): Flow<RequestResult<Boolean>> {
+    fun createRegistration(): Flow<RequestResult<Boolean>> {
         return apiRequestFlow {
-            api.createRegistration(carId)
+            api.createRegistration()
         }.map {
             it.toRequestResult(
                 {
